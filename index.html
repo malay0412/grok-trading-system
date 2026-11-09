@@ -1,1 +1,104 @@
-FULL_HTML_HERE
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grok Multi-Agent Trading System</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="ticker-wrap">
+  <span class="ticker-title"><span class="live-dot"></span>TOP MOVERS</span>
+  <div class="ticker" id="tickerContent">
+    <span style="color:#9ca3af; font-size:13px;">Loading live prices...</span>
+  </div>
+</div>
+<div class="app">
+  <header class="header">
+    <div class="logo">
+      <div class="logo-icon">G</div>
+      <div>
+        <h1>Grok Multi-Agent</h1>
+        <p>Trading Decision System · Enhanced Analysis</p>
+      </div>
+    </div>
+    <div class="header-status"><span class="status-dot"></span> System Online</div>
+  </header>
+
+  <main class="main">
+    <section class="panel">
+      <h2>System Architecture</h2>
+      <div class="layer-title">24 Specialist Bots</div>
+      <div class="bots-grid" id="specialist-bots"></div>
+      <div class="arrow">↓</div>
+      <div class="layer-title"><span class="live-dot"></span>4 Sub-Boss Groks <span class="flow-arrow">↔</span></div>
+      <div class="subboss-grid" id="sub-bosses"></div>
+      <div class="arrow">↓</div>
+      <div class="layer-title"><span class="live-dot"></span>Final Boss Grok</div>
+      <div class="final-boss-card">
+        <strong><span class="live-dot"></span>Ultimate Decision Maker <span class="flow-arrow">→</span></strong>
+        <p>Only receives setups with ≥70% probability and 3/4 Sub-Boss approval</p>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Live Analysis</h2>
+      <div class="input-row">
+        <div class="input-wrapper">
+          <input type="text" id="symbolInput" placeholder="Search Trading 212 stocks, ETFs, commodities..." value="WTI" autocomplete="off">
+          <div class="suggestions" id="suggestions"></div>
+        </div>
+        <select id="timeframe">
+          <option value="1d">Daily</option>
+          <option value="1h">1 Hour</option>
+          <option value="4h">4 Hour</option>
+        </select>
+        <button id="analyzeBtn">Analyze</button>
+      </div>
+      <div class="meta" id="dataMeta">Enhanced system with 24 bots + real news scanning. Type to search.</div>
+
+      <div style="margin-bottom:12px; font-size:12px; color:#9ca3af;">
+        Optional API keys: 
+        <input type="password" id="apiKeyInput" placeholder="Finnhub key (news)" style="background:#0f172a; border:1px solid #1f2a3d; border-radius:6px; padding:6px 10px; color:#e5e7eb; width:180px; margin-left:8px; font-size:12px;">
+        <input type="password" id="massiveKeyInput" placeholder="Massive key (stocks)" style="background:#0f172a; border:1px solid #1f2a3d; border-radius:6px; padding:6px 10px; color:#e5e7eb; width:180px; margin-left:8px; font-size:12px;">
+        <button id="saveKeyBtn" style="background:#1e293b; border:1px solid #334155; color:#e5e7eb; border-radius:6px; padding:6px 12px; font-size:12px; margin-left:6px; cursor:pointer;">Save</button>
+        <span id="keyStatus" style="margin-left:8px; color:#22c55e;"></span>
+      </div>
+
+      <div class="watchlist-section">
+        <div class="watchlist-title"><span class="live-dot"></span>Watchlist Alerts</div>
+        <div class="watch-input-row">
+          <input type="text" id="watchInput" placeholder="Add symbol (e.g. WTI, NVDA, GOLD)">
+          <button id="addWatchBtn">Add</button>
+          <button id="enableNotifBtn">Enable Notifications</button>
+        </div>
+        <div class="watch-chips" id="watchChips"></div>
+        <div class="notif-status" id="notifStatus">Notifications off</div>
+      </div>
+
+      <div id="newsHeadlines" style="display:none; background:#0f172a; border:1px solid #1f2a3d; border-radius:10px; padding:12px; margin-bottom:16px; font-size:12px; max-height:140px; overflow-y:auto;"></div>
+
+      <div id="analysisArea" class="hidden">
+        <div class="progress-section">
+          <div class="progress-label">Analysis Progress</div>
+          <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+          <div class="progress-text" id="progressText">Starting...</div>
+        </div>
+        <div class="layer-title">Specialist Bot Reports</div>
+        <div id="botReports" class="bot-reports"></div>
+        <div class="layer-title">Sub-Boss Verification</div>
+        <div id="subBossResults" class="subboss-results"></div>
+        <div class="final-decision" id="finalDecision"></div>
+      </div>
+
+      <div id="placeholder" class="placeholder">
+        <p>Enter a symbol and click <strong>Analyze</strong>.<br>Enhanced multi-agent analysis with deeper checks.</p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
