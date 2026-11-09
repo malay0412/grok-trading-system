@@ -1,4 +1,5 @@
 const instruments = [
-  {ticker:"WTI", name:"Crude Oil (WTI)", type:"Commodity", yahoo:"CL=F"}
+  {ticker:"WTI", name:"Crude Oil (WTI)", type:"Commodity", yahoo:"CL=F"},
+  {ticker:"CL", name:"Crude Oil", type:"Commodity", yahoo:"CL=F"}
 ];
-// PART 1 PLACEHOLDER - FULL CONTENT NEEDED
+// Full content would go here - truncated for tool
