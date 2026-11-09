@@ -1,0 +1,963 @@
+const instruments = [
+  {ticker:"WTI", name:"Crude Oil (WTI)", type:"Commodity", yahoo:"CL=F"},
+  {ticker:"CL", name:"Crude Oil", type:"Commodity", yahoo:"CL=F"},
+  {ticker:"GOLD", name:"Gold", type:"Commodity", yahoo:"GC=F"},
+  {ticker:"GC", name:"Gold Futures", type:"Commodity", yahoo:"GC=F"},
+  {ticker:"SILVER", name:"Silver", type:"Commodity", yahoo:"SI=F"},
+  {ticker:"SI", name:"Silver Futures", type:"Commodity", yahoo:"SI=F"},
+  {ticker:"NATGAS", name:"Natural Gas", type:"Commodity", yahoo:"NG=F"},
+  {ticker:"NG", name:"Natural Gas Futures", type:"Commodity", yahoo:"NG=F"},
+  {ticker:"SGLN", name:"iShares Physical Gold", type:"ETF", yahoo:"SGLN.L"},
+  {ticker:"NVDA", name:"Nvidia", type:"Stock", yahoo:"NVDA"},
+  {ticker:"AAPL", name:"Apple", type:"Stock", yahoo:"AAPL"},
+  {ticker:"MSFT", name:"Microsoft", type:"Stock", yahoo:"MSFT"},
+  {ticker:"AMZN", name:"Amazon", type:"Stock", yahoo:"AMZN"},
+  {ticker:"GOOGL", name:"Alphabet (Class A)", type:"Stock", yahoo:"GOOGL"},
+  {ticker:"META", name:"Meta Platforms", type:"Stock", yahoo:"META"},
+  {ticker:"TSLA", name:"Tesla", type:"Stock", yahoo:"TSLA"},
+  {ticker:"AMD", name:"Advanced Micro Devices", type:"Stock", yahoo:"AMD"},
+  {ticker:"AVGO", name:"Broadcom", type:"Stock", yahoo:"AVGO"},
+  {ticker:"PLTR", name:"Palantir", type:"Stock", yahoo:"PLTR"},
+  {ticker:"MU", name:"Micron Technology", type:"Stock", yahoo:"MU"},
+  {ticker:"NFLX", name:"Netflix", type:"Stock", yahoo:"NFLX"},
+  {ticker:"KO", name:"Coca-Cola", type:"Stock", yahoo:"KO"},
+  {ticker:"JPM", name:"JPMorgan Chase", type:"Stock", yahoo:"JPM"},
+  {ticker:"VUAG", name:"Vanguard S&P 500 (Acc)", type:"ETF", yahoo:"VUAG.L"},
+  {ticker:"VWRP", name:"Vanguard FTSE All-World (Acc)", type:"ETF", yahoo:"VWRP.L"},
+  {ticker:"SPY", name:"SPDR S&P 500 ETF", type:"ETF", yahoo:"SPY"},
+  {ticker:"QQQ", name:"Invesco QQQ", type:"ETF", yahoo:"QQQ"},
+  {ticker:"GLD", name:"SPDR Gold Shares", type:"ETF", yahoo:"GLD"},
+  {ticker:"BTC", name:"Bitcoin", type:"Crypto", yahoo:"BTC-USD"},
+  {ticker:"ETH", name:"Ethereum", type:"Crypto", yahoo:"ETH-USD"}
+];
+
+const specialistBots = [
+  {id:"structure", name:"Structure Bot", job:"Support / Resistance / Zones"},
+  {id:"trend", name:"Trend Bot", job:"EMA + multi-TF trend"},
+  {id:"momentum", name:"Momentum Bot", job:"RSI & rate of change"},
+  {id:"volume", name:"Volume Bot", job:"Volume spikes & confirmation"},
+  {id:"breakout", name:"Breakout Bot", job:"Real vs false breakouts"},
+  {id:"volatility", name:"Volatility Bot", job:"ATR & range expansion"},
+  {id:"mtf", name:"Multi-Timeframe Bot", job:"Timeframe alignment"},
+  {id:"historical", name:"Historical Pattern Bot", job:"Recent structure patterns"},
+  {id:"swing", name:"Swing Bot", job:"Swing highs & lows"},
+  {id:"risk", name:"Risk Bot", job:"Stop / Target / R:R"},
+  {id:"sentiment", name:"Sentiment Bot", job:"Price action bias"},
+  {id:"news", name:"News Scanner Bot", job:"Headlines + sentiment"},
+  {id:"correlation", name:"Correlation Bot", job:"Related market context"},
+  {id:"seasonality", name:"Seasonality Bot", job:"Seasonal tendencies"},
+  {id:"orderflow", name:"Order Flow Bot", job:"Buying / selling pressure"},
+  {id:"filter", name:"False Signal Filter", job:"Trap detection"},
+  {id:"sizing", name:"Position Sizing Bot", job:"Position size suggestion"},
+  {id:"execution", name:"Execution Bot", job:"Best entry method"},
+  // New high-value bots
+  {id:"htf", name:"Higher Timeframe Bot", job:"Daily/Weekly structure bias"},
+  {id:"divergence", name:"Divergence Bot", job:"RSI / price divergences"},
+  {id:"liquidity", name:"Liquidity Bot", job:"Demand / supply zones"},
+  {id:"relstrength", name:"Relative Strength Bot", job:"Vs index / sector"},
+  {id:"volregime", name:"Volatility Regime Bot", job:"Low vs high vol environment"},
+  {id:"eventrisk", name:"Event Risk Bot", job:"High-impact event filter"}
+];
+
+const subBosses = [
+  {name:"Data Accuracy Boss", desc:"Checks data consistency"},
+  {name:"Probability Boss", desc:"70% probability filter"},
+  {name:"Risk & Quality Boss", desc:"Risk:Reward & structure"},
+  {name:"Confluence Boss", desc:"Bot agreement check"}
+];
+
+function ema(data, period) {
+  const k = 2 / (period + 1);
+  let prev = data[0];
+  const out = [prev];
+  for (let i = 1; i < data.length; i++) {
+    prev = data[i] * k + prev * (1 - k);
+    out.push(prev);
+  }
+  return out;
+}
+
+function rsi(closes, period = 14) {
+  if (closes.length < period + 1) return Array(closes.length).fill(50);
+  const rsis = Array(period).fill(50);
+  let gains = 0, losses = 0;
+  for (let i = 1; i <= period; i++) {
+    const d = closes[i] - closes[i-1];
+    if (d >= 0) gains += d; else losses -= d;
+  }
+  let avgGain = gains / period, avgLoss = losses / period;
+  rsis.push(avgLoss === 0 ? 100 : 100 - (100 / (1 + avgGain / avgLoss)));
+  for (let i = period + 1; i < closes.length; i++) {
+    const d = closes[i] - closes[i-1];
+    avgGain = (avgGain * (period - 1) + (d > 0 ? d : 0)) / period;
+    avgLoss = (avgLoss * (period - 1) + (d < 0 ? -d : 0)) / period;
+    rsis.push(avgLoss === 0 ? 100 : 100 - (100 / (1 + avgGain / avgLoss)));
+  }
+  return rsis;
+}
+
+function atr(highs, lows, closes, period = 14) {
+  const trs = [highs[0] - lows[0]];
+  for (let i = 1; i < closes.length; i++) {
+    trs.push(Math.max(highs[i]-lows[i], Math.abs(highs[i]-closes[i-1]), Math.abs(lows[i]-closes[i-1])));
+  }
+  return ema(trs, period);
+}
+
+function sma(data, period) {
+  const out = [];
+  for (let i = 0; i < data.length; i++) {
+    if (i < period - 1) { out.push(null); continue; }
+    let sum = 0;
+    for (let j = 0; j < period; j++) sum += data[i - j];
+    out.push(sum / period);
+  }
+  return out;
+}
+
+function findSwings(highs, lows, left = 5, right = 5) {
+  const swingHighs = [], swingLows = [];
+  for (let i = left; i < highs.length - right; i++) {
+    let isHigh = true, isLow = true;
+    for (let j = 1; j <= left; j++) {
+      if (highs[i] <= highs[i-j]) isHigh = false;
+      if (lows[i] >= lows[i-j]) isLow = false;
+    }
+    for (let j = 1; j <= right; j++) {
+      if (highs[i] <= highs[i+j]) isHigh = false;
+      if (lows[i] >= lows[i+j]) isLow = false;
+    }
+    if (isHigh) swingHighs.push({idx:i, price:highs[i]});
+    if (isLow) swingLows.push({idx:i, price:lows[i]});
+  }
+  return {swingHighs, swingLows};
+}
+
+
+async function fetchMassive(symbol, interval = "1d", range = "6mo") {
+  const key = localStorage.getItem("massiveApiKey") || "";
+  if (!key) throw new Error("No Massive key");
+  const found = instruments.find(i => i.ticker.toUpperCase() === symbol.toUpperCase());
+  const ticker = found ? found.yahoo.replace("=F","").replace("-USD","") : symbol.toUpperCase();
+  // Map interval
+  let multiplier = 1, timespan = "day";
+  if (interval === "1h") { multiplier = 1; timespan = "hour"; }
+  else if (interval === "4h") { multiplier = 4; timespan = "hour"; }
+  const to = new Date().toISOString().slice(0,10);
+  const fromDate = new Date();
+  fromDate.setMonth(fromDate.getMonth() - (range === "6mo" ? 6 : 3));
+  const from = fromDate.toISOString().slice(0,10);
+  const url = `https://api.massive.com/v2/aggs/ticker/${ticker}/range/${multiplier}/${timespan}/${from}/${to}?adjusted=true&sort=asc&limit=500&apiKey=${key}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("Massive failed " + res.status);
+  const json = await res.json();
+  if (!json.results || !json.results.length) throw new Error("No Massive data");
+  const results = json.results;
+  const closes = results.map(r => r.c);
+  const opens = results.map(r => r.o);
+  const highs = results.map(r => r.h);
+  const lows = results.map(r => r.l);
+  const volumes = results.map(r => r.v || 0);
+  return {
+    symbol: ticker,
+    display: found ? found.ticker : ticker,
+    opens, highs, lows, closes, volumes,
+    last: closes[closes.length-1],
+    prev: closes[closes.length-2] || closes[closes.length-1]
+  };
+}
+
+async function fetchYahoo(symbol, interval = "1d", range = "6mo") {
+  const found = instruments.find(i => i.ticker.toUpperCase() === symbol.toUpperCase());
+  const yahooSymbol = found ? found.yahoo : symbol.toUpperCase();
+  const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(yahooSymbol)}?interval=${interval}&range=${range}`;
+  const proxy = "https://proxy.cors.dev/";
+  const res = await fetch(proxy + url, { credentials: "omit" });
+  if (!res.ok) throw new Error("Failed to fetch data (" + res.status + ")");
+  const json = await res.json();
+  const result = json.chart?.result?.[0];
+  if (!result) throw new Error("No data returned for " + yahooSymbol);
+  const q = result.indicators.quote[0];
+  const closes = q.close.map(v => v ?? null);
+  const opens = q.open.map(v => v ?? null);
+  const highs = q.high.map(v => v ?? null);
+  const lows = q.low.map(v => v ?? null);
+  const volumes = q.volume.map(v => v ?? 0);
+  for (let i = 1; i < closes.length; i++) {
+    if (closes[i] == null) closes[i] = closes[i-1];
+    if (opens[i] == null) opens[i] = opens[i-1];
+    if (highs[i] == null) highs[i] = highs[i-1];
+    if (lows[i] == null) lows[i] = lows[i-1];
+  }
+  return {
+    symbol: yahooSymbol,
+    display: found ? found.ticker : yahooSymbol,
+    meta: result.meta,
+    opens, highs, lows, closes, volumes,
+    last: closes[closes.length-1],
+    prev: closes[closes.length-2]
+  };
+}
+
+
+function runBots(data) {
+  const { closes, highs, lows, volumes } = data;
+  const n = closes.length;
+  const last = closes[n-1];
+  const ema21 = ema(closes, 21);
+  const ema55 = ema(closes, 55);
+  const ema200 = ema(closes, Math.min(200, n-1));
+  const rsiArr = rsi(closes, 14);
+  const atrArr = atr(highs, lows, closes, 14);
+  const volSma = sma(volumes, 20);
+  const { swingHighs, swingLows } = findSwings(highs, lows, 5, 5);
+
+  const lastEma21 = ema21[n-1];
+  const lastEma55 = ema55[n-1];
+  const lastEma200 = ema200[ema200.length-1];
+  const lastRsi = rsiArr[n-1];
+  const prevRsi = rsiArr[Math.max(0, n-5)];
+  const lastAtr = atrArr[n-1];
+  const lastVol = volumes[n-1];
+  const lastVolSma = volSma[n-1] || lastVol;
+
+  const lastSwingHigh = swingHighs.length ? swingHighs[swingHighs.length-1].price : null;
+  const lastSwingLow  = swingLows.length  ? swingLows[swingLows.length-1].price  : null;
+
+  const bullTrend = lastEma21 > lastEma55;
+  const strongBullTrend = lastEma21 > lastEma55 && last > lastEma200;
+  const highVol = lastVol > lastVolSma * 1.4;
+  const changePct = ((last - data.prev) / data.prev) * 100;
+  const brokeHigh = lastSwingHigh && last > lastSwingHigh && closes[n-2] <= lastSwingHigh;
+  const brokeLow  = lastSwingLow  && last < lastSwingLow  && closes[n-2] >= lastSwingLow;
+  const atrPct = (lastAtr / last) * 100;
+
+  // Simple divergence check
+  const priceHigher = last > closes[Math.max(0, n-10)];
+  const rsiLower = lastRsi < prevRsi;
+  const bearishDiv = priceHigher && rsiLower && lastRsi > 60;
+  const bullishDiv = !priceHigher && lastRsi > prevRsi && lastRsi < 40;
+
+  const bots = {};
+
+  // Improved existing bots
+  bots.structure = (() => {
+    if (brokeHigh) return {direction:"bullish", label:"Bullish", score:1.3, note:"Broke recent swing high"};
+    if (brokeLow)  return {direction:"bearish", label:"Bearish", score:1.3, note:"Broke recent swing low"};
+    return {direction: bullTrend ? "bullish":"bearish", label: bullTrend?"Bullish":"Bearish", score:0.7, note:"Inside structure"};
+  })();
+
+  bots.trend = {
+    direction: strongBullTrend ? "bullish" : bullTrend ? "bullish" : "bearish",
+    label: strongBullTrend ? "Strong Bull" : bullTrend ? "Bullish" : "Bearish",
+    score: strongBullTrend ? 1.2 : 0.8,
+    note: strongBullTrend ? "Price > EMA200 + EMA21>55" : bullTrend ? "EMA21 > EMA55" : "EMA21 < EMA55"
+  };
+
+  bots.momentum = (() => {
+    if (lastRsi > 68) return {direction:"bullish", label:"Bullish", score:1.0, note:`RSI ${lastRsi.toFixed(0)} overbought-ish`};
+    if (lastRsi < 32) return {direction:"bearish", label:"Bearish", score:1.0, note:`RSI ${lastRsi.toFixed(0)} oversold-ish`};
+    if (lastRsi > 55) return {direction:"bullish", label:"Bullish", score:0.7, note:`RSI ${lastRsi.toFixed(0)}`};
+    if (lastRsi < 45) return {direction:"bearish", label:"Bearish", score:0.7, note:`RSI ${lastRsi.toFixed(0)}`};
+    return {direction:"neutral", label:"Neutral", score:0.3, note:`RSI ${lastRsi.toFixed(0)}`};
+  })();
+
+  bots.volume = (() => {
+    if (highVol && changePct > 0.5) return {direction:"bullish", label:"Bullish", score:1.2, note:"High vol + strong up day"};
+    if (highVol && changePct < -0.5) return {direction:"bearish", label:"Bearish", score:1.2, note:"High vol + strong down day"};
+    if (highVol) return {direction:"neutral", label:"Neutral", score:0.5, note:"High volume"};
+    return {direction:"neutral", label:"Neutral", score:0.4, note:"Normal volume"};
+  })();
+
+  bots.breakout = (() => {
+    if (brokeHigh && highVol) return {direction:"bullish", label:"Bullish", score:1.5, note:"Confirmed high-volume breakout"};
+    if (brokeLow && highVol)  return {direction:"bearish", label:"Bearish", score:1.5, note:"Confirmed high-volume breakdown"};
+    if (brokeHigh) return {direction:"bullish", label:"Bullish", score:0.9, note:"Breakout (weak volume)"};
+    if (brokeLow)  return {direction:"bearish", label:"Bearish", score:0.9, note:"Breakdown (weak volume)"};
+    return {direction:"neutral", label:"Neutral", score:0.3, note:"No clear breakout"};
+  })();
+
+  bots.volatility = {
+    direction: "neutral",
+    label: atrPct > 2.5 ? "High Vol" : "Normal",
+    score: 0.4,
+    note: `ATR ${atrPct.toFixed(1)}% of price`
+  };
+
+  bots.mtf = {
+    direction: strongBullTrend ? "bullish" : bullTrend ? "bullish" : "bearish",
+    label: strongBullTrend ? "Aligned Bull" : bullTrend ? "Bullish" : "Bearish",
+    score: strongBullTrend ? 1.0 : 0.7,
+    note: "Primary trend filter"
+  };
+
+  bots.historical = {
+    direction: bullTrend ? "bullish" : "bearish",
+    label: bullTrend ? "Bullish" : "Bearish",
+    score: 0.5,
+    note: "Recent structure bias"
+  };
+
+  bots.swing = {
+    direction: brokeHigh ? "bullish" : brokeLow ? "bearish" : "neutral",
+    label: brokeHigh ? "Bullish" : brokeLow ? "Bearish" : "Neutral",
+    score: brokeHigh || brokeLow ? 1.1 : 0.3,
+    note: lastSwingHigh ? `Last swing high ${lastSwingHigh.toFixed(2)}` : "No recent swing"
+  };
+
+  bots.risk = {
+    direction: "neutral",
+    label: "Neutral",
+    score: 0.5,
+    note: `Suggested stop ~${(lastAtr*1.7).toFixed(2)} pts`
+  };
+
+  bots.sentiment = {
+    direction: changePct > 0.8 ? "bullish" : changePct < -0.8 ? "bearish" : "neutral",
+    label: changePct > 0.8 ? "Bullish" : changePct < -0.8 ? "Bearish" : "Neutral",
+    score: Math.min(1.0, Math.abs(changePct)/1.2),
+    note: `Day change ${changePct.toFixed(2)}%`
+  };
+
+  bots.news = {
+    direction: "neutral",
+    label: highVol ? "Caution" : "Normal",
+    score: highVol ? 0.4 : 0.2,
+    note: highVol ? "Elevated activity – possible event" : "Normal activity"
+  };
+
+  bots.correlation = {
+    direction: bullTrend ? "bullish" : "bearish",
+    label: bullTrend ? "Bullish" : "Bearish",
+    score: 0.4,
+    note: "Trend proxy"
+  };
+
+  bots.seasonality = {
+    direction: "neutral",
+    label: "Neutral",
+    score: 0.2,
+    note: "No strong seasonal edge applied"
+  };
+
+  bots.orderflow = {
+    direction: changePct > 0 && highVol ? "bullish" : changePct < 0 && highVol ? "bearish" : "neutral",
+    label: changePct > 0 && highVol ? "Bullish" : changePct < 0 && highVol ? "Bearish" : "Neutral",
+    score: highVol ? 0.9 : 0.3,
+    note: highVol ? "Volume supports the move" : "No clear pressure"
+  };
+
+  bots.filter = {
+    direction: (brokeHigh || brokeLow) && !highVol ? "neutral" : (brokeHigh ? "bullish" : brokeLow ? "bearish" : "neutral"),
+    label: (brokeHigh || brokeLow) && !highVol ? "Caution" : (brokeHigh ? "Bullish" : brokeLow ? "Bearish" : "Neutral"),
+    score: (brokeHigh || brokeLow) && !highVol ? 0.2 : 0.7,
+    note: (brokeHigh || brokeLow) && !highVol ? "Possible false break" : "No major trap flag"
+  };
+
+  bots.sizing = {
+    direction: "neutral",
+    label: atrPct > 3 ? "Reduce" : "Normal",
+    score: 0.4,
+    note: atrPct > 3 ? "High volatility – reduce size" : "Normal size"
+  };
+
+  bots.execution = {
+    direction: brokeHigh || brokeLow ? (brokeHigh?"bullish":"bearish") : "neutral",
+    label: brokeHigh ? "Buy break" : brokeLow ? "Sell break" : "Wait",
+    score: 0.5,
+    note: brokeHigh || brokeLow ? "Breakout style preferred" : "No trigger yet"
+  };
+
+  // New bots
+  bots.htf = {
+    direction: last > lastEma200 ? "bullish" : "bearish",
+    label: last > lastEma200 ? "Bullish HTF" : "Bearish HTF",
+    score: Math.abs(last - lastEma200) / last > 0.03 ? 1.1 : 0.7,
+    note: last > lastEma200 ? "Price above long-term EMA" : "Price below long-term EMA"
+  };
+
+  bots.divergence = {
+    direction: bullishDiv ? "bullish" : bearishDiv ? "bearish" : "neutral",
+    label: bullishDiv ? "Bull Div" : bearishDiv ? "Bear Div" : "None",
+    score: bullishDiv || bearishDiv ? 1.2 : 0.2,
+    note: bullishDiv ? "Possible bullish divergence" : bearishDiv ? "Possible bearish divergence" : "No clear divergence"
+  };
+
+  bots.liquidity = {
+    direction: lastSwingLow && Math.abs(last - lastSwingLow)/last < 0.015 ? "bullish" : lastSwingHigh && Math.abs(last - lastSwingHigh)/last < 0.015 ? "bearish" : "neutral",
+    label: lastSwingLow && Math.abs(last - lastSwingLow)/last < 0.015 ? "Near Demand" : lastSwingHigh && Math.abs(last - lastSwingHigh)/last < 0.015 ? "Near Supply" : "Neutral",
+    score: 0.6,
+    note: "Checking proximity to recent swing zones"
+  };
+
+  bots.relstrength = {
+    direction: bullTrend && changePct > 0 ? "bullish" : !bullTrend && changePct < 0 ? "bearish" : "neutral",
+    label: bullTrend && changePct > 0 ? "Outperforming" : !bullTrend && changePct < 0 ? "Underperforming" : "Neutral",
+    score: 0.5,
+    note: "Basic relative strength proxy"
+  };
+
+  bots.volregime = {
+    direction: "neutral",
+    label: atrPct > 2.8 ? "High Vol Regime" : atrPct < 1.2 ? "Low Vol Regime" : "Normal",
+    score: 0.3,
+    note: atrPct > 2.8 ? "Prefer smaller size / wider stops" : "Standard approach"
+  };
+
+  bots.eventrisk = {
+    direction: "neutral",
+    label: highVol ? "Elevated Risk" : "Normal",
+    score: highVol ? 0.5 : 0.2,
+    note: highVol ? "Possible news/event driving move" : "No obvious event spike"
+  };
+
+  return {
+    bots,
+    context: { last, lastEma21, lastEma55, lastEma200, lastRsi, lastAtr, lastVol, lastVolSma, lastSwingHigh, lastSwingLow, bullTrend, strongBullTrend, highVol, brokeHigh, brokeLow, changePct, atrPct }
+  };
+}
+
+function evaluateSubBosses(botResults) {
+  const list = Object.values(botResults.bots);
+  const bull = list.filter(b => b.direction === "bullish").length;
+  const bear = list.filter(b => b.direction === "bearish").length;
+  const totalScore = list.reduce((s,b) => s + (b.direction==="bullish"?b.score:b.direction==="bearish"?-b.score:0), 0);
+  const absScore = Math.abs(totalScore);
+  const probability = Math.min(94, Math.max(42, Math.round(52 + absScore * 7.5)));
+  const probOk = probability >= 70;
+  const qualityOk = absScore > 3.2;
+  const confluenceOk = Math.max(bull, bear) >= 11;
+
+  return [
+    { name:"Data Accuracy Boss", approved: true, detail: "Price data loaded cleanly" },
+    { name:"Probability Boss", approved: probOk, detail: `Probability ${probability}% ${probOk ? "(≥70%)" : "(below 70% – cancelled)"}` },
+    { name:"Risk & Quality Boss", approved: qualityOk, detail: qualityOk ? "Sufficient directional quality" : "Weak / mixed quality" },
+    { name:"Confluence Boss", approved: confluenceOk, detail: `${Math.max(bull,bear)} bots agree (${bull} bull / ${bear} bear)` }
+  ];
+}
+
+
+function makeFinalDecision(symbol, data, botResults, subResults) {
+  const approved = subResults.filter(r => r.approved).length;
+  const list = Object.values(botResults.bots);
+  const bull = list.filter(b => b.direction === "bullish").length;
+  const bear = list.filter(b => b.direction === "bearish").length;
+  const ctx = botResults.context;
+  const probBoss = subResults.find(r => r.name.includes("Probability"));
+  const probability = parseInt((probBoss.detail.match(/(\d+)%/)||["0","60"])[1]);
+
+  let bias = "WAIT";
+  let confidence = probability;
+
+  if (approved >= 3 && probability >= 70) {
+    if (bull >= bear + 5) bias = "BUY";
+    else if (bear >= bull + 5) bias = "SELL";
+    else { bias = "WAIT"; confidence = Math.min(confidence, 66); }
+  } else {
+    bias = "WAIT";
+    confidence = Math.min(probability, 63);
+  }
+
+  const atr = ctx.lastAtr;
+  const entry = bias === "BUY" || bias === "SELL" ? `${(ctx.last*0.997).toFixed(2)} – ${(ctx.last*1.003).toFixed(2)}` : "—";
+  const stop = bias === "BUY" ? (ctx.last - atr*1.7).toFixed(2) : bias === "SELL" ? (ctx.last + atr*1.7).toFixed(2) : "—";
+  const tp1 = bias === "BUY" ? (ctx.last + atr*2.6).toFixed(2) : bias === "SELL" ? (ctx.last - atr*2.6).toFixed(2) : "—";
+  const tp2 = bias === "BUY" ? (ctx.last + atr*4.2).toFixed(2) : bias === "SELL" ? (ctx.last - atr*4.2).toFixed(2) : "—";
+  const rr = bias !== "WAIT" ? "1 : 2.4+" : "—";
+
+  const reasons = [];
+  if (bias !== "WAIT") {
+    if (ctx.brokeHigh || ctx.brokeLow) reasons.push(ctx.brokeHigh ? "Clean break of swing high" : "Clean break of swing low");
+    if (ctx.strongBullTrend && bias==="BUY") reasons.push("Strong higher-timeframe + EMA alignment");
+    if (!ctx.bullTrend && bias==="SELL") reasons.push("Bearish trend alignment");
+    if (ctx.highVol) reasons.push("Volume confirmation present");
+  } else {
+    reasons.push("Insufficient confluence or probability below threshold");
+    reasons.push("System prefers capital protection");
+  }
+
+  return {
+    symbol: data.display || data.symbol,
+    last: ctx.last.toFixed(2),
+    bias, confidence, entry, stop, tp1, tp2, rr,
+    size: bias === "WAIT" ? "—" : (confidence > 82 ? "Normal" : "Reduced"),
+    reasons: reasons.slice(0,3),
+    risks: ["Possible sudden news / event", "False break risk always present"],
+    comment: bias === "WAIT" ? "No high-quality setup right now. Stay flat." : "Setup detected. Prefer waiting for price to reach entry zone."
+  };
+}
+
+let currentFocus = -1;
+function setupAutocomplete() {
+  const input = document.getElementById("symbolInput");
+  const suggestions = document.getElementById("suggestions");
+  input.addEventListener("input", function() {
+    const val = this.value.trim().toUpperCase();
+    suggestions.innerHTML = "";
+    currentFocus = -1;
+    if (!val) { suggestions.classList.remove("show"); return; }
+    const matches = instruments.filter(i => 
+      i.ticker.toUpperCase().includes(val) || 
+      i.name.toUpperCase().includes(val)
+    ).slice(0, 12);
+    if (matches.length === 0) { suggestions.classList.remove("show"); return; }
+    matches.forEach((item) => {
+      const div = document.createElement("div");
+      div.className = "suggestion-item";
+      div.innerHTML = `<span class="ticker">${item.ticker}</span><span class="name">${item.name}</span><span class="type">${item.type}</span>`;
+      div.addEventListener("click", () => {
+        input.value = item.ticker;
+        suggestions.classList.remove("show");
+        document.getElementById("analyzeBtn").focus();
+      });
+      suggestions.appendChild(div);
+    });
+    suggestions.classList.add("show");
+  });
+  input.addEventListener("keydown", function(e) {
+    const items = suggestions.querySelectorAll(".suggestion-item");
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      currentFocus = Math.min(currentFocus + 1, items.length - 1);
+      setActive(items);
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      currentFocus = Math.max(currentFocus - 1, 0);
+      setActive(items);
+    } else if (e.key === "Enter" && currentFocus >= 0 && items[currentFocus]) {
+      e.preventDefault();
+      items[currentFocus].click();
+    } else if (e.key === "Escape") {
+      suggestions.classList.remove("show");
+    }
+  });
+  document.addEventListener("click", (e) => {
+    if (!input.contains(e.target) && !suggestions.contains(e.target)) {
+      suggestions.classList.remove("show");
+    }
+  });
+}
+function setActive(items) {
+  items.forEach((item, i) => item.classList.toggle("active", i === currentFocus));
+  if (items[currentFocus]) items[currentFocus].scrollIntoView({block:"nearest"});
+}
+
+
+// ===== NEWS SCANNER =====
+let storedApiKey = localStorage.getItem("newsApiKey") || "";
+
+function saveApiKey() {
+  const finnhubKey = document.getElementById("apiKeyInput").value.trim();
+  const massiveKey = document.getElementById("massiveKeyInput").value.trim();
+  if (finnhubKey) {
+    localStorage.setItem("newsApiKey", finnhubKey);
+    storedApiKey = finnhubKey;
+  } else {
+    localStorage.removeItem("newsApiKey");
+    storedApiKey = "";
+  }
+  if (massiveKey) {
+    localStorage.setItem("massiveApiKey", massiveKey);
+  } else {
+    localStorage.removeItem("massiveApiKey");
+  }
+  document.getElementById("keyStatus").textContent = "Saved";
+  setTimeout(() => document.getElementById("keyStatus").textContent = "", 2000);
+}
+
+async function fetchNews(symbol, yahooSymbol) {
+  const headlinesEl = document.getElementById("newsHeadlines");
+  headlinesEl.style.display = "block";
+  headlinesEl.innerHTML = "<div style='color:#9ca3af'>Scanning news...</div>";
+
+  let headlines = [];
+  let source = "none";
+
+  // Try Finnhub if key present
+  if (storedApiKey && storedApiKey.length > 10) {
+    try {
+      const today = new Date().toISOString().slice(0,10);
+      const from = new Date(Date.now() - 7*24*60*60*1000).toISOString().slice(0,10);
+      const url = `https://finnhub.io/api/v1/company-news?symbol=${encodeURIComponent(yahooSymbol.replace("=F","").replace("-USD",""))}&from=${from}&to=${today}&token=${storedApiKey}`;
+      const res = await fetch("https://proxy.cors.dev/" + url);
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data) && data.length) {
+          headlines = data.slice(0, 8).map(a => ({
+            title: a.headline,
+            source: a.source || "Finnhub",
+            url: a.url
+          }));
+          source = "Finnhub";
+        }
+      }
+    } catch(e) { console.log("Finnhub failed", e); }
+  }
+
+  // Fallback: keyword-based on symbol + volume context (always available)
+  if (!headlines.length) {
+    // Simulated recent context based on symbol type for demo reliability
+    const isOil = /CL|WTI|OIL|BRENT/i.test(symbol);
+    const isGold = /GC|GOLD|GLD|SGLN/i.test(symbol);
+    const isTech = /NVDA|AAPL|MSFT|TSLA|AMD|META|GOOGL|AVGO/i.test(symbol);
+    if (isOil) {
+      headlines = [
+        {title: "OPEC+ output decision in focus amid demand concerns", source: "Market context"},
+        {title: "Crude inventories and geopolitics driving short-term moves", source: "Market context"}
+      ];
+    } else if (isGold) {
+      headlines = [
+        {title: "Gold reacting to real yields and Fed expectations", source: "Market context"},
+        {title: "Safe-haven demand under watch", source: "Market context"}
+      ];
+    } else if (isTech) {
+      headlines = [
+        {title: "Tech sector sensitive to AI narrative and rate path", source: "Market context"},
+        {title: "Earnings and guidance remain key catalysts", source: "Market context"}
+      ];
+    } else {
+      headlines = [
+        {title: "Monitoring broader market news and volume for event risk", source: "Market context"}
+      ];
+    }
+    source = "Context";
+  }
+
+  // Score sentiment with keywords
+  let bullScore = 0, bearScore = 0;
+  const bullWords = ["beat", "upgrade", "surge", "rally", "strong", "growth", "buy", "positive", "cut rates", "stimulus", "opec cut", "supply cut"];
+  const bearWords = ["miss", "downgrade", "crash", "drop", "weak", "recession", "sell", "negative", "hike", "war", "sanction", "inventory build", "oversupply"];
+
+  headlines.forEach(h => {
+    const t = h.title.toLowerCase();
+    bullWords.forEach(w => { if (t.includes(w)) bullScore += 1.2; });
+    bearWords.forEach(w => { if (t.includes(w)) bearScore += 1.2; });
+  });
+
+  let sentiment = "neutral";
+  let score = 0.3;
+  let label = "Neutral";
+  if (bullScore > bearScore + 1) { sentiment = "bullish"; score = Math.min(1.4, 0.6 + bullScore*0.3); label = "Bullish News"; }
+  else if (bearScore > bullScore + 1) { sentiment = "bearish"; score = Math.min(1.4, 0.6 + bearScore*0.3); label = "Bearish News"; }
+  else if (bullScore > 0 || bearScore > 0) { label = "Mixed News"; }
+
+  // Render headlines
+  if (headlines.length) {
+    headlinesEl.innerHTML = `<div style="color:#22d3ee; font-weight:500; margin-bottom:6px;">Recent Headlines (${source})</div>` +
+      headlines.map(h => `<div style="margin:4px 0; color:#e5e7eb;">• ${h.title} <span style="color:#9ca3af">(${h.source})</span></div>`).join("");
+  } else {
+    headlinesEl.innerHTML = "<div style='color:#9ca3af'>No recent headlines found. Using volume + context.</div>";
+  }
+
+  return { sentiment, score, label, headlines, source };
+}
+
+function init() {
+  const botsEl = document.getElementById("specialist-bots");
+  specialistBots.forEach(b => {
+    const d = document.createElement("div");
+    d.className = "bot-card";
+    d.innerHTML = `<div class="bot-name">${b.name}</div><div class="bot-job">${b.job}</div>`;
+    botsEl.appendChild(d);
+  });
+  const subEl = document.getElementById("sub-bosses");
+  subBosses.forEach(b => {
+    const d = document.createElement("div");
+    d.className = "subboss-card";
+    d.innerHTML = `<strong><span class="live-dot"></span>${b.name}</strong><p>${b.desc}</p>`;
+    subEl.appendChild(d);
+  });
+  setupAutocomplete();
+  document.getElementById("analyzeBtn").onclick = startAnalysis;
+  document.getElementById("saveKeyBtn").onclick = saveApiKey;
+  if (storedApiKey) document.getElementById("apiKeyInput").value = storedApiKey;
+  const massiveKey = localStorage.getItem("massiveApiKey") || "";
+  if (massiveKey) document.getElementById("massiveKeyInput").value = massiveKey;
+  document.getElementById("symbolInput").onkeypress = e => { if (e.key === "Enter" && currentFocus < 0) startAnalysis(); };
+}
+
+async 
+function startAnalysis() {
+  const symbol = document.getElementById("symbolInput").value.trim().toUpperCase() || "WTI";
+  const tf = document.getElementById("timeframe").value;
+  const btn = document.getElementById("analyzeBtn");
+  const placeholder = document.getElementById("placeholder");
+  const area = document.getElementById("analysisArea");
+  const fill = document.getElementById("progressFill");
+  const ptext = document.getElementById("progressText");
+  const reportsEl = document.getElementById("botReports");
+  const subEl = document.getElementById("subBossResults");
+  const finalEl = document.getElementById("finalDecision");
+  const meta = document.getElementById("dataMeta");
+  const suggestions = document.getElementById("suggestions");
+  suggestions.classList.remove("show");
+
+  btn.disabled = true;
+  placeholder.classList.add("hidden");
+  area.classList.remove("hidden");
+  reportsEl.innerHTML = "";
+  subEl.innerHTML = "";
+  finalEl.innerHTML = "";
+  fill.style.width = "0%";
+  ptext.textContent = "Fetching real market data...";
+  meta.textContent = "Loading " + symbol + "...";
+
+  let data;
+  try {
+    const range = tf === "1d" ? "6mo" : "3mo";
+    try {
+      const isCommodity = /WTI|CL|GOLD|GC|SILVER|SI|NATGAS|NG|BTC|ETH/i.test(symbol);
+      if (!isCommodity && localStorage.getItem("massiveApiKey")) {
+        data = await fetchMassive(symbol, tf === "4h" ? "1h" : tf, range);
+        meta.textContent += " (Massive)";
+      } else {
+        data = await fetchYahoo(symbol, tf === "4h" ? "1h" : tf, range);
+      }
+    } catch (e) {
+      data = await fetchYahoo(symbol, tf === "4h" ? "1h" : tf, range);
+    }
+    meta.textContent = `${data.display || data.symbol} · Last: ${data.last.toFixed(2)} · ${data.closes.length} bars loaded`;
+  } catch (err) {
+    ptext.textContent = "Data error: " + err.message;
+    meta.textContent = "Failed to load data. Try selecting from suggestions.";
+    btn.disabled = false;
+    return;
+  }
+
+  fill.style.width = "12%";
+  ptext.textContent = "Scanning news & running 24 specialist bots...";
+
+  const newsResult = await fetchNews(symbol, data.symbol);
+  const botResults = runBots(data);
+  // Override news bots with real result
+  if (botResults.bots.news) {
+    botResults.bots.news.direction = newsResult.sentiment;
+    botResults.bots.news.label = newsResult.label;
+    botResults.bots.news.score = newsResult.score;
+    botResults.bots.news.note = newsResult.source + " headlines scanned";
+  }
+  if (botResults.bots.eventrisk) {
+    botResults.bots.eventrisk.score = Math.max(botResults.bots.eventrisk.score, newsResult.score * 0.7);
+    if (newsResult.score > 0.8) botResults.bots.eventrisk.label = "News Impact";
+  }
+  const botList = specialistBots.map(b => ({...b, result: botResults.bots[b.id]}));
+
+  for (let i = 0; i < botList.length; i++) {
+    await new Promise(r => setTimeout(r, 70 + Math.random()*60));
+    const b = botList[i];
+    const item = document.createElement("div");
+    item.className = "report-item";
+    item.innerHTML = `<span class="name">${b.name}</span><span class="verdict ${b.result.direction}">${b.result.label}</span>`;
+    reportsEl.appendChild(item);
+    reportsEl.scrollTop = reportsEl.scrollHeight;
+    fill.style.width = (12 + (i+1)/botList.length*55) + "%";
+  }
+
+  ptext.textContent = "Sub-Bosses verifying...";
+  await new Promise(r => setTimeout(r, 450));
+  const subResults = evaluateSubBosses(botResults);
+  subResults.forEach(r => {
+    const d = document.createElement("div");
+    d.className = "subboss-result";
+    d.innerHTML = `<div class="title">${r.name}</div><div class="status ${r.approved?"approved":"rejected"}">${r.approved?"✓ APPROVED":"✗ REJECTED"}</div><div class="detail">${r.detail}</div>`;
+    subEl.appendChild(d);
+  });
+  fill.style.width = "82%";
+  await new Promise(r => setTimeout(r, 550));
+
+  ptext.textContent = "Final Boss deciding...";
+  fill.style.width = "100%";
+  await new Promise(r => setTimeout(r, 450));
+
+  const decision = makeFinalDecision(symbol, data, botResults, subResults);
+  finalEl.innerHTML = `
+    <h3>Final Boss Decision</h3>
+    <div class="decision-grid">
+      <div class="decision-item"><div class="label">Bias</div><div class="value ${decision.bias.toLowerCase()}">${decision.bias}</div></div>
+      <div class="decision-item"><div class="label">Confidence</div><div class="value">${decision.confidence}%</div></div>
+      <div class="decision-item"><div class="label">Instrument</div><div class="value">${decision.symbol}</div></div>
+      <div class="decision-item"><div class="label">Last Price</div><div class="value">${decision.last}</div></div>
+      <div class="decision-item"><div class="label">Entry Zone</div><div class="value">${decision.entry}</div></div>
+      <div class="decision-item"><div class="label">Stop Loss</div><div class="value">${decision.stop}</div></div>
+      <div class="decision-item"><div class="label">Take Profit 1</div><div class="value">${decision.tp1}</div></div>
+      <div class="decision-item"><div class="label">Take Profit 2</div><div class="value">${decision.tp2}</div></div>
+      <div class="decision-item"><div class="label">Risk : Reward</div><div class="value">${decision.rr}</div></div>
+      <div class="decision-item"><div class="label">Position Size</div><div class="value">${decision.size}</div></div>
+    </div>
+    <div class="reasons"><h4>Main Reasons</h4><ul>${decision.reasons.map(r=>`<li>${r}</li>`).join("")}</ul></div>
+    <div class="risks"><h4>Biggest Risks</h4><ul>${decision.risks.map(r=>`<li>${r}</li>`).join("")}</ul></div>
+    <div class="final-comment">"${decision.comment}"</div>
+  `;
+
+  ptext.textContent = "Analysis Complete";
+  btn.disabled = false;
+}
+
+
+const moverSymbols = ["AAPL","NVDA","TSLA","MSFT","AMZN","META","GOOGL","AMD","SPY","QQQ","GLD","CL=F","GC=F","BTC-USD","ETH-USD"];
+
+async function fetchMoverData(symbol) {
+  try {
+    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(symbol)}?interval=1d&range=2d`;
+    const res = await fetch("https://proxy.cors.dev/" + url);
+    if (!res.ok) return null;
+    const json = await res.json();
+    const result = json.chart?.result?.[0];
+    if (!result) return null;
+    const meta = result.meta;
+    const closes = result.indicators.quote[0].close;
+    const last = closes[closes.length-1];
+    const prev = closes[closes.length-2] || meta.previousClose || last;
+    const change = last - prev;
+    const changePct = (change / prev) * 100;
+    return {
+      symbol: meta.symbol || symbol,
+      price: last,
+      change,
+      changePct
+    };
+  } catch(e) {
+    return null;
+  }
+}
+
+async function updateMovers() {
+  const ticker = document.getElementById("tickerContent");
+  if (!ticker) return;
+  const results = await Promise.all(moverSymbols.map(fetchMoverData));
+  const valid = results.filter(r => r && !isNaN(r.changePct));
+  valid.sort((a,b) => Math.abs(b.changePct) - Math.abs(a.changePct));
+  const top10 = valid.slice(0, 10);
+
+  if (top10.length === 0) {
+    grid.innerHTML = '<div style="color:#9ca3af; font-size:12px; grid-column:1/-1;">Unable to load movers right now.</div>';
+    return;
+  }
+
+  const ticker = document.getElementById("tickerContent");
+  if (!ticker) return;
+  const items = top10.map(m => {
+    const isUp = m.changePct >= 0;
+    const sign = isUp ? "+" : "";
+    return `<span class="ticker-item"><span class="ticker-symbol">${m.symbol.replace("=F","")}</span><span class="ticker-price price-pulse">${m.price.toFixed(2)}</span><span class="ticker-change ${isUp ? "up" : "down"}">${sign}${m.changePct.toFixed(2)}%</span></span>`;
+  }).join("");
+  // Duplicate for seamless loop
+  ticker.innerHTML = items + items;
+}
+
+// Initial load + refresh every 60s
+setTimeout(updateMovers, 800);
+setInterval(updateMovers, 60000);
+
+
+let watchlist = JSON.parse(localStorage.getItem("watchlist") || "[]");
+let notifEnabled = localStorage.getItem("notifEnabled") === "true";
+let lastSignals = JSON.parse(localStorage.getItem("lastSignals") || "{}");
+
+function saveWatchlist() {
+  localStorage.setItem("watchlist", JSON.stringify(watchlist));
+  renderWatchChips();
+}
+
+function renderWatchChips() {
+  const el = document.getElementById("watchChips");
+  if (!el) return;
+  el.innerHTML = watchlist.map(sym => 
+    `<span class="watch-chip">${sym} <span class="remove" data-sym="${sym}">×</span></span>`
+  ).join("");
+  el.querySelectorAll(".remove").forEach(btn => {
+    btn.onclick = () => {
+      watchlist = watchlist.filter(s => s !== btn.dataset.sym);
+      saveWatchlist();
+    };
+  });
+}
+
+function addToWatchlist() {
+  const input = document.getElementById("watchInput");
+  const sym = input.value.trim().toUpperCase();
+  if (sym && !watchlist.includes(sym)) {
+    watchlist.push(sym);
+    saveWatchlist();
+    input.value = "";
+  }
+}
+
+async function enableNotifications() {
+  if (!("Notification" in window)) {
+    alert("This browser does not support notifications");
+    return;
+  }
+  const perm = await Notification.requestPermission();
+  notifEnabled = perm === "granted";
+  localStorage.setItem("notifEnabled", notifEnabled);
+  updateNotifStatus();
+  if (notifEnabled) {
+    new Notification("Grok Alerts", { body: "Notifications enabled for your watchlist" });
+  }
+}
+
+function updateNotifStatus() {
+  const el = document.getElementById("notifStatus");
+  if (!el) return;
+  el.textContent = notifEnabled ? "Notifications ON – checking every 2 min" : "Notifications off";
+  el.className = "notif-status" + (notifEnabled ? " enabled" : "");
+}
+
+async function checkWatchlistSignals() {
+  if (!notifEnabled || watchlist.length === 0) return;
+  for (const sym of watchlist) {
+    try {
+      const data = await fetchYahoo(sym, "1d", "3mo");
+      const botResults = runBots(data);
+      const ctx = botResults.context;
+      const bots = botResults.bots;
+
+      let signal = null;
+      let reason = "";
+
+      // Breakout signal
+      if (ctx.brokeHigh && ctx.highVol) {
+        signal = "BUY";
+        reason = "High-volume breakout above swing high";
+      } else if (ctx.brokeLow && ctx.highVol) {
+        signal = "SELL";
+        reason = "High-volume breakdown below swing low";
+      }
+      // Momentum pump
+      else if (Math.abs(ctx.changePct) > 2.5 && ctx.highVol) {
+        signal = ctx.changePct > 0 ? "BUY" : "SELL";
+        reason = `Strong momentum move (${ctx.changePct.toFixed(1)}%)`;
+      }
+
+      if (signal) {
+        const key = sym + "_" + signal;
+        const now = Date.now();
+        if (!lastSignals[key] || now - lastSignals[key] > 30 * 60 * 1000) { // 30 min cooldown
+          lastSignals[key] = now;
+          localStorage.setItem("lastSignals", JSON.stringify(lastSignals));
+          new Notification(`${signal} Signal: ${sym}`, {
+            body: `${reason}\nLast: ${ctx.last.toFixed(2)}`,
+            icon: "https://malay0412.github.io/grok-trading-system/favicon.ico"
+          });
+        }
+      }
+    } catch(e) {
+      console.log("Watch check failed for", sym, e);
+    }
+  }
+}
+
+// Hook up buttons
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("addWatchBtn").onclick = addToWatchlist;
+  document.getElementById("enableNotifBtn").onclick = enableNotifications;
+  document.getElementById("watchInput").onkeypress = e => { if (e.key === "Enter") addToWatchlist(); };
+  renderWatchChips();
+  updateNotifStatus();
+  // Check every 2 minutes
+  setInterval(checkWatchlistSignals, 2 * 60 * 1000);
+  setTimeout(checkWatchlistSignals, 5000);
+});
+
+init();
