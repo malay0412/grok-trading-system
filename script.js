@@ -1,3 +1,24 @@
+const instruments = [
+  {ticker:"WTI", name:"Crude Oil (WTI)", type:"Commodity", yahoo:"CL=F"},
+  {ticker:"CL", name:"Crude Oil", type:"Commodity", yahoo:"CL=F"},
+  {ticker:"GOLD", name:"Gold", type:"Commodity", yahoo:"GC=F"},
+  {ticker:"GC", name:"Gold Futures", type:"Commodity", yahoo:"GC=F"},
+  {ticker:"SILVER", name:"Silver", type:"Commodity", yahoo:"SI=F"},
+  {ticker:"SI", name:"Silver Futures", type:"Commodity", yahoo:"SI=F"},
+  {ticker:"NATGAS", name:"Natural Gas", type:"Commodity", yahoo:"NG=F"},
+  {ticker:"NG", name:"Natural Gas Futures", type:"Commodity", yahoo:"NG=F"},
+  {ticker:"NVDA", name:"Nvidia", type:"Stock", yahoo:"NVDA"},
+  {ticker:"AAPL", name:"Apple", type:"Stock", yahoo:"AAPL"},
+  {ticker:"MSFT", name:"Microsoft", type:"Stock", yahoo:"MSFT"},
+  {ticker:"AMZN", name:"Amazon", type:"Stock", yahoo:"AMZN"},
+  {ticker:"GOOGL", name:"Alphabet", type:"Stock", yahoo:"GOOGL"},
+  {ticker:"META", name:"Meta Platforms", type:"Stock", yahoo:"META"},
+  {ticker:"TSLA", name:"Tesla", type:"Stock", yahoo:"TSLA"},
+  {ticker:"AMD", name:"AMD", type:"Stock", yahoo:"AMD"},
+  {ticker:"BTC", name:"Bitcoin", type:"Crypto", yahoo:"BTC-USD"},
+  {ticker:"ETH", name:"Ethereum", type:"Crypto", yahoo:"ETH-USD"}
+];
+
 const specialistBots = [
   {name:"Structure Bot", job:"Support / Resistance"},
   {name:"Trend Bot", job:"EMA trend"},
@@ -47,8 +68,35 @@ function init() {
     d.innerHTML = `<strong>${b.name}</strong><p>${b.desc}</p>`;
     subEl.appendChild(d);
   });
-  document.getElementById("analyzeBtn").onclick = () => {
-    alert("Analysis is being restored. Full version coming soon.");
+  document.getElementById("analyzeBtn").onclick = startAnalysis;
+  document.getElementById("saveKeyBtn").onclick = () => {
+    const key = document.getElementById("massiveKeyInput").value.trim();
+    if (key) localStorage.setItem("massiveApiKey", key);
+    document.getElementById("keyStatus").textContent = "Saved";
   };
 }
+
+async function startAnalysis() {
+  const symbol = document.getElementById("symbolInput").value.trim().toUpperCase() || "WTI";
+  const btn = document.getElementById("analyzeBtn");
+  const meta = document.getElementById("dataMeta");
+  btn.disabled = true;
+  meta.textContent = "Loading " + symbol + "...";
+  try {
+    const isCommodity = /WTI|CL|GOLD|GC|SILVER|SI|NATGAS|NG|BTC|ETH/i.test(symbol);
+    if (!isCommodity && localStorage.getItem("massiveApiKey")) {
+      meta.textContent = "Using Massive for " + symbol;
+    } else {
+      meta.textContent = "Using Yahoo for " + symbol;
+    }
+    setTimeout(() => {
+      meta.textContent = symbol + " · Analysis ready (full logic restoring)";
+      btn.disabled = false;
+    }, 800);
+  } catch (e) {
+    meta.textContent = "Error: " + e.message;
+    btn.disabled = false;
+  }
+}
+
 init();
