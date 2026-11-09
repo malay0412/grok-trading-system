@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grok Multi-Agent Trading System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <div class="logo-icon">G</div>
+                <div>
+                    <h1>Grok Multi-Agent</h1>
+                    <p>Trading Decision System</p>
+                </div>
+            </div>
+            <div class="header-status">
+                <span class="status-dot"></span>
+                System Online
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <!-- Left Panel - System Structure -->
+            <section class="panel structure-panel">
+                <h2>System Architecture</h2>
+                
+                <div class="layer">
+                    <div class="layer-title">18 Specialist Bots</div>
+                    <div class="bots-grid" id="specialist-bots">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="layer">
+                    <div class="layer-title">4 Sub-Boss Groks (Verification)</div>
+                    <div class="subboss-grid" id="sub-bosses">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+
+                <div class="arrow">↓</div>
+
+                <div class="layer final-layer">
+                    <div class="layer-title">Final Boss Grok</div>
+                    <div class="final-boss-card">
+                        <strong>Ultimate Decision Maker</strong>
+                        <p>Only receives setups with 70%+ probability and 3/4 Sub-Boss approval</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Panel - Analysis -->
+            <section class="panel analysis-panel">
+                <h2>Live Analysis</h2>
+                
+                <div class="input-group">
+                    <input type="text" id="symbolInput" placeholder="Enter symbol (e.g. WTI, AAPL, GOLD)" value="WTI">
+                    <button id="analyzeBtn">Analyze</button>
+                </div>
+
+                <div id="analysisArea" class="analysis-area hidden">
+                    <!-- Progress -->
+                    <div class="progress-section">
+                        <div class="progress-label">Analysis Progress</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="progress-text" id="progressText">Starting...</div>
+                    </div>
+
+                    <!-- Specialist Reports -->
+                    <div class="reports-section">
+                        <h3>Specialist Bot Reports</h3>
+                        <div id="botReports" class="bot-reports"></div>
+                    </div>
+
+                    <!-- Sub Boss Decisions -->
+                    <div class="subboss-section">
+                        <h3>Sub-Boss Verification</h3>
+                        <div id="subBossResults" class="subboss-results"></div>
+                    </div>
+
+                    <!-- Final Decision -->
+                    <div class="final-decision" id="finalDecision">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+
+                <div id="placeholder" class="placeholder">
+                    <p>Enter a symbol and click <strong>Analyze</strong> to start the multi-agent decision process.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
