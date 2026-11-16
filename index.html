@@ -371,13 +371,19 @@ function login(){
   if(document.getElementById("username").value&&document.getElementById("password").value){
     document.getElementById("loginScreen").style.display="none";
     document.getElementById("app").style.display="block";
+    const ses=JSON.stringify({user:document.getElementById("username").value,signedInAt:Date.now()});
+    try{localStorage.setItem("bq_session",ses);}catch(e){try{sessionStorage.setItem("bq_session",ses);}catch(e2){}}
   }
 }
 function logout(){
   document.getElementById("app").style.display="none";
   document.getElementById("loginScreen").style.display="flex";
+  try{localStorage.removeItem("bq_session");}catch(e){}try{sessionStorage.removeItem("bq_session");}catch(e){}
 }
 if(window.PublicKeyCredential)document.querySelector(".alt").textContent="TOUCH ID / FACE ID SUPPORTED";
+/* restore a saved sign-in after refresh: prefill if empty, then reuse login() */
+(function(){let s=null;try{s=JSON.parse(localStorage.getItem("bq_session")||"null");}catch(e){}if(!s)try{s=JSON.parse(sessionStorage.getItem("bq_session")||"null");}catch(e){}
+  if(s&&typeof s.signedInAt==="number"){const u=document.getElementById("username"),p=document.getElementById("password");if(!u.value)u.value=s.user||"trader";if(!p.value)p.value="restored";login();}})();
 </script>
 <script src="botty-loader.js"></script>
 <script src="trading-bg.js"></script>
