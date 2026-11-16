@@ -158,8 +158,8 @@ input:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline
   <div class="login-box">
     <h1>BOTTY QUANTER.grok</h1>
     <p>PERSONAL TRADING SYSTEM</p>
-    <input type="text" id="username" placeholder="USERNAME" value="trader">
-    <input type="password" id="password" placeholder="PASSWORD" value="quant">
+    <input type="text" id="username" placeholder="USERNAME" value="trader" onkeydown="if(event.key==='Enter')login()">
+    <input type="password" id="password" placeholder="PASSWORD" value="quant" onkeydown="if(event.key==='Enter')login()">
     <button onclick="login()">ENTER</button>
     <div class="alt">TOUCH ID / FACE ID AVAILABLE</div>
   </div>
