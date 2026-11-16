@@ -26,7 +26,7 @@
     ".pl-out{font-family:var(--mono);font-size:13px;color:var(--text-2);line-height:1.7;}",
     ".pl-warn{color:var(--red);font-weight:700;}",
     ".pl-ok{color:var(--green);}",
-    ".pl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3);margin-bottom:var(--s3);}",
+    ".pl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3);margin-bottom:var(--s2);}",
     ".pl-team{background:var(--bg-2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px;min-width:0;}",
     ".pl-team b{display:block;font-size:10px;letter-spacing:.08em;color:var(--muted);margin-bottom:6px;}",
     ".pl-team .pl-in{width:100%;box-sizing:border-box;}",
@@ -37,8 +37,10 @@
     ".pl-sw input:checked + .pl-knob{background:var(--green);}",
     ".pl-sw input:checked + .pl-knob:before{transform:translateX(16px);}",
     ".pl-sw input:focus-visible + .pl-knob{outline:2px solid var(--text-2);}",
+    ".pl-alloc{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:10px 0 4px;margin:4px 0 12px;}",
+    ".pl-alloc-h{font-size:11px;font-weight:700;letter-spacing:.1em;color:var(--text-2);margin-bottom:4px;}",
     ".pl-team small{display:block;font-family:var(--mono);font-size:12px;color:var(--text-2);margin-top:6px;}",
-    "@media(max-width:600px){.pl-grid{grid-template-columns:1fr;}.pl-in{width:100%;box-sizing:border-box;}.pl-row > *{flex:1 1 100%;}}"
+    "@media(max-width:600px){.pl-grid{grid-template-columns:1fr;gap:6px;}.pl-team{padding:8px;display:grid;grid-template-columns:1fr 90px;align-items:center;gap:4px 8px;}.pl-team b{margin:0;}.pl-team small{grid-column:1/-1;margin-top:0;}.pl-in{width:100%;box-sizing:border-box;}.pl-row > *{flex:1 1 100%;}.pl-row > .pl-btn{flex:1 1 40%;}}"
   ].join("\n");
   var planBox = null, allocBox = null, amount = null, plan = null, st = loadAlloc(), alloc = st.alloc, on = st.on, edited = st.edited;
   var TEAMS = ["a", "b", "c"], NAMES = { a: "TEAM A \u00b7 HIGH RISK", b: "TEAM B \u00b7 MID RISK", c: "TEAM C \u00b7 LOW RISK" };
@@ -89,11 +91,13 @@
     h += "<div class='pl-avail' id='plAvail'>Available: " + gbp(d.avail) + "</div>";
     h += "<div class='pl-sub'>Real Coinbase free cash (\u00a3 estimate) from the read-only account check \u00b7 as of " + esc(d.asOf) +
       (d.fx ? " \u00b7 GBP/USD " + d.rate.toFixed(4) + " (" + esc(d.fx.source) + ", " + esc(lon(d.fx.time)) + ")" : "") + "</div>";
-    h += "<div class='pl-row'><label for='plAmount'>AMOUNT (\u00a3)</label><input class='pl-in' id='plAmount' type='number' inputmode='decimal' min='0' step='0.01' placeholder='e.g. 100' value='" + (num(amount) ? amount : "") + "'>" +
-      "<button class='pl-btn' id='plBuy' type='button'>PLAN BUY</button><button class='pl-btn' id='plSell' type='button'>PLAN SELL</button></div>";
+    h += "<div class='pl-row'><label for='plAmount'>AMOUNT (\u00a3)</label><input class='pl-in' id='plAmount' type='number' inputmode='decimal' min='0' step='0.01' placeholder='e.g. 100' value='" + (num(amount) ? amount : "") + "'></div>";
+    h += "<div id='allocCard' class='pl-alloc'></div>";
+    h += "<div class='pl-row'><button class='pl-btn' id='plBuy' type='button'>PLAN BUY</button><button class='pl-btn' id='plSell' type='button'>PLAN SELL</button></div>";
     h += "<div class='pl-out' id='plOut'></div>";
     h += "<div class='pl-sub' style='margin-top:8px'>Planning and simulation only. These buttons only show the plan on this page: they place no Coinbase order, send nothing anywhere and add nothing to the trade log.</div></div>";
     planBox.innerHTML = h;
+    allocBox = document.getElementById("allocCard"); renderAlloc();
     var inp = document.getElementById("plAmount");
     inp.addEventListener("input", function () { var v = parseFloat(inp.value); amount = num(v) && v >= 0 ? v : null; plan = null; updatePlan(); renderAllocOut(); });
     document.getElementById("plBuy").addEventListener("click", function () { plan = "BUY"; updatePlan(); });
@@ -127,18 +131,17 @@
   function renderAlloc() {
     if (!allocBox) return;
     if (!data().ok) { allocBox.innerHTML = ""; return; }
-    var h = "<div class='section-label'>Team allocation (planning)</div><div class='pl-card' id='allocCard'><h2>TEAM ALLOCATION %<span class='pl-tag'>PLANNER \u2014 NO REAL ORDERS</span></h2>";
-    h += "<div class='pl-sub'>Switch on any combination of teams (one, two or all three). Only switched-on teams get a share, and their percentages must total 100%. " +
-      "The \u00a3 split comes only from the amount typed in the planner, never from the account balance. Switching teams re-suggests an equal split across the teams that are on, " +
-      "unless you have typed your own percentages since; Reset to equal always splits evenly across the teams that are on. " +
-      "Applies to the next paper session \u2014 the current 17:53\u201319:53 window keeps A $100 / B $100. Saved only in this browser; the dashboard cannot change the engine, so use Copy allocation and send it to the bot.</div><div class='pl-grid'>";
+    var h = "<div class='pl-alloc-h'>TEAM ALLOCATION %</div>";
+    h += "<div class='pl-sub' style='margin-bottom:8px'>Switch on one, two or all three teams. Only teams that are on get a share of the amount above (never the account balance), and their % must total 100%. " +
+      "Switching teams suggests an equal split unless you have typed your own %; Reset splits evenly across the teams that are on. " +
+      "Applies to the next paper session \u2014 the current 17:53\u201319:53 window keeps A $100 / B $100. Saved in this browser only; use Copy allocation and send it to the bot.</div><div class='pl-grid'>";
     TEAMS.forEach(function (k) {
       h += "<div class='pl-team' id='allocBox_" + k + "'><b><label class='pl-sw'><input type='checkbox' id='allocOn_" + k + "'" + (on[k] ? " checked" : "") + "><span class='pl-knob'></span></label>" + NAMES[k] + "</b>" +
         "<input class='pl-in' type='number' inputmode='decimal' min='0' max='100' step='0.01' id='alloc_" + k + "' value='" + alloc[k] + "'><small id='allocAmt_" + k + "'></small></div>";
     });
     h += "</div><div class='pl-row'><span class='pl-out' id='allocTotal'></span></div>";
     h += "<div class='pl-row'><button class='pl-btn' type='button' id='allocReset'>RESET TO EQUAL</button><button class='pl-btn' type='button' id='allocCopy'>COPY ALLOCATION</button>" +
-      "<input class='pl-in' id='allocText' readonly style='width:auto;flex:1 1 220px;font-size:13px'></div><div class='pl-sub' id='allocMsg' style='margin:0'></div></div>";
+      "<input class='pl-in' id='allocText' readonly style='width:auto;flex:1 1 220px;font-size:13px'></div><div class='pl-sub' id='allocMsg' style='margin:0'></div>";
     allocBox.innerHTML = h;
     TEAMS.forEach(function (k) {
       document.getElementById("alloc_" + k).addEventListener("input", function (e) { var v = parseFloat(e.target.value); alloc[k] = num(v) ? v : 0; edited = true; save(); renderAllocOut(); });
@@ -177,16 +180,15 @@
     updatePlan();
   }
 
-  function renderAll() { renderPlan(); renderAlloc(); syncAccountCard(); }
+  function renderAll() { renderPlan(); syncAccountCard(); }
   function mount() {
     var app = document.getElementById("app"); if (!app) return;
     var st = document.createElement("style"); st.textContent = CSS; document.head.appendChild(st);
     planBox = document.createElement("div"); planBox.id = "plannerSection";
     var sb = app.querySelector(".search-bar");
     if (sb && sb.parentNode) sb.parentNode.insertBefore(planBox, sb.nextSibling); else app.appendChild(planBox);
-    allocBox = document.createElement("div"); allocBox.id = "allocSection"; app.appendChild(allocBox);
-    window.addEventListener("bq:data", function () { if (document.getElementById("plannerCard")) { document.getElementById("plAvail").textContent = "Available: " + gbp(data().avail); updatePlan(); } else renderPlan(); if (!document.getElementById("allocCard")) renderAlloc(); else renderAllocOut(); syncAccountCard(); });
-    window.addEventListener("bq:lock", function () { amount = null; plan = null; if (planBox) planBox.innerHTML = ""; if (allocBox) allocBox.innerHTML = ""; });
+    window.addEventListener("bq:data", function () { if (document.getElementById("plannerCard")) { document.getElementById("plAvail").textContent = "Available: " + gbp(data().avail); updatePlan(); } else renderPlan(); renderAllocOut(); syncAccountCard(); });
+    window.addEventListener("bq:lock", function () { amount = null; plan = null; if (planBox) planBox.innerHTML = ""; allocBox = null; });
     renderAll();
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount);
