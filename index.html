@@ -29,20 +29,30 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #05070a url("bg.jpg") center/cover no-repeat;
+  background: 
+    radial-gradient(circle at 30% 20%, rgba(0,240,255,0.08) 0%, transparent 40%),
+    radial-gradient(circle at 70% 80%, rgba(0,100,255,0.06) 0%, transparent 40%),
+    linear-gradient(180deg, #05070a 0%, #0a0f18 100%);
   position: relative;
+  overflow: hidden;
 }
 .login-screen::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(5,7,10,0.72);
+  background-image: 
+    linear-gradient(rgba(0,240,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,240,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
 }
 .login-box {
   position: relative;
   z-index: 1;
-  background: rgba(10,13,18,0.82);
-  backdrop-filter: blur(6px);
+  background: rgba(10,13,18,0.75);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0,240,255,0.15);
+  box-shadow: 0 0 40px rgba(0,240,255,0.05);
 }
 .login-box h1 { font-size: 22px; font-weight: 400; letter-spacing: 2px; }
 .login-box p { color: var(--muted); font-size: 11px; margin: 8px 0 36px; letter-spacing: 1px; }
