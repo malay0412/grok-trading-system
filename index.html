@@ -22,7 +22,10 @@ body{background:var(--bg);color:var(--text);font-family:"JetBrains Mono","SF Mon
 .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border);}
 .header h1{font-size:18px;font-weight:700;}
 .status{font-size:12px;font-weight:700;color:var(--accent);}
-.grid{display:grid;grid-template-columns:1fr 1fr 1.15fr;gap:12px;margin-bottom:12px;}
+.chief{background:var(--panel);border:1px solid var(--accent);padding:20px;margin-bottom:16px;backdrop-filter:blur(8px);}
+.chief h2{font-size:16px;font-weight:700;color:var(--accent);margin-bottom:6px;letter-spacing:1px;}
+.chief .sub{font-size:12px;color:var(--muted);font-weight:600;}
+.grid{display:grid;grid-template-columns:1fr 1fr 1.15fr;gap:12px;margin-bottom:16px;}
 .card,.team-card{background:var(--panel);border:1px solid var(--border);padding:16px;cursor:pointer;backdrop-filter:blur(8px);}
 .card:hover,.team-card:hover{border-color:var(--accent);}
 .card h2,.team-card h3{font-size:13px;font-weight:700;color:var(--accent);margin-bottom:10px;letter-spacing:.5px;}
@@ -69,9 +72,17 @@ body{background:var(--bg);color:var(--text);font-family:"JetBrains Mono","SF Mon
       <button class="logout" onclick="logout()">LOGOUT</button>
     </div>
   </div>
+
+  <div class="chief" onclick="openOverlay('chief')">
+    <h2>CHIEF BOT</h2>
+    <div class="sub">Final decision engine · Aggregates Team A / B / C</div>
+    <div class="bot-status" id="chiefStatus">Awaiting team reports...</div>
+  </div>
+
   <div class="search-bar">
     <input type="text" id="symbolInput" placeholder="Symbol (WTI, GOLD, BTC, NVDA...)" value="WTI" onchange="setSymbol()">
   </div>
+
   <div class="grid">
     <div class="card" onclick="openOverlay('news')">
       <h2>HOT NEWS</h2>
@@ -94,24 +105,25 @@ body{background:var(--bg);color:var(--text);font-family:"JetBrains Mono","SF Mon
       <button onclick="event.stopPropagation();updateAlloc()" style="margin-top:8px;background:transparent;border:2px solid var(--accent);color:var(--accent);padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">APPLY</button>
     </div>
   </div>
+
   <div class="teams">
-    <div class="team-card" onclick="openOverlay('high')">
-      <h3>HIGH RISK</h3>
-      <div class="risk">Min 55% · Size up to 2.5%</div>
-      <div class="pnl-mini" id="highPnl">$0</div>
-      <div class="bot-status" id="highStatus">Scanning...</div>
+    <div class="team-card" onclick="openOverlay('a')">
+      <h3>TEAM A</h3>
+      <div class="risk">High Risk · Min 55% · Size up to 2.5%</div>
+      <div class="pnl-mini" id="aPnl">$0</div>
+      <div class="bot-status" id="aStatus">Scanning...</div>
     </div>
-    <div class="team-card" onclick="openOverlay('mid')">
-      <h3>MID RISK</h3>
-      <div class="risk">Min 65% · Size up to 1.5%</div>
-      <div class="pnl-mini" id="midPnl">$0</div>
-      <div class="bot-status" id="midStatus">Scanning...</div>
+    <div class="team-card" onclick="openOverlay('b')">
+      <h3>TEAM B</h3>
+      <div class="risk">Mid Risk · Min 65% · Size up to 1.5%</div>
+      <div class="pnl-mini" id="bPnl">$0</div>
+      <div class="bot-status" id="bStatus">Scanning...</div>
     </div>
-    <div class="team-card" onclick="openOverlay('low')">
-      <h3>LOW RISK</h3>
-      <div class="risk">Min 75% · Size up to 0.8%</div>
-      <div class="pnl-mini" id="lowPnl">$0</div>
-      <div class="bot-status" id="lowStatus">Scanning...</div>
+    <div class="team-card" onclick="openOverlay('c')">
+      <h3>TEAM C</h3>
+      <div class="risk">Low Risk · Min 75% · Size up to 0.8%</div>
+      <div class="pnl-mini" id="cPnl">$0</div>
+      <div class="bot-status" id="cStatus">Scanning...</div>
     </div>
   </div>
 </div>
@@ -140,15 +152,15 @@ function draw(){
 }
 draw();
 
-let balance=50000,trades=[],symbol="WTI",alloc={high:40,mid:35,low:25};
-const teams={high:{pnl:0,minConf:55,maxRisk:.025,status:"Scanning"},mid:{pnl:0,minConf:65,maxRisk:.015,status:"Scanning"},low:{pnl:0,minConf:75,maxRisk:.008,status:"Scanning"}};
+let balance=50000,trades=[],symbol="WTI",alloc={a:40,b:35,c:25};
+const teams={a:{pnl:0,minConf:55,maxRisk:.025,status:"Scanning",label:"Team A"},b:{pnl:0,minConf:65,maxRisk:.015,status:"Scanning",label:"Team B"},c:{pnl:0,minConf:75,maxRisk:.008,status:"Scanning",label:"Team C"}};
 const newsPool=["Oil inventories draw larger than expected","Fed speakers signal cautious path","Gold holds support ahead of data","BTC volume rising on key level","WTI breakout above 87","NVDA momentum continuation","DXY softens","Risk-on tone in crypto"];
 
 function setSymbol(){symbol=document.getElementById("symbolInput").value.toUpperCase()||"WTI";}
 function updateAlloc(){
-  const h=+document.getElementById("highAlloc").value||0,m=+document.getElementById("midAlloc").value||0,l=+document.getElementById("lowAlloc").value||0;
-  if(h+m+l!==100){alert("Must total 100%");return;}
-  alloc={high:h,mid:m,low:l};
+  const a=+document.getElementById("highAlloc").value||0,b=+document.getElementById("midAlloc").value||0,c=+document.getElementById("lowAlloc").value||0;
+  if(a+b+c!==100){alert("Must total 100%");return;}
+  alloc={a,b,c};
 }
 function render(){
   document.getElementById("balance").textContent="$"+balance.toLocaleString();
@@ -158,26 +170,27 @@ function render(){
   el.className="pnl "+(totalPnl>=0?"pos":"neg");
   document.getElementById("newsList").innerHTML=newsPool.slice(0,4).map(n=>`<div class="news-item"><span>${n}</span><span class="tag">${symbol}</span></div>`).join("");
   document.getElementById("tradeList").innerHTML=trades.slice(-3).reverse().map(t=>`<div class="trade-row"><span>${t.sym} ${t.side} · ${t.team}</span><span class="pnl ${t.pnl>=0?"pos":"neg"}">${t.pnl>=0?"+":""}$${Math.round(t.pnl)}</span></div>`).join("")||"<div class='news-item'>No trades yet</div>";
-  ["high","mid","low"].forEach(k=>{
+  ["a","b","c"].forEach(k=>{
     document.getElementById(k+"Pnl").textContent=(teams[k].pnl>=0?"+":"")+"$"+Math.round(teams[k].pnl);
     document.getElementById(k+"Pnl").className="pnl-mini "+(teams[k].pnl>=0?"pnl pos":"pnl neg");
     document.getElementById(k+"Status").textContent=teams[k].status;
   });
 }
 function simulateTrade(){
-  const teamKeys=["high","mid","low"];
+  const teamKeys=["a","b","c"];
   const team=teamKeys[Math.floor(Math.random()*3)];
   const conf=50+Math.random()*45;
-  if(conf<teams[team].minConf){teams[team].status="No setup ("+Math.round(conf)+"%)";return;}
+  if(conf<teams[team].minConf){teams[team].status="No setup ("+Math.round(conf)+"%)";document.getElementById("chiefStatus").textContent="Waiting for stronger signals...";return;}
   const side=Math.random()>.5?"Long":"Short";
   const risk=balance*(alloc[team]/100)*teams[team].maxRisk;
   const rr=1.5+Math.random()*1.5;
   const win=Math.random()<.55;
   const pnl=win?risk*rr:-risk*.8;
-  trades.push({sym:symbol,side,team,pnl,conf:Math.round(conf),time:Date.now()});
+  trades.push({sym:symbol,side,team:teams[team].label,pnl,conf:Math.round(conf),time:Date.now()});
   teams[team].pnl+=pnl;
   balance+=pnl;
   teams[team].status=side+" "+symbol+" · "+Math.round(conf)+"% · "+(win?"WIN":"LOSS");
+  document.getElementById("chiefStatus").textContent="Approved "+teams[team].label+" "+side+" "+symbol;
   if(trades.length>50)trades.shift();
   render();
 }
@@ -185,12 +198,13 @@ setInterval(simulateTrade,4500);
 render();
 
 const overlays={
+  chief:{title:"CHIEF BOT",content:"Final decision engine. Receives reports from Team A, Team B, and Team C. Applies final filters and issues the trade."},
   news:{title:"HOT NEWS",content:newsPool.map(n=>`<strong>${symbol}</strong><br>${n}<br><br>`).join("")},
   trades:{title:"TRADE LOG",content:()=>trades.slice().reverse().map(t=>`<strong>${t.sym} ${t.side} · ${t.team}</strong><br>Conf: ${t.conf}% · P&L: ${t.pnl>=0?"+":""}$${Math.round(t.pnl)}<br><br>`).join("")||"No trades yet."},
-  account:{title:"ACCOUNT",content:`<strong>Balance</strong><br>$${balance.toLocaleString()}<br><br><strong>Allocation</strong><br>High ${alloc.high}% · Mid ${alloc.mid}% · Low ${alloc.low}%`},
-  high:{title:"HIGH RISK TEAM",content:"Aggressive breakout/momentum focus. Lower confluence threshold. Larger relative size."},
-  mid:{title:"MID RISK TEAM",content:"Balanced filters. Mix of setups. Standard risk."},
-  low:{title:"LOW RISK TEAM",content:"High-probability only. Smaller size. Capital preservation first."}
+  account:{title:"ACCOUNT",content:`<strong>Balance</strong><br>$${balance.toLocaleString()}<br><br><strong>Allocation</strong><br>Team A ${alloc.a}% · Team B ${alloc.b}% · Team C ${alloc.c}%`},
+  a:{title:"TEAM A",content:"High-risk specialist. Aggressive breakout and momentum focus. Lower confluence threshold. Larger relative size."},
+  b:{title:"TEAM B",content:"Mid-risk specialist. Balanced filters. Mix of setups. Standard risk."},
+  c:{title:"TEAM C",content:"Low-risk specialist. High-probability only. Smaller size. Capital preservation first."}
 };
 function openOverlay(key){
   const d=overlays[key];
