@@ -101,8 +101,8 @@
     var a = window.BQ && window.BQ.account;
     if (!box) return;
     if (!a) { box.innerHTML = ""; return; }
-    box.innerHTML = "<div class='section-label'>Holdings \x26amp; Free cash</div><div class='ap-grid'>" + holdingsHtml(a) + cashHtml(a) + "</div>" +
-      "<div class='section-label'>Performance</div><div class='ap-grid' style='grid-template-columns:1fr'>" + perfHtml(a) + "</div>";
+    box.innerHTML = "<div class='section-label'>Real account (Coinbase, read-only) \u00b7 Holdings \x26amp; Free cash</div><div class='ap-grid'>" + holdingsHtml(a) + cashHtml(a) + "</div>" +
+      "<div class='section-label'>Real account (Coinbase, read-only) \u00b7 Performance</div><div class='ap-grid' style='grid-template-columns:1fr'>" + perfHtml(a) + "</div>";
   }
 
   function mount() {
