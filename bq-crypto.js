@@ -1,6 +1,6 @@
 /* bq-crypto.js - BOTTY QUANTER.grok client-side decryption (StatiCrypt-style). ANALYSIS ONLY, never places orders.
    data/latest.enc.json = AES-256-GCM ciphertext; key = PBKDF2-SHA256(password, salt, iter) via WebCrypto.
-   Wrong password -> verifier fails to decrypt -> "bad-password". Nothing readable is published in plaintext.
+   v2 key input = username + "\n" + password: a wrong username OR password fails the verifier -> "bad-password". Nothing readable is published in plaintext.
    Session: the derived AES key (raw, never the password) is kept in localStorage "bq_session" for 7 days.
    Exposes window.BQ { data (latest), account, payload, unlock(pw), restore(), hasSession(), lock() } and fires
    window events "bq:data" (detail = latest) after every successful decrypt and "bq:lock" on sign-out. */
@@ -22,8 +22,9 @@
       return r.json();
     });
   }
-  function derive(pw, doc) {
-    return subtle.importKey("raw", new TextEncoder().encode(pw), "PBKDF2", false, ["deriveKey"]).then(function (base) {
+  function derive(user, pw, doc) {
+    var secret = doc.v >= 2 ? String(user || "").trim() + "\n" + pw : pw;
+    return subtle.importKey("raw", new TextEncoder().encode(secret), "PBKDF2", false, ["deriveKey"]).then(function (base) {
       return subtle.deriveKey({ name: "PBKDF2", hash: doc.hash || "SHA-256", salt: b64d(doc.salt), iterations: doc.iter },
         base, { name: "AES-GCM", length: 256 }, true, ["decrypt"]);
     });
@@ -73,10 +74,10 @@
 
   BQ.supported = !!(subtle && window.fetch && window.TextEncoder);
   BQ.hasSession = function () { return !!readSession(); };
-  BQ.unlock = function (pw) {
+  BQ.unlock = function (user, pw) {
     if (!BQ.supported) return Promise.reject(fail("unsupported"));
     return fetchDoc().then(function (doc) {
-      return derive(pw, doc).then(function (k) { return open_(k, doc).then(function (d) { return save(k).then(function () { return d; }); }); });
+      return derive(user, pw, doc).then(function (k) { return open_(k, doc).then(function (d) { return save(k).then(function () { return d; }); }); });
     });
   };
   BQ.restore = function () {

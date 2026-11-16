@@ -158,7 +158,7 @@ input:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline
   <div class="login-box">
     <h1>BOTTY QUANTER.grok</h1>
     <p>PERSONAL TRADING SYSTEM</p>
-    <input type="text" id="username" placeholder="USERNAME (optional)" autocomplete="username" onkeydown="if(event.key==='Enter')login()">
+    <input type="text" id="username" placeholder="USERNAME" autocomplete="username" onkeydown="if(event.key==='Enter')login()">
     <input type="password" id="password" placeholder="PASSWORD" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()">
     <button onclick="login()">ENTER</button>
     <div id="loginError" role="alert" style="color:var(--red);font-size:13px;font-weight:600;min-height:18px;margin-top:10px;"></div>
@@ -370,14 +370,15 @@ function openOverlay(key){
 }
 function closeOverlay(){document.getElementById("overlay").classList.remove("open");}
 function login(fromSession){
-  const restoring=fromSession===true,pw=document.getElementById("password").value,err=document.getElementById("loginError");
+  const restoring=fromSession===true,user=document.getElementById("username").value.trim(),pw=document.getElementById("password").value,err=document.getElementById("loginError");
+  if(!restoring&&!user){err.textContent="Enter your username";return;}
   if(!restoring&&!pw){err.textContent="Enter your password";return;}
   err.textContent=restoring?"":"Unlocking…";
-  (restoring?BQ.restore():BQ.unlock(pw)).then(function(){
+  (restoring?BQ.restore():BQ.unlock(user,pw)).then(function(){
     document.getElementById("loginScreen").style.display="none";
     document.getElementById("app").style.display="block";
     document.getElementById("password").value="";err.textContent="";
-  },function(e){err.textContent=restoring?"":(e&&e.code==="bad-password"?"Wrong password":"Sign-in failed ("+(e&&e.message||"error")+")");});
+  },function(e){err.textContent=restoring?"":(e&&e.code==="bad-password"?"Wrong username or password":"Sign-in failed ("+(e&&e.message||"error")+")");});
 }
 function logout(){
   document.getElementById("app").style.display="none";
