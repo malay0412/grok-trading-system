@@ -41,7 +41,7 @@
     ".ap-list{font-size:12.5px;color:var(--text-2);}",
     ".ap-list div{padding:6px 0;border-bottom:1px solid var(--border);font-family:var(--mono);}",
     "@media(max-width:960px){.ap-grid{grid-template-columns:1fr;}}",
-    "@media(max-width:480px){.ap-kpis{grid-template-columns:1fr;}.ap-card{padding:var(--s4);}}"
+    "@media(max-width:480px){.ap-kpis{grid-template-columns:1fr;}.ap-card{padding:var(--s4);}.ap-t{min-width:0 !important;font-size:12px;}.ap-t td,.ap-t th{white-space:normal;padding:6px 4px;}}"
   ].join("\n");
 
   var box = null;
@@ -50,13 +50,15 @@
     var h = a.holdings || {}, fx = a.fx, rows = h.rows || [];
     var out = "<div class='ap-card'><h2>HOLDINGS</h2><div class='ap-sub'>Coinbase " + esc(h.portfolio || "") + " portfolio \u00b7 read-only \u00b7 as of " + esc(a.generated_london) + "</div>";
     if (!rows.length) return out + "<div class='empty'>No non-zero holdings reported by Coinbase.</div></div>";
-    out += "<div class='ap-tw'><table class='ap-t'><thead><tr><th>ASSET</th><th>AMOUNT</th><th>PRICE (USD)</th><th>VALUE (USD)</th><th>VALUE (\u00a3 EST.)</th><th>STAKED</th></tr></thead><tbody>";
+    out += "<div class='ap-tw'><table class='ap-t'><thead><tr><th>ASSET</th><th>QUANTITY</th><th>PRICE (USD PER UNIT)</th><th>VALUE = QUANTITY \u00d7 PRICE</th><th>STAKED</th></tr></thead><tbody>";
     rows.forEach(function (r) {
-      out += "<tr><td>" + esc(r.asset) + (r.is_cash ? " <small>(cash)</small>" : "") + "</td><td>" + amt(r.amount) + "</td><td>" + usd(r.price_usd) +
-        "</td><td>" + usd(r.value_usd) + "</td><td>" + gbp(r.value_gbp_est) + "</td><td>" + (r.staked ? esc(JSON.stringify(r.staked)) : "\u2014") + "</td></tr>";
+      out += "<tr><td>" + esc(r.asset) + (r.is_cash ? " <small>(cash)</small>" : "") + "</td><td>Quantity " + amt(r.amount) + " " + esc(r.asset) + "</td><td>Price " + usd(r.price_usd) + " per " + esc(r.asset) +
+        "</td><td>Value " + usd(r.value_usd) + " (\u2248 " + gbp(r.value_gbp_est) + ")</td><td>" + (r.staked ? esc(JSON.stringify(r.staked)) : "\u2014") + "</td></tr>";
     });
     var t = h.total || {};
-    out += "<tr class='tot'><td>TOTAL</td><td></td><td></td><td>" + usd(t.value_usd) + "</td><td>" + gbp(t.value_gbp_est) + "</td><td></td></tr></tbody></table></div>";
+    out += "<tr class='tot'><td>TOTAL</td><td></td><td></td><td>" + usd(t.value_usd) + " (\u2248 " + gbp(t.value_gbp_est) + ")</td><td></td></tr></tbody></table></div>";
+    out += "<div class='ap-note' id='holdHint'>Value = quantity \u00d7 price: " + rows.filter(function (r) { return num(r.amount) && num(r.price_usd); }).map(function (r) {
+      return amt(r.amount) + " " + esc(r.asset) + " \u00d7 " + usd(r.price_usd) + " = " + usd(r.value_usd); }).join("; ") + ".</div>";
     out += "<div class='ap-note'>" + (fx ? "\u00a3 values are estimates at " + fx.rate.toFixed(4) + " GBP per USD (" + esc(fx.source) + ", " + esc(lon(fx.time)) + ")." : "No live GBP/USD rate available; \u00a3 estimate omitted.") +
       (num(t.coinbase_reported_total_usd) ? " Coinbase-reported portfolio total " + usd(t.coinbase_reported_total_usd) + "." : "") + " Prices are Coinbase USD mids. " + esc(h.staking_note || "") + ".</div></div>";
     return out;
