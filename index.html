@@ -6,52 +6,43 @@
 <title>Grok Quant Dashboard</title>
 <style>
 :root {
-  --bg: #05060a;
-  --panel: #0c0e14;
-  --panel-2: #11141c;
-  --border: #1c212e;
-  --text: #e8eaed;
-  --muted: #8b93a7;
-  --accent: #00e5ff;
-  --accent-dim: #00b8d4;
-  --green: #00e676;
-  --red: #ff5252;
-  --yellow: #ffd740;
+  --bg: #05070a;
+  --panel: #0a0d12;
+  --border: #1a2030;
+  --text: #c9d1d9;
+  --muted: #6b7280;
+  --accent: #00f0ff;
+  --green: #00ff9d;
+  --red: #ff4d4d;
+  --yellow: #ffd000;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: "SF Mono", "JetBrains Mono", ui-monospace, monospace;
+  font-family: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
   min-height: 100vh;
-  background-image: radial-gradient(circle at 20% 0%, rgba(0,229,255,0.04) 0%, transparent 40%);
+  overflow-x: hidden;
 }
 .login-screen {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #05070a;
 }
 .login-box {
   background: var(--panel);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 48px 40px;
-  width: 400px;
-  box-shadow: 0 0 60px rgba(0,229,255,0.06);
+  padding: 56px 48px;
+  width: 420px;
 }
-.login-box h1 {
-  font-size: 24px;
-  font-weight: 500;
-  letter-spacing: -0.5px;
-  margin-bottom: 4px;
-}
-.login-box p { color: var(--muted); font-size: 12px; margin-bottom: 32px; }
+.login-box h1 { font-size: 22px; font-weight: 400; letter-spacing: 2px; }
+.login-box p { color: var(--muted); font-size: 11px; margin: 8px 0 36px; letter-spacing: 1px; }
 .login-box input {
   width: 100%;
-  background: #080a10;
+  background: #07090d;
   border: 1px solid var(--border);
-  border-radius: 6px;
   padding: 14px 16px;
   color: var(--text);
   font-family: inherit;
@@ -62,21 +53,93 @@ body {
 .login-box input:focus { border-color: var(--accent); }
 .login-box button {
   width: 100%;
-  background: var(--accent);
-  border: none;
-  color: #001014;
-  font-weight: 600;
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
   padding: 14px;
-  border-radius: 6px;
-  cursor: pointer;
   font-family: inherit;
-  font-size: 13px;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  cursor: pointer;
   margin-top: 8px;
-  letter-spacing: 0.5px;
 }
-.login-box .alt { margin-top: 18px; text-align: center; font-size: 11px; color: var(--muted); }
-.app { display: none; padding: 24px; max-width: 1440px; margin: 0 auto; }
+.login-box .alt { margin-top: 20px; text-align: center; font-size: 10px; color: var(--muted); letter-spacing: 1px; }
+.app { display: none; padding: 20px; }
 .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.header h1 { font-size: 16px; font-weight: 400; letter-spacing: 2px; }
+.status { font-size: 11px; color: var(--accent); letter-spacing: 1px; }
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.2fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.card, .team-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 16px;
+  cursor: pointer;
+  position: relative;
+}
+.card:hover, .team-card:hover { border-color: #2a3a50; }
+.card h2, .team-card h3 {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.news-item, .trade-row {
+  font-size: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #12161f;
+  display: flex;
+  justify-content: space-between;
+}
+.tag { font-size: 9px; color: var(--accent); letter-spacing: 0.5px; }
+.balance-big { font-size: 28px; margin: 6px 0; }
+.pnl.pos { color: var(--green); }
+.pnl.neg { color: var(--red); }
+.split-controls { display: flex; gap: 6px; margin-top: 12px; }
+.split-controls input {
+  flex: 1;
+  background: #07090d;
+  border: 1px solid var(--border);
+  padding: 8px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 12px;
+  text-align: center;
+}
+.teams { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.team-card .risk { font-size: 10px; color: var(--muted); letter-spacing: 0.5px; }
+.logout {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 6px 12px;
+  font-family: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: #05070a;
+  z-index: 100;
+  padding: 32px;
+  overflow-y: auto;
+}
+.overlay.open { display: block; }
+.overlay-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -84,108 +147,20 @@ body {
   padding-bottom: 16px;
   border-bottom: 1px solid var(--border);
 }
-.header h1 { font-size: 18px; font-weight: 500; letter-spacing: 0.5px; }
-.header .status { font-size: 11px; color: var(--accent); letter-spacing: 1px; }
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1.15fr;
-  gap: 16px;
-  margin-bottom: 16px;
-}
-.card {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 18px;
-  cursor: pointer;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-.card:hover { border-color: var(--accent-dim); box-shadow: 0 0 20px rgba(0,229,255,0.05); }
-.card h2 {
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: var(--muted);
-  margin-bottom: 14px;
-  display: flex;
-  justify-content: space-between;
-}
-.card h2 span { color: var(--accent); font-size: 10px; }
-.news-item, .trade-row {
-  font-size: 12.5px;
-  padding: 9px 0;
-  border-bottom: 1px solid #151821;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.news-item:last-child, .trade-row:last-child { border-bottom: none; }
-.tag {
-  font-size: 9px;
-  padding: 2px 7px;
-  border-radius: 3px;
-  background: #0d2130;
-  color: var(--accent);
-  letter-spacing: 0.5px;
-}
-.balance-big { font-size: 32px; font-weight: 500; margin: 8px 0 4px; letter-spacing: -0.5px; }
-.pnl.pos { color: var(--green); }
-.pnl.neg { color: var(--red); }
-.split-controls { display: flex; gap: 8px; margin-top: 14px; }
-.split-controls input {
-  flex: 1;
-  background: #080a10;
-  border: 1px solid var(--border);
-  border-radius: 5px;
-  padding: 9px;
-  color: var(--text);
-  font-family: inherit;
-  font-size: 12px;
-  text-align: center;
-}
-.more {
-  display: none;
-  margin-top: 14px;
-  padding-top: 12px;
-  border-top: 1px solid #151821;
-  font-size: 12px;
-  color: var(--muted);
-  line-height: 1.6;
-}
-.card.open .more { display: block; }
-.teams { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-.team-card {
-  background: var(--panel-2);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 18px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-.team-card:hover { border-color: var(--accent); }
-.team-card h3 { font-size: 15px; margin-bottom: 4px; font-weight: 500; }
-.team-card .risk { font-size: 11px; color: var(--muted); letter-spacing: 0.3px; }
-.team-detail {
-  display: none;
-  margin-top: 14px;
-  font-size: 12.5px;
-  color: var(--muted);
-  line-height: 1.65;
-}
-.team-card.open .team-detail { display: block; }
-.logout {
+.overlay-header h2 { font-size: 18px; letter-spacing: 2px; font-weight: 400; }
+.close-btn {
   background: transparent;
   border: 1px solid var(--border);
   color: var(--muted);
-  padding: 7px 14px;
-  border-radius: 5px;
-  cursor: pointer;
+  padding: 8px 16px;
   font-family: inherit;
   font-size: 11px;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
+  cursor: pointer;
 }
-@media (max-width: 1100px) {
+.overlay-content { font-size: 13px; line-height: 1.7; max-width: 900px; }
+.overlay-content strong { color: var(--text); }
+@media (max-width: 1000px) {
   .grid, .teams { grid-template-columns: 1fr; }
 }
 </style>
@@ -198,8 +173,8 @@ body {
     <p>PERSONAL TRADING SYSTEM</p>
     <input type="text" id="username" placeholder="USERNAME" value="trader">
     <input type="password" id="password" placeholder="PASSWORD" value="quant">
-    <button onclick="login()">ENTER DASHBOARD</button>
-    <div class="alt">TOUCH ID / FACE ID SUPPORTED ON DEVICE</div>
+    <button onclick="login()">ENTER</button>
+    <div class="alt">TOUCH ID / FACE ID AVAILABLE</div>
   </div>
 </div>
 
@@ -207,103 +182,113 @@ body {
   <div class="header">
     <h1>GROK QUANT // DASHBOARD</h1>
     <div>
-      <span class="status">● SYSTEM ONLINE · PAPER</span>
+      <span class="status">● ONLINE · PAPER</span>
       <button class="logout" onclick="logout()">LOGOUT</button>
     </div>
   </div>
 
   <div class="grid">
-    <div class="card" onclick="this.classList.toggle('open')">
-      <h2>HOT NEWS <span>CLICK</span></h2>
-      <div>
-        <div class="news-item"><span>Oil inventories draw larger than expected</span><span class="tag">WTI</span></div>
-        <div class="news-item"><span>Fed speakers signal cautious path on rates</span><span class="tag">MACRO</span></div>
-        <div class="news-item"><span>Gold holds support ahead of data</span><span class="tag">GOLD</span></div>
-        <div class="news-item"><span>BTC volume rising on key level</span><span class="tag">CRYPTO</span></div>
-      </div>
-      <div class="more">
-        <strong>Full feed</strong><br>
-        • WTI: EIA draw of 4.2M barrels vs 1.1M expected. Bullish short-term.<br>
-        • MACRO: Multiple Fed members reiterating data-dependence. No cut priced this meeting.<br>
-        • GOLD: Holding 2650 zone. DXY soft. Watch NFP.<br>
-        • CRYPTO: BTC consolidating above 95k. Volume expanding on higher timeframe.
-      </div>
+    <div class="card" onclick="openOverlay('news')">
+      <h2>HOT NEWS</h2>
+      <div class="news-item"><span>Oil inventories draw larger than expected</span><span class="tag">WTI</span></div>
+      <div class="news-item"><span>Fed speakers signal cautious path</span><span class="tag">MACRO</span></div>
+      <div class="news-item"><span>Gold holds support ahead of data</span><span class="tag">GOLD</span></div>
+      <div class="news-item"><span>BTC volume rising on key level</span><span class="tag">CRYPTO</span></div>
     </div>
 
-    <div class="card" onclick="this.classList.toggle('open')">
-      <h2>TRADE LOG <span>CLICK</span></h2>
-      <div>
-        <div class="trade-row"><span>WTI Long · High</span><span class="pnl pos">+1.8%</span></div>
-        <div class="trade-row"><span>NVDA Short · Mid</span><span class="pnl neg">-0.6%</span></div>
-        <div class="trade-row"><span>GOLD Long · Low</span><span class="pnl pos">+0.4%</span></div>
-      </div>
-      <div class="more">
-        <strong>Detailed log</strong><br>
-        WTI Long · High Risk<br>
-        Entry: 86.12 · Exit: 87.67 · Size: 2 lots · P&L: +$1,240<br><br>
-        NVDA Short · Mid Risk<br>
-        Entry: 142.30 · Exit: 143.15 · Size: 50 shares · P&L: -$42.50<br><br>
-        GOLD Long · Low Risk<br>
-        Entry: 2648 · Exit: 2659 · Size: 1 lot · P&L: +$110
-      </div>
+    <div class="card" onclick="openOverlay('trades')">
+      <h2>TRADE LOG</h2>
+      <div class="trade-row"><span>WTI Long · High</span><span class="pnl pos">+1.8%</span></div>
+      <div class="trade-row"><span>NVDA Short · Mid</span><span class="pnl neg">-0.6%</span></div>
+      <div class="trade-row"><span>GOLD Long · Low</span><span class="pnl pos">+0.4%</span></div>
     </div>
 
-    <div class="card" onclick="this.classList.toggle('open')">
-      <h2>ACCOUNT <span>CLICK</span></h2>
-      <div class="balance-big" id="balance">$50,000</div>
-      <div class="pnl pos" id="totalPnl">+$1,240 · 2.48%</div>
-      <div style="margin-top:16px; font-size:11px; color:var(--muted); letter-spacing:1px;">CAPITAL ALLOCATION</div>
+    <div class="card" onclick="openOverlay('account')">
+      <h2>ACCOUNT</h2>
+      <div class="balance-big">$50,000</div>
+      <div class="pnl pos">+$1,240 · 2.48%</div>
+      <div style="margin-top:14px; font-size:10px; color:var(--muted); letter-spacing:1px;">CAPITAL ALLOCATION</div>
       <div class="split-controls">
-        <input type="number" id="highAlloc" value="40" min="0" max="100">
-        <input type="number" id="midAlloc" value="35" min="0" max="100">
-        <input type="number" id="lowAlloc" value="25" min="0" max="100">
+        <input type="number" id="highAlloc" value="40">
+        <input type="number" id="midAlloc" value="35">
+        <input type="number" id="lowAlloc" value="25">
       </div>
-      <button onclick="event.stopPropagation(); updateAlloc()" style="margin-top:12px; background:#0d2130; color:var(--accent); border:1px solid var(--accent-dim); padding:8px 14px; border-radius:5px; font-size:11px; cursor:pointer; font-family:inherit; letter-spacing:0.5px;">APPLY SPLIT</button>
-      <div class="more">
-        High Risk: 40% = $20,000<br>
-        Mid Risk: 35% = $17,500<br>
-        Low Risk: 25% = $12,500<br><br>
-        Open risk across all teams: 1.8% of capital<br>
-        Max daily drawdown limit: 3%
-      </div>
+      <button onclick="event.stopPropagation(); updateAlloc()" style="margin-top:10px; background:transparent; border:1px solid var(--accent); color:var(--accent); padding:6px 12px; font-size:11px; cursor:pointer; font-family:inherit;">APPLY</button>
     </div>
   </div>
 
   <div class="teams">
-    <div class="team-card" onclick="this.classList.toggle('open')">
+    <div class="team-card" onclick="openOverlay('high')">
       <h3>HIGH RISK</h3>
       <div class="risk">AGGRESSIVE · LARGER SIZE · LOWER FILTERS</div>
-      <div class="team-detail">
-        <strong>Strategy</strong><br>
-        Focuses on breakouts and momentum continuation. Accepts lower confluence. Larger position sizing relative to other teams. Willing to take more trades per session.<br><br>
-        <strong>Parameters</strong><br>
-        Min confluence: 55% · Max size: 2.5% risk · Stops: tighter · Targets: 2.5–3R
-      </div>
     </div>
-    <div class="team-card" onclick="this.classList.toggle('open')">
+    <div class="team-card" onclick="openOverlay('mid')">
       <h3>MID RISK</h3>
       <div class="risk">BALANCED · STANDARD FILTERS</div>
-      <div class="team-detail">
-        <strong>Strategy</strong><br>
-        Requires solid agreement from specialists. Medium size. Aims for consistent returns with controlled drawdowns. Mix of breakout and mean-reversion setups.<br><br>
-        <strong>Parameters</strong><br>
-        Min confluence: 65% · Max size: 1.5% risk · Stops: standard · Targets: 2R
-      </div>
     </div>
-    <div class="team-card" onclick="this.classList.toggle('open')">
+    <div class="team-card" onclick="openOverlay('low')">
       <h3>LOW RISK</h3>
       <div class="risk">CONSERVATIVE · HIGH PROBABILITY ONLY</div>
-      <div class="team-detail">
-        <strong>Strategy</strong><br>
-        Only highest-probability setups. Smaller size. Wider stops or tighter filters. Prioritizes capital preservation. Fewer trades, higher quality.<br><br>
-        <strong>Parameters</strong><br>
-        Min confluence: 75% · Max size: 0.8% risk · Stops: wider · Targets: 1.5–2R
-      </div>
     </div>
   </div>
 </div>
 
+<div class="overlay" id="overlay">
+  <div class="overlay-header">
+    <h2 id="overlayTitle"></h2>
+    <button class="close-btn" onclick="closeOverlay()">CLOSE</button>
+  </div>
+  <div class="overlay-content" id="overlayContent"></div>
+</div>
+
 <script>
+const overlays = {
+  news: {
+    title: "HOT NEWS",
+    content: `<strong>WTI</strong><br>EIA draw of 4.2M barrels vs 1.1M expected. Bullish short-term. Price holding above key level.<br><br>
+<strong>MACRO</strong><br>Multiple Fed members reiterating data-dependence. No rate cut priced for this meeting. Watch upcoming prints.<br><br>
+<strong>GOLD</strong><br>Holding 2650 zone. DXY soft. Positioning light ahead of data.<br><br>
+<strong>CRYPTO</strong><br>BTC consolidating above 95k. Volume expanding on higher timeframe. Risk-on tone.`
+  },
+  trades: {
+    title: "TRADE LOG",
+    content: `<strong>WTI Long · High Risk</strong><br>Entry: 86.12 · Exit: 87.67 · Size: 2 lots · P&L: +$1,240<br><br>
+<strong>NVDA Short · Mid Risk</strong><br>Entry: 142.30 · Exit: 143.15 · Size: 50 shares · P&L: -$42.50<br><br>
+<strong>GOLD Long · Low Risk</strong><br>Entry: 2648 · Exit: 2659 · Size: 1 lot · P&L: +$110`
+  },
+  account: {
+    title: "ACCOUNT",
+    content: `<strong>Balance</strong><br>$50,000<br><br>
+<strong>Total P&L</strong><br>+$1,240 (2.48%)<br><br>
+<strong>Allocation</strong><br>High Risk: 40% = $20,000<br>Mid Risk: 35% = $17,500<br>Low Risk: 25% = $12,500<br><br>
+Open risk across all teams: 1.8% of capital<br>Max daily drawdown limit: 3%`
+  },
+  high: {
+    title: "HIGH RISK TEAM",
+    content: `<strong>Strategy</strong><br>Focuses on breakouts and momentum continuation. Accepts lower confluence. Larger position sizing relative to other teams. Willing to take more trades per session.<br><br>
+<strong>Parameters</strong><br>Min confluence: 55%<br>Max size: 2.5% risk<br>Stops: tighter<br>Targets: 2.5–3R`
+  },
+  mid: {
+    title: "MID RISK TEAM",
+    content: `<strong>Strategy</strong><br>Requires solid agreement from specialists. Medium size. Aims for consistent returns with controlled drawdowns. Mix of breakout and mean-reversion setups.<br><br>
+<strong>Parameters</strong><br>Min confluence: 65%<br>Max size: 1.5% risk<br>Stops: standard<br>Targets: 2R`
+  },
+  low: {
+    title: "LOW RISK TEAM",
+    content: `<strong>Strategy</strong><br>Only highest-probability setups. Smaller size. Wider stops or tighter filters. Prioritizes capital preservation. Fewer trades, higher quality.<br><br>
+<strong>Parameters</strong><br>Min confluence: 75%<br>Max size: 0.8% risk<br>Stops: wider<br>Targets: 1.5–2R`
+  }
+};
+
+function openOverlay(key) {
+  const data = overlays[key];
+  document.getElementById("overlayTitle").textContent = data.title;
+  document.getElementById("overlayContent").innerHTML = data.content;
+  document.getElementById("overlay").classList.add("open");
+}
+function closeOverlay() {
+  document.getElementById("overlay").classList.remove("open");
+}
 function login() {
   const u = document.getElementById("username").value;
   const p = document.getElementById("password").value;
@@ -320,12 +305,8 @@ function updateAlloc() {
   const h = +document.getElementById("highAlloc").value || 0;
   const m = +document.getElementById("midAlloc").value || 0;
   const l = +document.getElementById("lowAlloc").value || 0;
-  const total = h + m + l;
-  if (total !== 100) {
-    alert("Allocation must total 100%");
-    return;
-  }
-  alert(`Split applied: High ${h}% · Mid ${m}% · Low ${l}%`);
+  if (h + m + l !== 100) { alert("Must total 100%"); return; }
+  alert(`Split: High ${h}% · Mid ${m}% · Low ${l}%`);
 }
 if (window.PublicKeyCredential) {
   document.querySelector(".alt").textContent = "TOUCH ID / FACE ID SUPPORTED";
