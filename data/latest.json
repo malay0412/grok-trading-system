@@ -1,0 +1,3443 @@
+{
+ "schema": "botty-quanter/latest@1",
+ "cycle_id": "20261116-163346",
+ "generated_london": "2026-11-16 16:34:06 GMT",
+ "mode": "ANALYSIS ONLY - no orders placed",
+ "currency": {
+  "account": "GBP",
+  "account_symbol": "\u00a3",
+  "prices": "USD",
+  "note": "Instrument prices are Coinbase USD pairs and are not converted to GBP."
+ },
+ "account": {
+  "currency": "GBP",
+  "balance": null,
+  "pnl": null,
+  "note": "No account data read; analysis only."
+ },
+ "trade_log": {
+  "entries": [],
+  "label": "Analysis only, no orders"
+ },
+ "chief": {
+  "view": [
+   "Teams A, B agree on direction (short) but pick different symbols: A SOL-USD, B LINK-USD.",
+   "30d daily-return correlation SOL-USD vs LINK-USD: 0.90 (treat as one correlated risk)",
+   "Team C NO TRADE; best candidate short SUI-USD (3/10) rejected: agreement 3/10 < 7; |net score| 0.19 < 0.35; extended -1.91 daily ATR from EMA20 (> 1.5)",
+   "Strongest 30-bot consensus: SOL-USD 17 short / 0 long / 13 neutral; LINK-USD 17 short / 0 long / 13 neutral; SUI-USD 17 short / 1 long / 12 neutral.",
+   "Analysis only: no orders placed, changed or cancelled; no funds moved."
+  ],
+  "calls": [
+   {
+    "team": "A",
+    "decision": "SELL (short)",
+    "symbol": "SOL-USD",
+    "direction": "short",
+    "price_currency": "USD",
+    "entry": 70.975,
+    "entry_basis": "live mid (Coinbase connector best_bid_ask, 2026-11-16 16:33:08 GMT)",
+    "stop": 73.6083,
+    "stop_pct": 3.71,
+    "stop_basis": "stop beyond 6-bar 4h swing high 72.91 + 0.1 ATR",
+    "targets": [
+     63.8147,
+     56.6544
+    ],
+    "t1_basis": "no structural level >= 1.5R; 1.5 daily ATR projection",
+    "rr": [
+     2.72,
+     5.44
+    ],
+    "confidence": "high",
+    "confidence_score": 0.865,
+    "net_score": -0.487,
+    "agreement": "9/10",
+    "agree_bots": [
+     "A2-Momentum-RSIThrust",
+     "A3-Trend-FastEMA",
+     "A4-Volume-Surge",
+     "A5-Volatility-Expansion",
+     "A6-News-HeadlineMomentum",
+     "A7-Patterns-ContinuationStats",
+     "A8-OrderFlow-TapeAggression",
+     "A9-Risk-HighBetaSeeker",
+     "A10-TradeStyle-AggressiveMomentumRules"
+    ],
+    "dissent_bots": [],
+    "neutral_bots": [
+     "A1-PriceAction-Breakout"
+    ],
+    "dissent_reasons": {},
+    "daily_rsi": 20.1,
+    "corr_btc_30d": 0.91
+   },
+   {
+    "team": "B",
+    "decision": "SELL (short)",
+    "symbol": "LINK-USD",
+    "direction": "short",
+    "price_currency": "USD",
+    "entry": 9.152,
+    "entry_basis": "live mid (Coinbase connector best_bid_ask, 2026-11-16 16:33:08 GMT)",
+    "stop": 9.40085,
+    "stop_pct": 2.72,
+    "stop_basis": "stop beyond 6-bar 4h swing high 9.354 + 0.1 ATR",
+    "targets": [
+     8.573,
+     7.89816
+    ],
+    "t1_basis": "nearest daily pivot/20d extreme >= min R:R",
+    "rr": [
+     2.33,
+     5.04
+    ],
+    "confidence": "medium",
+    "confidence_score": 0.656,
+    "net_score": -0.445,
+    "agreement": "6/10",
+    "agree_bots": [
+     "B1-PriceAction-SwingStructure",
+     "B3-Trend-EMAStack",
+     "B4-Volume-OBVConfirm",
+     "B6-News-BalancedSentiment",
+     "B9-Risk-VolAdjustedReturn",
+     "B10-TradeStyle-TeamBRulebook"
+    ],
+    "dissent_bots": [],
+    "neutral_bots": [
+     "B2-Momentum-MACD",
+     "B5-Volatility-BollingerReversion",
+     "B7-Patterns-Candlestick",
+     "B8-OrderFlow-BookImbalance"
+    ],
+    "dissent_reasons": {},
+    "daily_rsi": 31.8,
+    "corr_btc_30d": 0.77,
+    "sizing": {
+     "account_currency": "GBP",
+     "risk_pct_of_equity": 1.0,
+     "max_leverage": 2.0,
+     "position_notional_pct_of_equity": 36.8,
+     "capped_by_leverage": false,
+     "note": "Percent of GBP account equity; equity value not read (analysis only). Instrument priced in USD."
+    },
+    "correlation_note": "30d corr to BTC 0.77: counts as the same risk as any BTC/major exposure."
+   },
+   {
+    "team": "C",
+    "decision": "NO TRADE",
+    "symbol": null,
+    "direction": "none",
+    "reason": "no symbol passed this team's filters",
+    "best_candidate": {
+     "symbol": "SUI-USD",
+     "side": "short",
+     "agree": 3,
+     "net_score": -0.189,
+     "reasons": [
+      "agreement 3/10 < 7",
+      "|net score| 0.19 < 0.35",
+      "extended -1.91 daily ATR from EMA20 (> 1.5)"
+     ]
+    }
+   }
+  ],
+  "tally": {
+   "BTC-USD": {
+    "long": 2,
+    "short": 16,
+    "neutral": 12
+   },
+   "ETH-USD": {
+    "long": 1,
+    "short": 14,
+    "neutral": 15
+   },
+   "SOL-USD": {
+    "long": 0,
+    "short": 17,
+    "neutral": 13
+   },
+   "XRP-USD": {
+    "long": 3,
+    "short": 14,
+    "neutral": 13
+   },
+   "DOGE-USD": {
+    "long": 0,
+    "short": 13,
+    "neutral": 17
+   },
+   "AVAX-USD": {
+    "long": 1,
+    "short": 15,
+    "neutral": 14
+   },
+   "LINK-USD": {
+    "long": 0,
+    "short": 17,
+    "neutral": 13
+   },
+   "ADA-USD": {
+    "long": 3,
+    "short": 14,
+    "neutral": 13
+   },
+   "SUI-USD": {
+    "long": 1,
+    "short": 17,
+    "neutral": 12
+   },
+   "PEPE-USD": {
+    "long": 2,
+    "short": 13,
+    "neutral": 15
+   }
+  }
+ },
+ "teams": {
+  "A": {
+   "name": "Team A",
+   "risk": "high",
+   "style": "aggressive breakout/momentum, wider targets",
+   "call": {
+    "team": "A",
+    "decision": "SELL (short)",
+    "symbol": "SOL-USD",
+    "direction": "short",
+    "price_currency": "USD",
+    "entry": 70.975,
+    "entry_basis": "live mid (Coinbase connector best_bid_ask, 2026-11-16 16:33:08 GMT)",
+    "stop": 73.6083,
+    "stop_pct": 3.71,
+    "stop_basis": "stop beyond 6-bar 4h swing high 72.91 + 0.1 ATR",
+    "targets": [
+     63.8147,
+     56.6544
+    ],
+    "t1_basis": "no structural level >= 1.5R; 1.5 daily ATR projection",
+    "rr": [
+     2.72,
+     5.44
+    ],
+    "confidence": "high",
+    "confidence_score": 0.865,
+    "net_score": -0.487,
+    "agreement": "9/10",
+    "agree_bots": [
+     "A2-Momentum-RSIThrust",
+     "A3-Trend-FastEMA",
+     "A4-Volume-Surge",
+     "A5-Volatility-Expansion",
+     "A6-News-HeadlineMomentum",
+     "A7-Patterns-ContinuationStats",
+     "A8-OrderFlow-TapeAggression",
+     "A9-Risk-HighBetaSeeker",
+     "A10-TradeStyle-AggressiveMomentumRules"
+    ],
+    "dissent_bots": [],
+    "neutral_bots": [
+     "A1-PriceAction-Breakout"
+    ],
+    "dissent_reasons": {},
+    "daily_rsi": 20.1,
+    "corr_btc_30d": 0.91
+   },
+   "rejected": [],
+   "ranking": [
+    {
+     "symbol": "SOL-USD",
+     "side": "short",
+     "net_score": -0.487,
+     "agree": 9
+    },
+    {
+     "symbol": "AVAX-USD",
+     "side": "short",
+     "net_score": -0.45,
+     "agree": 8
+    },
+    {
+     "symbol": "SUI-USD",
+     "side": "short",
+     "net_score": -0.409,
+     "agree": 8
+    },
+    {
+     "symbol": "LINK-USD",
+     "side": "short",
+     "net_score": -0.399,
+     "agree": 8
+    },
+    {
+     "symbol": "BTC-USD",
+     "side": "short",
+     "net_score": -0.449,
+     "agree": 7
+    },
+    {
+     "symbol": "ETH-USD",
+     "side": "short",
+     "net_score": -0.433,
+     "agree": 7
+    },
+    {
+     "symbol": "XRP-USD",
+     "side": "short",
+     "net_score": -0.357,
+     "agree": 7
+    },
+    {
+     "symbol": "ADA-USD",
+     "side": "short",
+     "net_score": -0.311,
+     "agree": 7
+    },
+    {
+     "symbol": "PEPE-USD",
+     "side": "short",
+     "net_score": -0.298,
+     "agree": 7
+    },
+    {
+     "symbol": "DOGE-USD",
+     "side": "short",
+     "net_score": -0.344,
+     "agree": 6
+    }
+   ],
+   "subbots": [
+    {
+     "name": "A1-PriceAction-Breakout",
+     "team": "A",
+     "element": "price action",
+     "style": "Range-breakout hunter: trades proximity to / breaks of the 10-day and 24h ranges, follows the break direction.",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "neutral",
+       "score": -0.039,
+       "reason": "inside 10d range; 24h range position 0.45; 2.05 4h-ATR above 10d low 61946.2"
+      },
+      "ETH-USD": {
+       "direction": "neutral",
+       "score": -0.02,
+       "reason": "inside 10d range; 24h range position 0.47; 2.39 4h-ATR above 10d low 1709.48"
+      },
+      "SOL-USD": {
+       "direction": "neutral",
+       "score": -0.109,
+       "reason": "inside 10d range; 24h range position 0.36; 1.71 4h-ATR above 10d low 67.37"
+      },
+      "XRP-USD": {
+       "direction": "neutral",
+       "score": -0.105,
+       "reason": "inside 10d range; 24h range position 0.37; 2.40 4h-ATR above 10d low 0.8922"
+      },
+      "DOGE-USD": {
+       "direction": "neutral",
+       "score": 0.035,
+       "reason": "inside 10d range; 24h range position 0.54; 2.26 4h-ATR above 10d low 0.05539"
+      },
+      "AVAX-USD": {
+       "direction": "neutral",
+       "score": -0.091,
+       "reason": "inside 10d range; 24h range position 0.39; 1.77 4h-ATR above 10d low 6.736"
+      },
+      "LINK-USD": {
+       "direction": "neutral",
+       "score": -0.058,
+       "reason": "inside 10d range; 24h range position 0.43; 2.33 4h-ATR above 10d low 8.573"
+      },
+      "ADA-USD": {
+       "direction": "neutral",
+       "score": -0.061,
+       "reason": "inside 10d range; 24h range position 0.42; 2.22 4h-ATR above 10d low 0.14245"
+      },
+      "SUI-USD": {
+       "direction": "neutral",
+       "score": -0.123,
+       "reason": "inside 10d range; 24h range position 0.35; 1.94 4h-ATR above 10d low 0.6759"
+      },
+      "PEPE-USD": {
+       "direction": "short",
+       "score": -0.206,
+       "reason": "inside 10d range; 24h range position 0.56; 1.10 4h-ATR above 10d low 3.69e-06"
+      }
+     }
+    },
+    {
+     "name": "A2-Momentum-RSIThrust",
+     "team": "A",
+     "element": "momentum indicators",
+     "style": "RSI thrust follower: rides 1h/4h RSI direction and slope, no oversold veto.",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "short",
+       "score": -0.311,
+       "reason": "4h RSI 32.6, 1h RSI 49.0 (3h slope +7.9)"
+      },
+      "ETH-USD": {
+       "direction": "neutral",
+       "score": -0.135,
+       "reason": "4h RSI 38.7, 1h RSI 52.1 (3h slope +7.4)"
+      },
+      "SOL-USD": {
+       "direction": "short",
+       "score": -0.387,
+       "reason": "4h RSI 33.7, 1h RSI 46.4 (3h slope +3.2)"
+      },
+      "XRP-USD": {
+       "direction": "short",
+       "score": -0.217,
+       "reason": "4h RSI 39.5, 1h RSI 48.8 (3h slope +3.2)"
+      },
+      "DOGE-USD": {
+       "direction": "neutral",
+       "score": -0.149,
+       "reason": "4h RSI 38.1, 1h RSI 52.1 (3h slope +7.4)"
+      },
+      "AVAX-USD": {
+       "direction": "short",
+       "score": -0.451,
+       "reason": "4h RSI 30.6, 1h RSI 45.8 (3h slope +4.4)"
+      },
+      "LINK-USD": {
+       "direction": "short",
+       "score": -0.278,
+       "reason": "4h RSI 37.2, 1h RSI 48.9 (3h slope +2.8)"
+      },
+      "ADA-USD": {
+       "direction": "short",
+       "score": -0.34,
+       "reason": "4h RSI 34.9, 1h RSI 48.1 (3h slope +3.1)"
+      },
+      "SUI-USD": {
+       "direction": "short",
+       "score": -0.289,
+       "reason": "4h RSI 36.4, 1h RSI 47.3 (3h slope +4.6)"
+      },
+      "PEPE-USD": {
+       "direction": "short",
+       "score": -0.312,
+       "reason": "4h RSI 33.2, 1h RSI 51.6 (3h slope +4.8)"
+      }
+     }
+    },
+    {
+     "name": "A3-Trend-FastEMA",
+     "team": "A",
+     "element": "trend indicators",
+     "style": "Fast EMA9/21 cross on 4h and 1h; acts early on short-term trend.",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "short",
+       "score": -0.691,
+       "reason": "4h EMA9-21 -1.04 ATR, 1h EMA9-21 -0.16 ATR"
+      },
+      "ETH-USD": {
+       "direction": "short",
+       "score": -0.463,
+       "reason": "4h EMA9-21 -0.80 ATR, 1h EMA9-21 +0.04 ATR"
+      },
+      "SOL-USD": {
+       "direction": "short",
+       "score": -0.699,
+       "reason": "4h EMA9-21 -1.03 ATR, 1h EMA9-21 -0.20 ATR"
+      },
+      "XRP-USD": {
+       "direction": "short",
+       "score": -0.443,
+       "reason": "4h EMA9-21 -0.66 ATR, 1h EMA9-21 -0.11 ATR"
+      },
+      "DOGE-USD": {
+       "direction": "short",
+       "score": -0.561,
+       "reason": "4h EMA9-21 -0.93 ATR, 1h EMA9-21 -0.01 ATR"
+      },
+      "AVAX-USD": {
+       "direction": "short",
+       "score": -0.821,
+       "reason": "4h EMA9-21 -1.19 ATR, 1h EMA9-21 -0.27 ATR"
+      },
+      "LINK-USD": {
+       "direction": "short",
+       "score": -0.492,
+       "reason": "4h EMA9-21 -0.76 ATR, 1h EMA9-21 -0.10 ATR"
+      },
+      "ADA-USD": {
+       "direction": "short",
+       "score": -0.601,
+       "reason": "4h EMA9-21 -0.91 ATR, 1h EMA9-21 -0.14 ATR"
+      },
+      "SUI-USD": {
+       "direction": "short",
+       "score": -0.587,
+       "reason": "4h EMA9-21 -0.85 ATR, 1h EMA9-21 -0.19 ATR"
+      },
+      "PEPE-USD": {
+       "direction": "short",
+       "score": -0.773,
+       "reason": "4h EMA9-21 -1.17 ATR, 1h EMA9-21 -0.18 ATR"
+      }
+     }
+    },
+    {
+     "name": "A4-Volume-Surge",
+     "team": "A",
+     "element": "volume",
+     "style": "Volume-surge chaser: follows the direction of the last closed 1h/daily bar when volume spikes.",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "short",
+       "score": -0.291,
+       "reason": "last closed 1h bar down at 2.45x avg vol; last daily up at 1.77x"
+      },
+      "ETH-USD": {
+       "direction": "short",
+       "score": -0.374,
+       "reason": "last closed 1h bar down at 3.34x avg vol; last daily up at 1.57x"
+      },
+      "SOL-USD": {
+       "direction": "short",
+       "score": -0.255,
+       "reason": "last closed 1h bar down at 2.95x avg vol; last daily up at 1.86x"
+      },
+      "XRP-USD": {
+       "direction": "short",
+       "score": -0.266,
+       "reason": "last closed 1h bar down at 2.11x avg vol; last daily up at 1.83x"
+      },
+      "DOGE-USD": {
+       "direction": "short",
+       "score": -0.313,
+       "reason": "last closed 1h bar down at 2.28x avg vol; last daily up at 1.72x"
+      },
+      "AVAX-USD": {
+       "direction": "short",
+       "score": -0.287,
+       "reason": "last closed 1h bar down at 1.93x avg vol; last daily up at 1.68x"
+      },
+      "LINK-USD": {
+       "direction": "short",
+       "score": -0.525,
+       "reason": "last closed 1h bar down at 2.54x avg vol; last daily up at 1.19x"
+      },
+      "ADA-USD": {
+       "direction": "short",
+       "score": -0.3,
+       "reason": "last closed 1h bar down at 2.71x avg vol; last daily up at 1.75x"
+      },
+      "SUI-USD": {
+       "direction": "short",
+       "score": -0.297,
+       "reason": "last closed 1h bar down at 1.60x avg vol; last daily up at 1.15x"
+      },
+      "PEPE-USD": {
+       "direction": "short",
+       "score": -0.6,
+       "reason": "last closed 1h bar down at 3.00x avg vol; last daily down at 0.58x"
+      }
+     }
+    },
+    {
+     "name": "A5-Volatility-Expansion",
+     "team": "A",
+     "element": "volatility",
+     "style": "Volatility-expansion rider: when 4h ATR(5)/ATR(20) expands, trade the 24-bar direction.",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "neutral",
+       "score": -0.146,
+       "reason": "4h ATR5/ATR20 0.92; 4-day move -9.71%"
+      },
+      "ETH-USD": {
+       "direction": "short",
+       "score": -0.169,
+       "reason": "4h ATR5/ATR20 0.94; 4-day move -9.54%"
+      },
+      "SOL-USD": {
+       "direction": "short",
+       "score": -0.177,
+       "reason": "4h ATR5/ATR20 0.95; 4-day move -12.96%"
+      },
+      "XRP-USD": {
+       "direction": "neutral",
+       "score": -0.115,
+       "reason": "4h ATR5/ATR20 0.90; 4-day move -7.51%"
+      },
+      "DOGE-USD": {
+       "direction": "neutral",
+       "score": -0.084,
+       "reason": "4h ATR5/ATR20 0.87; 4-day move -10.38%"
+      },
+      "AVAX-USD": {
+       "direction": "neutral",
+       "score": -0.031,
+       "reason": "4h ATR5/ATR20 0.83; 4-day move -14.23%"
+      },
+      "LINK-USD": {
+       "direction": "neutral",
+       "score": -0.071,
+       "reason": "4h ATR5/ATR20 0.86; 4-day move -8.88%"
+      },
+      "ADA-USD": {
+       "direction": "neutral",
+       "score": -0.079,
+       "reason": "4h ATR5/ATR20 0.87; 4-day move -11.39%"
+      },
+      "SUI-USD": {
+       "direction": "neutral",
+       "score": -0.078,
+       "reason": "4h ATR5/ATR20 0.86; 4-day move -10.64%"
+      },
+      "PEPE-USD": {
+       "direction": "neutral",
+       "score": -0.003,
+       "reason": "4h ATR5/ATR20 0.80; 4-day move -13.65%"
+      }
+     }
+    },
+    {
+     "name": "A6-News-HeadlineMomentum",
+     "team": "A",
+     "element": "news and macro",
+     "style": "Headline-momentum trader: follows net headline sentiment (symbol news weighted 2x, crypto/macro 1x), low bar to act.",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "short",
+       "score": -1.0,
+       "reason": "48 symbol headlines avg -0.60; 29 market/macro avg -0.64"
+      },
+      "ETH-USD": {
+       "direction": "short",
+       "score": -0.978,
+       "reason": "6 symbol headlines avg -0.33; 29 market/macro avg -0.64"
+      },
+      "SOL-USD": {
+       "direction": "short",
+       "score": -0.478,
+       "reason": "3 symbol headlines avg +0.00; 29 market/macro avg -0.64"
+      },
+      "XRP-USD": {
+       "direction": "short",
+       "score": -0.978,
+       "reason": "1 symbol headlines avg -1.00; 29 market/macro avg -0.64"
+      },
+      "DOGE-USD": {
+       "direction": "short",
+       "score": -0.478,
+       "reason": "0 symbol headlines avg +0.00; 29 market/macro avg -0.64"
+      },
+      "AVAX-USD": {
+       "direction": "short",
+       "score": -0.478,
+       "reason": "0 symbol headlines avg +0.00; 29 market/macro avg -0.64"
+      },
+      "LINK-USD": {
+       "direction": "short",
+       "score": -0.478,
+       "reason": "1 symbol headlines avg +0.00; 29 market/macro avg -0.64"
+      },
+      "ADA-USD": {
+       "direction": "short",
+       "score": -0.478,
+       "reason": "0 symbol headlines avg +0.00; 29 market/macro avg -0.64"
+      },
+      "SUI-USD": {
+       "direction": "short",
+       "score": -0.478,
+       "reason": "0 symbol headlines avg +0.00; 29 market/macro avg -0.64"
+      },
+      "PEPE-USD": {
+       "direction": "short",
+       "score": -0.478,
+       "reason": "0 symbol headlines avg +0.00; 29 market/macro avg -0.64"
+      }
+     }
+    },
+    {
+     "name": "A7-Patterns-ContinuationStats",
+     "team": "A",
+     "element": "historical patterns",
+     "style": "Continuation statistician: after a 7d move as large as today's, did the next 3 days continue? Follows a >50% base rate.",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "short",
+       "score": -0.711,
+       "reason": "19 past 7d moves of similar size (-14.1% now): continued over next 3d 74% of the time"
+      },
+      "ETH-USD": {
+       "direction": "short",
+       "score": -0.536,
+       "reason": "28 past 7d moves of similar size (-14.5% now): continued over next 3d 68% of the time"
+      },
+      "SOL-USD": {
+       "direction": "short",
+       "score": -0.429,
+       "reason": "28 past 7d moves of similar size (-18.1% now): continued over next 3d 64% of the time"
+      },
+      "XRP-USD": {
+       "direction": "short",
+       "score": -0.675,
+       "reason": "40 past 7d moves of similar size (-13.0% now): continued over next 3d 72% of the time"
+      },
+      "DOGE-USD": {
+       "direction": "short",
+       "score": -0.682,
+       "reason": "33 past 7d moves of similar size (-15.5% now): continued over next 3d 73% of the time"
+      },
+      "AVAX-USD": {
+       "direction": "short",
+       "score": -0.682,
+       "reason": "22 past 7d moves of similar size (-17.5% now): continued over next 3d 73% of the time"
+      },
+      "LINK-USD": {
+       "direction": "short",
+       "score": -0.365,
+       "reason": "37 past 7d moves of similar size (-14.1% now): continued over next 3d 62% of the time"
+      },
+      "ADA-USD": {
+       "direction": "short",
+       "score": -0.28,
+       "reason": "59 past 7d moves of similar size (-14.0% now): continued over next 3d 59% of the time"
+      },
+      "SUI-USD": {
+       "direction": "short",
+       "score": -0.418,
+       "reason": "61 past 7d moves of similar size (-14.9% now): continued over next 3d 64% of the time"
+      },
+      "PEPE-USD": {
+       "direction": "short",
+       "score": -0.15,
+       "reason": "20 past 7d moves of similar size (-24.6% now): continued over next 3d 55% of the time"
+      }
+     }
+    },
+    {
+     "name": "A8-OrderFlow-TapeAggression",
+     "team": "A",
+     "element": "order flow and liquidity",
+     "style": "Tape reader: follows taker aggression in the last 1000 trades.",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "short",
+       "score": -1.0,
+       "reason": "taker buy-sell imbalance -0.59 over 1000 trades (1 min)"
+      },
+      "ETH-USD": {
+       "direction": "short",
+       "score": -1.0,
+       "reason": "taker buy-sell imbalance -0.51 over 1000 trades (6 min)"
+      },
+      "SOL-USD": {
+       "direction": "short",
+       "score": -1.0,
+       "reason": "taker buy-sell imbalance -0.57 over 1000 trades (8 min)"
+      },
+      "XRP-USD": {
+       "direction": "long",
+       "score": 0.685,
+       "reason": "taker buy-sell imbalance +0.27 over 1000 trades (8 min)"
+      },
+      "DOGE-USD": {
+       "direction": "short",
+       "score": -0.578,
+       "reason": "taker buy-sell imbalance -0.23 over 1000 trades (37 min)"
+      },
+      "AVAX-USD": {
+       "direction": "short",
+       "score": -0.153,
+       "reason": "taker buy-sell imbalance -0.06 over 1000 trades (35 min)"
+      },
+      "LINK-USD": {
+       "direction": "short",
+       "score": -0.238,
+       "reason": "taker buy-sell imbalance -0.10 over 1000 trades (41 min)"
+      },
+      "ADA-USD": {
+       "direction": "long",
+       "score": 0.594,
+       "reason": "taker buy-sell imbalance +0.24 over 1000 trades (17 min)"
+      },
+      "SUI-USD": {
+       "direction": "short",
+       "score": -0.207,
+       "reason": "taker buy-sell imbalance -0.08 over 1000 trades (41 min)"
+      },
+      "PEPE-USD": {
+       "direction": "long",
+       "score": 0.169,
+       "reason": "taker buy-sell imbalance +0.07 over 1000 trades (117 min)"
+      }
+     }
+    },
+    {
+     "name": "A9-Risk-HighBetaSeeker",
+     "team": "A",
+     "element": "risk metrics",
+     "style": "High-beta seeker: favours names with beta to BTC > 1 in the direction of BTC's 4h trend (more bang per move).",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "short",
+       "score": -0.3,
+       "reason": "30d beta to BTC 1.00; BTC below 4h EMA20"
+      },
+      "ETH-USD": {
+       "direction": "short",
+       "score": -0.66,
+       "reason": "30d beta to BTC 1.26; BTC below 4h EMA20"
+      },
+      "SOL-USD": {
+       "direction": "short",
+       "score": -0.583,
+       "reason": "30d beta to BTC 1.18; BTC below 4h EMA20"
+      },
+      "XRP-USD": {
+       "direction": "short",
+       "score": -0.614,
+       "reason": "30d beta to BTC 1.21; BTC below 4h EMA20"
+      },
+      "DOGE-USD": {
+       "direction": "short",
+       "score": -0.635,
+       "reason": "30d beta to BTC 1.23; BTC below 4h EMA20"
+      },
+      "AVAX-USD": {
+       "direction": "short",
+       "score": -0.784,
+       "reason": "30d beta to BTC 1.38; BTC below 4h EMA20"
+      },
+      "LINK-USD": {
+       "direction": "short",
+       "score": -0.697,
+       "reason": "30d beta to BTC 1.30; BTC below 4h EMA20"
+      },
+      "ADA-USD": {
+       "direction": "short",
+       "score": -0.782,
+       "reason": "30d beta to BTC 1.38; BTC below 4h EMA20"
+      },
+      "SUI-USD": {
+       "direction": "short",
+       "score": -0.877,
+       "reason": "30d beta to BTC 1.48; BTC below 4h EMA20"
+      },
+      "PEPE-USD": {
+       "direction": "short",
+       "score": -0.632,
+       "reason": "30d beta to BTC 1.23; BTC below 4h EMA20"
+      }
+     }
+    },
+    {
+     "name": "A10-TradeStyle-AggressiveMomentumRules",
+     "team": "A",
+     "element": "trade style rules",
+     "style": "Aggressive rulebook: 1h and 4h trend must agree; oversold/overbought allowed; wants room to 1.5 daily ATR.",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "1h and 4h trend disagree (4h down, 1h up) - no trade"
+      },
+      "ETH-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "1h and 4h trend disagree (4h down, 1h up) - no trade"
+      },
+      "SOL-USD": {
+       "direction": "short",
+       "score": -0.752,
+       "reason": "1h & 4h both down; 0.76 daily ATR to 20d low"
+      },
+      "XRP-USD": {
+       "direction": "short",
+       "score": -0.845,
+       "reason": "1h & 4h both down; 1.04 daily ATR to 20d low"
+      },
+      "DOGE-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "1h and 4h trend disagree (4h down, 1h up) - no trade"
+      },
+      "AVAX-USD": {
+       "direction": "short",
+       "score": -0.722,
+       "reason": "1h & 4h both down; 0.67 daily ATR to 20d low"
+      },
+      "LINK-USD": {
+       "direction": "short",
+       "score": -0.786,
+       "reason": "1h & 4h both down; 0.86 daily ATR to 20d low"
+      },
+      "ADA-USD": {
+       "direction": "short",
+       "score": -0.78,
+       "reason": "1h & 4h both down; 0.84 daily ATR to 20d low"
+      },
+      "SUI-USD": {
+       "direction": "short",
+       "score": -0.737,
+       "reason": "1h & 4h both down; 0.71 daily ATR to 20d low"
+      },
+      "PEPE-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "1h and 4h trend disagree (4h down, 1h up) - no trade"
+      }
+     }
+    }
+   ]
+  },
+  "B": {
+   "name": "Team B",
+   "risk": "mid",
+   "style": "balanced, standard filters (1% risk, 2x max lev, >=2:1, no shorts if daily RSI<28)",
+   "call": {
+    "team": "B",
+    "decision": "SELL (short)",
+    "symbol": "LINK-USD",
+    "direction": "short",
+    "price_currency": "USD",
+    "entry": 9.152,
+    "entry_basis": "live mid (Coinbase connector best_bid_ask, 2026-11-16 16:33:08 GMT)",
+    "stop": 9.40085,
+    "stop_pct": 2.72,
+    "stop_basis": "stop beyond 6-bar 4h swing high 9.354 + 0.1 ATR",
+    "targets": [
+     8.573,
+     7.89816
+    ],
+    "t1_basis": "nearest daily pivot/20d extreme >= min R:R",
+    "rr": [
+     2.33,
+     5.04
+    ],
+    "confidence": "medium",
+    "confidence_score": 0.656,
+    "net_score": -0.445,
+    "agreement": "6/10",
+    "agree_bots": [
+     "B1-PriceAction-SwingStructure",
+     "B3-Trend-EMAStack",
+     "B4-Volume-OBVConfirm",
+     "B6-News-BalancedSentiment",
+     "B9-Risk-VolAdjustedReturn",
+     "B10-TradeStyle-TeamBRulebook"
+    ],
+    "dissent_bots": [],
+    "neutral_bots": [
+     "B2-Momentum-MACD",
+     "B5-Volatility-BollingerReversion",
+     "B7-Patterns-Candlestick",
+     "B8-OrderFlow-BookImbalance"
+    ],
+    "dissent_reasons": {},
+    "daily_rsi": 31.8,
+    "corr_btc_30d": 0.77,
+    "sizing": {
+     "account_currency": "GBP",
+     "risk_pct_of_equity": 1.0,
+     "max_leverage": 2.0,
+     "position_notional_pct_of_equity": 36.8,
+     "capped_by_leverage": false,
+     "note": "Percent of GBP account equity; equity value not read (analysis only). Instrument priced in USD."
+    },
+    "correlation_note": "30d corr to BTC 0.77: counts as the same risk as any BTC/major exposure."
+   },
+   "rejected": [],
+   "ranking": [
+    {
+     "symbol": "LINK-USD",
+     "side": "short",
+     "net_score": -0.445,
+     "agree": 6
+    },
+    {
+     "symbol": "BTC-USD",
+     "side": "short",
+     "net_score": -0.42,
+     "agree": 6
+    },
+    {
+     "symbol": "SUI-USD",
+     "side": "short",
+     "net_score": -0.41,
+     "agree": 6
+    },
+    {
+     "symbol": "SOL-USD",
+     "side": "short",
+     "net_score": -0.399,
+     "agree": 5
+    },
+    {
+     "symbol": "AVAX-USD",
+     "side": "short",
+     "net_score": -0.349,
+     "agree": 5
+    },
+    {
+     "symbol": "XRP-USD",
+     "side": "short",
+     "net_score": -0.373,
+     "agree": 4
+    },
+    {
+     "symbol": "DOGE-USD",
+     "side": "short",
+     "net_score": -0.345,
+     "agree": 4
+    },
+    {
+     "symbol": "ADA-USD",
+     "side": "short",
+     "net_score": -0.261,
+     "agree": 5
+    },
+    {
+     "symbol": "ETH-USD",
+     "side": "short",
+     "net_score": -0.31,
+     "agree": 4
+    },
+    {
+     "symbol": "PEPE-USD",
+     "side": "short",
+     "net_score": -0.288,
+     "agree": 4
+    }
+   ],
+   "subbots": [
+    {
+     "name": "B1-PriceAction-SwingStructure",
+     "team": "B",
+     "element": "price action",
+     "style": "Swing-structure reader: higher-highs/higher-lows vs lower-highs/lower-lows from confirmed 4h pivots.",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "short",
+       "score": -1.0,
+       "reason": "4h pivots: last highs 74737.1->66100, lows 67555->61946.2"
+      },
+      "ETH-USD": {
+       "direction": "short",
+       "score": -1.0,
+       "reason": "4h pivots: last highs 2101.88->1845.01, lows 1894.32->1709.48"
+      },
+      "SOL-USD": {
+       "direction": "short",
+       "score": -1.0,
+       "reason": "4h pivots: last highs 82.32->73.24, lows 77.86->67.37"
+      },
+      "XRP-USD": {
+       "direction": "short",
+       "score": -1.0,
+       "reason": "4h pivots: last highs 1.0427->0.9792, lows 0.9961->0.8922"
+      },
+      "DOGE-USD": {
+       "direction": "short",
+       "score": -1.0,
+       "reason": "4h pivots: last highs 0.0695->0.06011, lows 0.06297->0.05539"
+      },
+      "AVAX-USD": {
+       "direction": "short",
+       "score": -1.0,
+       "reason": "4h pivots: last highs 8.628->7.342, lows 7.99->6.736"
+      },
+      "LINK-USD": {
+       "direction": "short",
+       "score": -1.0,
+       "reason": "4h pivots: last highs 10.234->9.37, lows 9.614->8.573"
+      },
+      "ADA-USD": {
+       "direction": "short",
+       "score": -1.0,
+       "reason": "4h pivots: last highs 0.17546->0.15659, lows 0.16589->0.14245"
+      },
+      "SUI-USD": {
+       "direction": "short",
+       "score": -1.0,
+       "reason": "4h pivots: last highs 0.8285->0.7398, lows 0.7648->0.6759"
+      },
+      "PEPE-USD": {
+       "direction": "short",
+       "score": -1.0,
+       "reason": "4h pivots: last highs 4.68e-06->4.07e-06, lows 4.3e-06->3.69e-06"
+      }
+     }
+    },
+    {
+     "name": "B2-Momentum-MACD",
+     "team": "B",
+     "element": "momentum indicators",
+     "style": "MACD(12,26,9) histogram on 4h, confirmed by daily MACD sign.",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "neutral",
+       "score": 0.034,
+       "reason": "4h MACD hist +0.159 ATR (2-bar slope +0.036); daily hist -0.429 ATR"
+      },
+      "ETH-USD": {
+       "direction": "neutral",
+       "score": 0.085,
+       "reason": "4h MACD hist +0.178 ATR (2-bar slope +0.050); daily hist -0.327 ATR"
+      },
+      "SOL-USD": {
+       "direction": "neutral",
+       "score": -0.023,
+       "reason": "4h MACD hist +0.120 ATR (2-bar slope +0.023); daily hist -0.310 ATR"
+      },
+      "XRP-USD": {
+       "direction": "neutral",
+       "score": -0.024,
+       "reason": "4h MACD hist +0.138 ATR (2-bar slope -0.000); daily hist -0.307 ATR"
+      },
+      "DOGE-USD": {
+       "direction": "neutral",
+       "score": 0.082,
+       "reason": "4h MACD hist +0.133 ATR (2-bar slope +0.060); daily hist -0.256 ATR"
+      },
+      "AVAX-USD": {
+       "direction": "neutral",
+       "score": -0.055,
+       "reason": "4h MACD hist -0.028 ATR (2-bar slope +0.077); daily hist -0.144 ATR"
+      },
+      "LINK-USD": {
+       "direction": "neutral",
+       "score": 0.064,
+       "reason": "4h MACD hist +0.117 ATR (2-bar slope +0.022); daily hist -0.185 ATR"
+      },
+      "ADA-USD": {
+       "direction": "neutral",
+       "score": 0.047,
+       "reason": "4h MACD hist +0.083 ATR (2-bar slope +0.032); daily hist -0.158 ATR"
+      },
+      "SUI-USD": {
+       "direction": "neutral",
+       "score": 0.001,
+       "reason": "4h MACD hist +0.067 ATR (2-bar slope +0.024); daily hist -0.172 ATR"
+      },
+      "PEPE-USD": {
+       "direction": "neutral",
+       "score": -0.003,
+       "reason": "4h MACD hist +0.079 ATR (2-bar slope +0.103); daily hist -0.340 ATR"
+      }
+     }
+    },
+    {
+     "name": "B3-Trend-EMAStack",
+     "team": "B",
+     "element": "trend indicators",
+     "style": "EMA20/50 stack on daily and 4h; standard trend alignment.",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "short",
+       "score": -1.0,
+       "reason": "daily EMA20/50 73032/76599.9; 4h 66123.3/69401; price 64642.5"
+      },
+      "ETH-USD": {
+       "direction": "short",
+       "score": -1.0,
+       "reason": "daily EMA20/50 2095.88/2258.61; 4h 1857.08/1964; price 1823.06"
+      },
+      "SOL-USD": {
+       "direction": "short",
+       "score": -1.0,
+       "reason": "daily EMA20/50 85.6176/94.4866; 4h 73.6032/78.8057; price 70.975"
+      },
+      "XRP-USD": {
+       "direction": "short",
+       "score": -1.0,
+       "reason": "daily EMA20/50 1.11492/1.22677; 4h 0.974783/1.03063; price 0.9547"
+      },
+      "DOGE-USD": {
+       "direction": "short",
+       "score": -1.0,
+       "reason": "daily EMA20/50 0.0688855/0.0756969; 4h 0.0605566/0.0642466; price 0.05913"
+      },
+      "AVAX-USD": {
+       "direction": "short",
+       "score": -1.0,
+       "reason": "daily EMA20/50 8.23693/8.73509; 4h 7.46515/7.86992; price 7.1345"
+      },
+      "LINK-USD": {
+       "direction": "short",
+       "score": -1.0,
+       "reason": "daily EMA20/50 10.4345/11.2322; 4h 9.36088/9.83173; price 9.152"
+      },
+      "ADA-USD": {
+       "direction": "short",
+       "score": -1.0,
+       "reason": "daily EMA20/50 0.178569/0.197842; 4h 0.157264/0.166241; price 0.152425"
+      },
+      "SUI-USD": {
+       "direction": "short",
+       "score": -1.0,
+       "reason": "daily EMA20/50 0.833295/0.894135; 4h 0.742026/0.782635; price 0.7187"
+      },
+      "PEPE-USD": {
+       "direction": "short",
+       "score": -0.5,
+       "reason": "daily EMA20/50 4.50024e-06/4.38774e-06; 4h 4.03256e-06/4.37206e-06; price 3.86e-06"
+      }
+     }
+    },
+    {
+     "name": "B4-Volume-OBVConfirm",
+     "team": "B",
+     "element": "volume",
+     "style": "OBV confirmation: 10-day OBV slope vs price slope (confirm or diverge).",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "short",
+       "score": -0.658,
+       "reason": "10d OBV change -0.33 (avg-vol units) vs price -14.0% (confirms)"
+      },
+      "ETH-USD": {
+       "direction": "short",
+       "score": -0.267,
+       "reason": "10d OBV change -0.13 (avg-vol units) vs price -17.9% (confirms)"
+      },
+      "SOL-USD": {
+       "direction": "short",
+       "score": -0.95,
+       "reason": "10d OBV change -0.47 (avg-vol units) vs price -18.5% (confirms)"
+      },
+      "XRP-USD": {
+       "direction": "short",
+       "score": -1.0,
+       "reason": "10d OBV change -0.96 (avg-vol units) vs price -19.2% (confirms)"
+      },
+      "DOGE-USD": {
+       "direction": "short",
+       "score": -1.0,
+       "reason": "10d OBV change -0.51 (avg-vol units) vs price -15.8% (confirms)"
+      },
+      "AVAX-USD": {
+       "direction": "neutral",
+       "score": -0.183,
+       "reason": "10d OBV change -0.09 (avg-vol units) vs price -10.5% (confirms)"
+      },
+      "LINK-USD": {
+       "direction": "short",
+       "score": -0.835,
+       "reason": "10d OBV change -0.42 (avg-vol units) vs price -12.8% (confirms)"
+      },
+      "ADA-USD": {
+       "direction": "short",
+       "score": -0.456,
+       "reason": "10d OBV change -0.23 (avg-vol units) vs price -14.0% (confirms)"
+      },
+      "SUI-USD": {
+       "direction": "short",
+       "score": -0.691,
+       "reason": "10d OBV change -0.35 (avg-vol units) vs price -12.3% (confirms)"
+      },
+      "PEPE-USD": {
+       "direction": "neutral",
+       "score": -0.161,
+       "reason": "10d OBV change -0.08 (avg-vol units) vs price -19.2% (confirms)"
+      }
+     }
+    },
+    {
+     "name": "B5-Volatility-BollingerReversion",
+     "team": "B",
+     "element": "volatility",
+     "style": "Bollinger(20,2) %B on 4h: fades band extremes back to the mean, neutral mid-band.",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "4h Bollinger %B 0.32 (band 62632-68861.2)"
+      },
+      "ETH-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "4h Bollinger %B 0.39 (band 1742.36-1949.99)"
+      },
+      "SOL-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "4h Bollinger %B 0.31 (band 67.0689-79.5416)"
+      },
+      "XRP-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "4h Bollinger %B 0.35 (band 0.91696-1.02439)"
+      },
+      "DOGE-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "4h Bollinger %B 0.37 (band 0.0553405-0.0655675)"
+      },
+      "AVAX-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "4h Bollinger %B 0.30 (band 6.56392-8.46423)"
+      },
+      "LINK-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "4h Bollinger %B 0.36 (band 8.7026-9.9628)"
+      },
+      "ADA-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "4h Bollinger %B 0.34 (band 0.142795-0.171487)"
+      },
+      "SUI-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "4h Bollinger %B 0.32 (band 0.675643-0.809637)"
+      },
+      "PEPE-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "4h Bollinger %B 0.32 (band 3.54824e-06-4.50776e-06)"
+      }
+     }
+    },
+    {
+     "name": "B6-News-BalancedSentiment",
+     "team": "B",
+     "element": "news and macro",
+     "style": "Balanced sentiment: 50/50 symbol vs macro headlines, needs at least 3 scored headlines.",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "short",
+       "score": -0.97,
+       "reason": "symbol news avg -0.80 (n=36); macro avg -0.82 (n=25)"
+      },
+      "ETH-USD": {
+       "direction": "short",
+       "score": -0.792,
+       "reason": "symbol news avg -0.50 (n=4); macro avg -0.82 (n=25)"
+      },
+      "SOL-USD": {
+       "direction": "short",
+       "score": -0.492,
+       "reason": "symbol news avg +0.00 (n=2); macro avg -0.82 (n=25)"
+      },
+      "XRP-USD": {
+       "direction": "short",
+       "score": -1.0,
+       "reason": "symbol news avg -1.00 (n=1); macro avg -0.82 (n=25)"
+      },
+      "DOGE-USD": {
+       "direction": "short",
+       "score": -0.492,
+       "reason": "symbol news avg +0.00 (n=0); macro avg -0.82 (n=25)"
+      },
+      "AVAX-USD": {
+       "direction": "short",
+       "score": -0.492,
+       "reason": "symbol news avg +0.00 (n=0); macro avg -0.82 (n=25)"
+      },
+      "LINK-USD": {
+       "direction": "short",
+       "score": -0.492,
+       "reason": "symbol news avg +0.00 (n=0); macro avg -0.82 (n=25)"
+      },
+      "ADA-USD": {
+       "direction": "short",
+       "score": -0.492,
+       "reason": "symbol news avg +0.00 (n=0); macro avg -0.82 (n=25)"
+      },
+      "SUI-USD": {
+       "direction": "short",
+       "score": -0.492,
+       "reason": "symbol news avg +0.00 (n=0); macro avg -0.82 (n=25)"
+      },
+      "PEPE-USD": {
+       "direction": "short",
+       "score": -0.492,
+       "reason": "symbol news avg +0.00 (n=0); macro avg -0.82 (n=25)"
+      }
+     }
+    },
+    {
+     "name": "B7-Patterns-Candlestick",
+     "team": "B",
+     "element": "historical patterns",
+     "style": "Classic daily candlestick patterns (engulfing, hammer, shooting star) on the last two closed bars.",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "last closed daily candle (2026-11-15): none"
+      },
+      "ETH-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "last closed daily candle (2026-11-15): none"
+      },
+      "SOL-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "last closed daily candle (2026-11-15): none"
+      },
+      "XRP-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "last closed daily candle (2026-11-15): none"
+      },
+      "DOGE-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "last closed daily candle (2026-11-15): none"
+      },
+      "AVAX-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "last closed daily candle (2026-11-15): none"
+      },
+      "LINK-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "last closed daily candle (2026-11-15): none"
+      },
+      "ADA-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "last closed daily candle (2026-11-15): none"
+      },
+      "SUI-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "last closed daily candle (2026-11-15): none"
+      },
+      "PEPE-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "last closed daily candle (2026-11-15): none"
+      }
+     }
+    },
+    {
+     "name": "B8-OrderFlow-BookImbalance",
+     "team": "B",
+     "element": "order flow and liquidity",
+     "style": "L2 depth imbalance within 1% of mid, cross-checked with taker flow.",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "short",
+       "score": -0.338,
+       "reason": "1% book imbalance -0.07 (bids $11,571,759 / asks $13,240,664); taker -0.59"
+      },
+      "ETH-USD": {
+       "direction": "neutral",
+       "score": 0.101,
+       "reason": "1% book imbalance +0.32 (bids $6,964,043 / asks $3,618,372); taker -0.51"
+      },
+      "SOL-USD": {
+       "direction": "neutral",
+       "score": -0.222,
+       "reason": "1% book imbalance +0.03 (bids $3,209,808 / asks $3,004,980); taker -0.57"
+      },
+      "XRP-USD": {
+       "direction": "long",
+       "score": 0.536,
+       "reason": "1% book imbalance +0.39 (bids $3,919,029 / asks $1,708,223); taker +0.27"
+      },
+      "DOGE-USD": {
+       "direction": "neutral",
+       "score": 0.199,
+       "reason": "1% book imbalance +0.29 (bids $538,383 / asks $297,432); taker -0.23"
+      },
+      "AVAX-USD": {
+       "direction": "long",
+       "score": 0.485,
+       "reason": "1% book imbalance +0.49 (bids $601,783 / asks $206,900); taker -0.06"
+      },
+      "LINK-USD": {
+       "direction": "neutral",
+       "score": -0.002,
+       "reason": "1% book imbalance +0.04 (bids $564,547 / asks $522,462); taker -0.10"
+      },
+      "ADA-USD": {
+       "direction": "long",
+       "score": 0.547,
+       "reason": "1% book imbalance +0.42 (bids $558,239 / asks $228,675); taker +0.24"
+      },
+      "SUI-USD": {
+       "direction": "long",
+       "score": 0.319,
+       "reason": "1% book imbalance +0.34 (bids $765,822 / asks $378,138); taker -0.08"
+      },
+      "PEPE-USD": {
+       "direction": "neutral",
+       "score": -0.203,
+       "reason": "1% book imbalance -0.22 (bids $152,227 / asks $239,416); taker +0.07"
+      }
+     }
+    },
+    {
+     "name": "B9-Risk-VolAdjustedReturn",
+     "team": "B",
+     "element": "risk metrics",
+     "style": "Risk-adjusted momentum: 30d return / 30d vol (Sharpe-like); penalises when daily RSI is <28 or >72.",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "short",
+       "score": -0.266,
+       "reason": "30d return/vol ratio -1.77; daily RSI 23.7"
+      },
+      "ETH-USD": {
+       "direction": "neutral",
+       "score": -0.232,
+       "reason": "30d return/vol ratio -1.55; daily RSI 25.8"
+      },
+      "SOL-USD": {
+       "direction": "short",
+       "score": -0.3,
+       "reason": "30d return/vol ratio -2.22; daily RSI 20.1"
+      },
+      "XRP-USD": {
+       "direction": "neutral",
+       "score": -0.238,
+       "reason": "30d return/vol ratio -1.59; daily RSI 26.0"
+      },
+      "DOGE-USD": {
+       "direction": "neutral",
+       "score": -0.236,
+       "reason": "30d return/vol ratio -1.58; daily RSI 26.1"
+      },
+      "AVAX-USD": {
+       "direction": "short",
+       "score": -0.642,
+       "reason": "30d return/vol ratio -1.28; daily RSI 32.6"
+      },
+      "LINK-USD": {
+       "direction": "short",
+       "score": -0.581,
+       "reason": "30d return/vol ratio -1.16; daily RSI 31.8"
+      },
+      "ADA-USD": {
+       "direction": "short",
+       "score": -0.255,
+       "reason": "30d return/vol ratio -1.70; daily RSI 27.3"
+      },
+      "SUI-USD": {
+       "direction": "short",
+       "score": -0.64,
+       "reason": "30d return/vol ratio -1.28; daily RSI 32.0"
+      },
+      "PEPE-USD": {
+       "direction": "neutral",
+       "score": 0.075,
+       "reason": "30d return/vol ratio +0.15; daily RSI 37.2"
+      }
+     }
+    },
+    {
+     "name": "B10-TradeStyle-TeamBRulebook",
+     "team": "B",
+     "element": "trade style rules",
+     "style": "Team B rulebook: trend+momentum agreement, no shorts with daily RSI<28 (no longs >72), extension <=2 daily ATR from EMA20.",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "short blocked: daily RSI 23.7 < 28 (no chasing)"
+      },
+      "ETH-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "short blocked: daily RSI 25.8 < 28 (no chasing)"
+      },
+      "SOL-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "short blocked: daily RSI 20.1 < 28 (no chasing)"
+      },
+      "XRP-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "short blocked: daily RSI 26.0 < 28 (no chasing)"
+      },
+      "DOGE-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "short blocked: daily RSI 26.1 < 28 (no chasing)"
+      },
+      "AVAX-USD": {
+       "direction": "short",
+       "score": -0.6,
+       "reason": "trend down, RSI 32.6, extension -1.85 ATR: rules pass"
+      },
+      "LINK-USD": {
+       "direction": "short",
+       "score": -0.6,
+       "reason": "trend down, RSI 31.8, extension -1.90 ATR: rules pass"
+      },
+      "ADA-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "short blocked: daily RSI 27.3 < 28 (no chasing)"
+      },
+      "SUI-USD": {
+       "direction": "short",
+       "score": -0.6,
+       "reason": "trend down, RSI 32.0, extension -1.91 ATR: rules pass"
+      },
+      "PEPE-USD": {
+       "direction": "short",
+       "score": -0.6,
+       "reason": "trend down, RSI 37.2, extension -1.43 ATR: rules pass"
+      }
+     }
+    }
+   ]
+  },
+  "C": {
+   "name": "Team C",
+   "risk": "low",
+   "style": "conservative, high-probability, tight stops, strong confluence",
+   "call": {
+    "team": "C",
+    "decision": "NO TRADE",
+    "symbol": null,
+    "direction": "none",
+    "reason": "no symbol passed this team's filters",
+    "best_candidate": {
+     "symbol": "SUI-USD",
+     "side": "short",
+     "agree": 3,
+     "net_score": -0.189,
+     "reasons": [
+      "agreement 3/10 < 7",
+      "|net score| 0.19 < 0.35",
+      "extended -1.91 daily ATR from EMA20 (> 1.5)"
+     ]
+    }
+   },
+   "rejected": [
+    {
+     "symbol": "SUI-USD",
+     "side": "short",
+     "agree": 3,
+     "net_score": -0.189,
+     "reasons": [
+      "agreement 3/10 < 7",
+      "|net score| 0.19 < 0.35",
+      "extended -1.91 daily ATR from EMA20 (> 1.5)"
+     ]
+    },
+    {
+     "symbol": "LINK-USD",
+     "side": "short",
+     "agree": 3,
+     "net_score": -0.184,
+     "reasons": [
+      "agreement 3/10 < 7",
+      "|net score| 0.18 < 0.35",
+      "extended -1.90 daily ATR from EMA20 (> 1.5)"
+     ]
+    },
+    {
+     "symbol": "SOL-USD",
+     "side": "short",
+     "agree": 3,
+     "net_score": -0.18,
+     "reasons": [
+      "agreement 3/10 < 7",
+      "|net score| 0.18 < 0.35",
+      "short blocked: daily RSI 20.1 < 30.0",
+      "extended -3.07 daily ATR from EMA20 (> 1.5)",
+      "T1 R:R 1.71 < 2.0"
+     ]
+    },
+    {
+     "symbol": "DOGE-USD",
+     "side": "short",
+     "agree": 3,
+     "net_score": -0.178,
+     "reasons": [
+      "agreement 3/10 < 7",
+      "|net score| 0.18 < 0.35",
+      "short blocked: daily RSI 26.1 < 30.0",
+      "extended -2.48 daily ATR from EMA20 (> 1.5)"
+     ]
+    },
+    {
+     "symbol": "XRP-USD",
+     "side": "short",
+     "agree": 3,
+     "net_score": -0.114,
+     "reasons": [
+      "agreement 3/10 < 7",
+      "|net score| 0.11 < 0.35",
+      "short blocked: daily RSI 26.0 < 30.0",
+      "extended -2.66 daily ATR from EMA20 (> 1.5)"
+     ]
+    },
+    {
+     "symbol": "ETH-USD",
+     "side": "short",
+     "agree": 3,
+     "net_score": -0.097,
+     "reasons": [
+      "agreement 3/10 < 7",
+      "|net score| 0.10 < 0.35",
+      "short blocked: daily RSI 25.8 < 30.0",
+      "extended -2.59 daily ATR from EMA20 (> 1.5)"
+     ]
+    },
+    {
+     "symbol": "AVAX-USD",
+     "side": "short",
+     "agree": 2,
+     "net_score": -0.12,
+     "reasons": [
+      "agreement 2/10 < 7",
+      "|net score| 0.12 < 0.35",
+      "extended -1.85 daily ATR from EMA20 (> 1.5)"
+     ]
+    },
+    {
+     "symbol": "ADA-USD",
+     "side": "short",
+     "agree": 2,
+     "net_score": -0.081,
+     "reasons": [
+      "agreement 2/10 < 7",
+      "|net score| 0.08 < 0.35",
+      "short blocked: daily RSI 27.3 < 30.0",
+      "extended -2.20 daily ATR from EMA20 (> 1.5)"
+     ]
+    },
+    {
+     "symbol": "BTC-USD",
+     "side": "short",
+     "agree": 3,
+     "net_score": -0.048,
+     "reasons": [
+      "agreement 3/10 < 7",
+      "|net score| 0.05 < 0.35",
+      "short blocked: daily RSI 23.7 < 30.0",
+      "extended -3.14 daily ATR from EMA20 (> 1.5)"
+     ]
+    },
+    {
+     "symbol": "PEPE-USD",
+     "side": "short",
+     "agree": 2,
+     "net_score": -0.058,
+     "reasons": [
+      "agreement 2/10 < 7",
+      "|net score| 0.06 < 0.35"
+     ]
+    }
+   ],
+   "ranking": [
+    {
+     "symbol": "SUI-USD",
+     "side": "short",
+     "net_score": -0.189,
+     "agree": 3
+    },
+    {
+     "symbol": "LINK-USD",
+     "side": "short",
+     "net_score": -0.184,
+     "agree": 3
+    },
+    {
+     "symbol": "SOL-USD",
+     "side": "short",
+     "net_score": -0.18,
+     "agree": 3
+    },
+    {
+     "symbol": "DOGE-USD",
+     "side": "short",
+     "net_score": -0.178,
+     "agree": 3
+    },
+    {
+     "symbol": "XRP-USD",
+     "side": "short",
+     "net_score": -0.114,
+     "agree": 3
+    },
+    {
+     "symbol": "ETH-USD",
+     "side": "short",
+     "net_score": -0.097,
+     "agree": 3
+    },
+    {
+     "symbol": "AVAX-USD",
+     "side": "short",
+     "net_score": -0.12,
+     "agree": 2
+    },
+    {
+     "symbol": "ADA-USD",
+     "side": "short",
+     "net_score": -0.081,
+     "agree": 2
+    },
+    {
+     "symbol": "BTC-USD",
+     "side": "short",
+     "net_score": -0.048,
+     "agree": 3
+    },
+    {
+     "symbol": "PEPE-USD",
+     "side": "short",
+     "net_score": -0.058,
+     "agree": 2
+    }
+   ],
+   "subbots": [
+    {
+     "name": "C1-PriceAction-SupportResistance",
+     "team": "C",
+     "element": "price action",
+     "style": "Multi-touch S/R: only votes when price is within 0.5 daily ATR of a level touched >=2 times in 60 days, then plays the bounce/rejection.",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "no multi-touch S/R level within 0.5 daily ATR"
+      },
+      "ETH-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "no multi-touch S/R level within 0.5 daily ATR"
+      },
+      "SOL-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "no multi-touch S/R level within 0.5 daily ATR"
+      },
+      "XRP-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "no multi-touch S/R level within 0.5 daily ATR"
+      },
+      "DOGE-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "no multi-touch S/R level within 0.5 daily ATR"
+      },
+      "AVAX-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "no multi-touch S/R level within 0.5 daily ATR"
+      },
+      "LINK-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "no multi-touch S/R level within 0.5 daily ATR"
+      },
+      "ADA-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "no multi-touch S/R level within 0.5 daily ATR"
+      },
+      "SUI-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "no multi-touch S/R level within 0.5 daily ATR"
+      },
+      "PEPE-USD": {
+       "direction": "long",
+       "score": 0.5,
+       "reason": "support 3.77e-06 (2 touches) 0.20 ATR away"
+      }
+     }
+    },
+    {
+     "name": "C2-Momentum-RSIDivergence",
+     "team": "C",
+     "element": "momentum indicators",
+     "style": "Strict RSI divergence on 4h between the last two confirmed pivots (high-probability reversal only).",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "long",
+       "score": 0.6,
+       "reason": "bullish 4h divergence: low 67555->61946.2, RSI 16.8->22.3"
+      },
+      "ETH-USD": {
+       "direction": "long",
+       "score": 0.6,
+       "reason": "bullish 4h divergence: low 1894.32->1709.48, RSI 22.1->30.4"
+      },
+      "SOL-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "no qualifying 4h RSI divergence"
+      },
+      "XRP-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "no qualifying 4h RSI divergence"
+      },
+      "DOGE-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "no qualifying 4h RSI divergence"
+      },
+      "AVAX-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "no qualifying 4h RSI divergence"
+      },
+      "LINK-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "no qualifying 4h RSI divergence"
+      },
+      "ADA-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "no qualifying 4h RSI divergence"
+      },
+      "SUI-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "no qualifying 4h RSI divergence"
+      },
+      "PEPE-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "no qualifying 4h RSI divergence"
+      }
+     }
+    },
+    {
+     "name": "C3-Trend-ADXStrength",
+     "team": "C",
+     "element": "trend indicators",
+     "style": "Daily ADX(14) > 25 required; direction from +DI/-DI. Weak trends are ignored.",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "short",
+       "score": -0.675,
+       "reason": "daily ADX 33.8, +DI 7.2 / -DI 38.4"
+      },
+      "ETH-USD": {
+       "direction": "short",
+       "score": -0.672,
+       "reason": "daily ADX 33.6, +DI 9.8 / -DI 35.1"
+      },
+      "SOL-USD": {
+       "direction": "short",
+       "score": -0.9,
+       "reason": "daily ADX 46.6, +DI 6.0 / -DI 37.3"
+      },
+      "XRP-USD": {
+       "direction": "short",
+       "score": -0.738,
+       "reason": "daily ADX 36.9, +DI 8.2 / -DI 36.9"
+      },
+      "DOGE-USD": {
+       "direction": "short",
+       "score": -0.879,
+       "reason": "daily ADX 44.0, +DI 6.1 / -DI 34.3"
+      },
+      "AVAX-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "daily ADX 21.3 < 25 (no strong trend)"
+      },
+      "LINK-USD": {
+       "direction": "short",
+       "score": -0.643,
+       "reason": "daily ADX 32.2, +DI 7.9 / -DI 28.2"
+      },
+      "ADA-USD": {
+       "direction": "short",
+       "score": -0.81,
+       "reason": "daily ADX 40.5, +DI 7.2 / -DI 30.7"
+      },
+      "SUI-USD": {
+       "direction": "short",
+       "score": -0.686,
+       "reason": "daily ADX 34.3, +DI 8.1 / -DI 28.2"
+      },
+      "PEPE-USD": {
+       "direction": "short",
+       "score": -0.576,
+       "reason": "daily ADX 28.8, +DI 18.4 / -DI 23.5"
+      }
+     }
+    },
+    {
+     "name": "C4-Volume-VWAPAnchor",
+     "team": "C",
+     "element": "volume",
+     "style": "24h volume-weighted average price from 1h bars: votes only if price is >0.5 1h-ATR away from VWAP.",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "price -0.03 1h-ATR from 24h VWAP 64664.6 (too close)"
+      },
+      "ETH-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "price +0.24 1h-ATR from 24h VWAP 1817.41 (too close)"
+      },
+      "SOL-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "price -0.41 1h-ATR from 24h VWAP 71.4095 (too close)"
+      },
+      "XRP-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "price -0.23 1h-ATR from 24h VWAP 0.957679 (too close)"
+      },
+      "DOGE-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "price +0.26 1h-ATR from 24h VWAP 0.0589284 (too close)"
+      },
+      "AVAX-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "price -0.39 1h-ATR from 24h VWAP 7.17734 (too close)"
+      },
+      "LINK-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "price -0.23 1h-ATR from 24h VWAP 9.1806 (too close)"
+      },
+      "ADA-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "price -0.24 1h-ATR from 24h VWAP 0.152965 (too close)"
+      },
+      "SUI-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "price -0.36 1h-ATR from 24h VWAP 0.722651 (too close)"
+      },
+      "PEPE-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "price +0.43 1h-ATR from 24h VWAP 3.8299e-06 (too close)"
+      }
+     }
+    },
+    {
+     "name": "C5-Volatility-RegimeFilter",
+     "team": "C",
+     "element": "volatility",
+     "style": "Calm-regime only: stands aside if daily ATR% is in the top 30% of its 1-year range; otherwise Keltner-channel position.",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "daily ATR% at 92th percentile of 1y: high-vol regime, stand aside"
+      },
+      "ETH-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "daily ATR% at 94th percentile of 1y: high-vol regime, stand aside"
+      },
+      "SOL-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "daily ATR% at 99th percentile of 1y: high-vol regime, stand aside"
+      },
+      "XRP-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "daily ATR% at 97th percentile of 1y: high-vol regime, stand aside"
+      },
+      "DOGE-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "daily ATR% at 98th percentile of 1y: high-vol regime, stand aside"
+      },
+      "AVAX-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "daily ATR% at 99th percentile of 1y: high-vol regime, stand aside"
+      },
+      "LINK-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "daily ATR% at 99th percentile of 1y: high-vol regime, stand aside"
+      },
+      "ADA-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "daily ATR% at 97th percentile of 1y: high-vol regime, stand aside"
+      },
+      "SUI-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "daily ATR% at 96th percentile of 1y: high-vol regime, stand aside"
+      },
+      "PEPE-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "daily ATR% at 99th percentile of 1y: high-vol regime, stand aside"
+      }
+     }
+    },
+    {
+     "name": "C6-News-RiskOffFilter",
+     "team": "C",
+     "element": "news and macro",
+     "style": "Macro risk filter: votes only when >=70% of scored macro+market headlines lean one way; otherwise neutral.",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "short",
+       "score": -0.5,
+       "reason": "88% of 65 scored headlines negative (risk-off)"
+      },
+      "ETH-USD": {
+       "direction": "short",
+       "score": -0.5,
+       "reason": "85% of 39 scored headlines negative (risk-off)"
+      },
+      "SOL-USD": {
+       "direction": "short",
+       "score": -0.5,
+       "reason": "84% of 37 scored headlines negative (risk-off)"
+      },
+      "XRP-USD": {
+       "direction": "short",
+       "score": -0.5,
+       "reason": "86% of 36 scored headlines negative (risk-off)"
+      },
+      "DOGE-USD": {
+       "direction": "short",
+       "score": -0.5,
+       "reason": "86% of 35 scored headlines negative (risk-off)"
+      },
+      "AVAX-USD": {
+       "direction": "short",
+       "score": -0.5,
+       "reason": "86% of 35 scored headlines negative (risk-off)"
+      },
+      "LINK-USD": {
+       "direction": "short",
+       "score": -0.5,
+       "reason": "86% of 35 scored headlines negative (risk-off)"
+      },
+      "ADA-USD": {
+       "direction": "short",
+       "score": -0.5,
+       "reason": "86% of 35 scored headlines negative (risk-off)"
+      },
+      "SUI-USD": {
+       "direction": "short",
+       "score": -0.5,
+       "reason": "86% of 35 scored headlines negative (risk-off)"
+      },
+      "PEPE-USD": {
+       "direction": "short",
+       "score": -0.5,
+       "reason": "86% of 35 scored headlines negative (risk-off)"
+      }
+     }
+    },
+    {
+     "name": "C7-Patterns-OversoldBounceStats",
+     "team": "C",
+     "element": "historical patterns",
+     "style": "Extreme-RSI base rates: when daily RSI was this stretched before, how often did price revert over 3 days? Needs n>=5 and >=60% hit rate.",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "long",
+       "score": 0.5,
+       "reason": "11 past cases at similar RSI: 3d reversion 64%, median +1.4%"
+      },
+      "ETH-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "19 past cases, reversion hit rate 58% (<60%)"
+      },
+      "SOL-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "10 past cases, reversion hit rate 50% (<60%)"
+      },
+      "XRP-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "14 past cases, reversion hit rate 43% (<60%)"
+      },
+      "DOGE-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "21 past cases, reversion hit rate 43% (<60%)"
+      },
+      "AVAX-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "42 past cases, reversion hit rate 50% (<60%)"
+      },
+      "LINK-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "31 past cases, reversion hit rate 58% (<60%)"
+      },
+      "ADA-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "33 past cases, reversion hit rate 36% (<60%)"
+      },
+      "SUI-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "44 past cases, reversion hit rate 50% (<60%)"
+      },
+      "PEPE-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "daily RSI 37.2 not extreme"
+      }
+     }
+    },
+    {
+     "name": "C8-OrderFlow-LiquidityQuality",
+     "team": "C",
+     "element": "order flow and liquidity",
+     "style": "Liquidity-quality gate: votes only if spread <5 bps AND book and taker flow agree strongly (both |imb|>0.2).",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "no strong agreement (0.2% book +0.06, taker -0.59, spread 0.0 bps)"
+      },
+      "ETH-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "no strong agreement (0.2% book +0.33, taker -0.51, spread 0.9 bps)"
+      },
+      "SOL-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "no strong agreement (0.2% book +0.45, taker -0.57, spread 1.4 bps)"
+      },
+      "XRP-USD": {
+       "direction": "long",
+       "score": 0.5,
+       "reason": "0.2% book imb +0.25 and taker +0.27 agree; spread 2.1 bps"
+      },
+      "DOGE-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "no strong agreement (0.2% book +0.61, taker -0.23, spread 3.4 bps)"
+      },
+      "AVAX-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "no strong agreement (0.2% book +0.84, taker -0.06, spread 4.2 bps)"
+      },
+      "LINK-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "no strong agreement (0.2% book +0.46, taker -0.10, spread 2.2 bps)"
+      },
+      "ADA-USD": {
+       "direction": "long",
+       "score": 0.5,
+       "reason": "0.2% book imb +0.56 and taker +0.24 agree; spread 2.0 bps"
+      },
+      "SUI-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "no strong agreement (0.2% book +0.15, taker -0.08, spread 2.8 bps)"
+      },
+      "PEPE-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "spread 51.8 bps too wide"
+      }
+     }
+    },
+    {
+     "name": "C9-Risk-VaRGate",
+     "team": "C",
+     "element": "risk metrics",
+     "style": "95% 1-day historical VaR (90d): only names with VaR below the universe median get a vote, in the direction of the daily EMA20.",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "short",
+       "score": -0.4,
+       "reason": "95% 1d VaR 3.39% (median 5.46%); price below daily EMA20"
+      },
+      "ETH-USD": {
+       "direction": "short",
+       "score": -0.4,
+       "reason": "95% 1d VaR 4.61% (median 5.46%); price below daily EMA20"
+      },
+      "SOL-USD": {
+       "direction": "short",
+       "score": -0.4,
+       "reason": "95% 1d VaR 5.32% (median 5.46%); price below daily EMA20"
+      },
+      "XRP-USD": {
+       "direction": "short",
+       "score": -0.4,
+       "reason": "95% 1d VaR 4.98% (median 5.46%); price below daily EMA20"
+      },
+      "DOGE-USD": {
+       "direction": "short",
+       "score": -0.4,
+       "reason": "95% 1d VaR 5.44% (median 5.46%); price below daily EMA20"
+      },
+      "AVAX-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "95% 1d VaR 7.06% above universe median 5.46%: too risky"
+      },
+      "LINK-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "95% 1d VaR 5.49% above universe median 5.46%: too risky"
+      },
+      "ADA-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "95% 1d VaR 7.07% above universe median 5.46%: too risky"
+      },
+      "SUI-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "95% 1d VaR 7.68% above universe median 5.46%: too risky"
+      },
+      "PEPE-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "95% 1d VaR 7.16% above universe median 5.46%: too risky"
+      }
+     }
+    },
+    {
+     "name": "C10-TradeStyle-TripleConfluence",
+     "team": "C",
+     "element": "trade style rules",
+     "style": "Conservative rulebook: daily, 4h and 1h trend must all agree and daily RSI must be 30-70 (no extremes).",
+     "outputs": {
+      "BTC-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "timeframes disagree (D/4h/1h [-1, -1, 1])"
+      },
+      "ETH-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "timeframes disagree (D/4h/1h [-1, -1, 1])"
+      },
+      "SOL-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "all timeframes down but daily RSI 20.1 outside 30-70"
+      },
+      "XRP-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "all timeframes down but daily RSI 26.0 outside 30-70"
+      },
+      "DOGE-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "timeframes disagree (D/4h/1h [-1, -1, 1])"
+      },
+      "AVAX-USD": {
+       "direction": "short",
+       "score": -0.7,
+       "reason": "daily/4h/1h all down; daily RSI 32.6"
+      },
+      "LINK-USD": {
+       "direction": "short",
+       "score": -0.7,
+       "reason": "daily/4h/1h all down; daily RSI 31.8"
+      },
+      "ADA-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "all timeframes down but daily RSI 27.3 outside 30-70"
+      },
+      "SUI-USD": {
+       "direction": "short",
+       "score": -0.7,
+       "reason": "daily/4h/1h all down; daily RSI 32.0"
+      },
+      "PEPE-USD": {
+       "direction": "neutral",
+       "score": 0.0,
+       "reason": "timeframes disagree (D/4h/1h [-1, -1, 1])"
+      }
+     }
+    }
+   ]
+  }
+ },
+ "news": [
+  {
+   "title": "Bitcoin price fails to hold $65K as US stocks drop further on AI nerves",
+   "source": "Cointelegraph RSS",
+   "url": "https://cointelegraph.com/markets/bitcoin-price-fails-to-hold-65k-us-stocks-drop-on-ai-nerves?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "published_london": "2026-11-16 16:26:52 GMT",
+   "via": "RSS",
+   "sentiment": -1.0,
+   "symbols": [
+    "BTC-USD"
+   ],
+   "macro": true
+  },
+  {
+   "title": "Zelle picks Solana for ZelleUSD stablecoin and international payments",
+   "source": "Cointelegraph RSS",
+   "url": "https://cointelegraph.com/news/zelle-solana-zelleusd-stablecoin-international-payments?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "published_london": "2026-11-16 14:55:46 GMT",
+   "via": "RSS",
+   "sentiment": 1.0,
+   "symbols": [
+    "SOL-USD"
+   ],
+   "macro": false
+  },
+  {
+   "title": "Lighter pauses withdrawals after reported $10M account theft",
+   "source": "Cointelegraph RSS",
+   "url": "https://cointelegraph.com/news/lighter-dex-pauses-withdrawals-10m-exploit?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "published_london": "2026-11-16 14:19:50 GMT",
+   "via": "RSS",
+   "sentiment": -1.0,
+   "symbols": [],
+   "macro": false
+  },
+  {
+   "title": "Banks are banning AI agents over security... and competition concerns",
+   "source": "Cointelegraph RSS",
+   "url": "https://cointelegraph.com/magazine/banks-are-banning-ai-agents-over-security-and-competition-concerns?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "published_london": "2026-11-16 13:30:00 GMT",
+   "via": "RSS",
+   "sentiment": -1.0,
+   "symbols": [],
+   "macro": false
+  },
+  {
+   "title": "Strategy buys $33M in Bitcoin, spends $228M on STRC buybacks",
+   "source": "Cointelegraph RSS",
+   "url": "https://cointelegraph.com/news/strategy-buy-485-bitcoin-228-million-strc-buyback?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "published_london": "2026-11-16 13:29:11 GMT",
+   "via": "RSS",
+   "sentiment": 1.0,
+   "symbols": [
+    "BTC-USD"
+   ],
+   "macro": false
+  },
+  {
+   "title": "Binance Pay Later offers credit backed by Bitcoin, Ether and BNB holdings",
+   "source": "Cointelegraph RSS",
+   "url": "https://cointelegraph.com/news/binance-pay-later-crypto-backed-credit?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "published_london": "2026-11-16 13:00:00 GMT",
+   "via": "RSS",
+   "sentiment": 0.0,
+   "symbols": [
+    "BTC-USD",
+    "ETH-USD"
+   ],
+   "macro": false
+  },
+  {
+   "title": "HKMA, Swift explore tokenized deposits for cross-border bank payments",
+   "source": "Cointelegraph RSS",
+   "url": "https://cointelegraph.com/news/hkma-swift-tokenized-deposits-cross-border-payments?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "published_london": "2026-11-16 12:54:51 GMT",
+   "via": "RSS",
+   "sentiment": -1.0,
+   "symbols": [],
+   "macro": false
+  },
+  {
+   "title": "BTC price tags 18-week low into Nvidia earnings: Three things to know in Bitcoin this week",
+   "source": "Cointelegraph RSS",
+   "url": "https://cointelegraph.com/markets/btc-price-18-week-low-nvidia-three-things-know-bitcoin-this-week?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "published_london": "2026-11-16 10:39:05 GMT",
+   "via": "RSS",
+   "sentiment": -1.0,
+   "symbols": [
+    "BTC-USD"
+   ],
+   "macro": true
+  },
+  {
+   "title": "DBS, JPMorgan\u2019s Kinexys launch 24/7 transfers of tokenized deposits",
+   "source": "Cointelegraph RSS",
+   "url": "https://cointelegraph.com/news/dbs-jpmorgans-kinexys-launch-tokenized-transfers?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "published_london": "2026-11-16 08:50:50 GMT",
+   "via": "RSS",
+   "sentiment": 1.0,
+   "symbols": [],
+   "macro": false
+  },
+  {
+   "title": "Harvard, Dartmouth keep Bitcoin ETF stakes steady as fund gains 42% in Q3",
+   "source": "Cointelegraph RSS",
+   "url": "https://cointelegraph.com/news/harvard-dartmouth-bitcoin-etf-ibit-up-q3?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "published_london": "2026-11-16 08:27:39 GMT",
+   "via": "RSS",
+   "sentiment": 1.0,
+   "symbols": [
+    "BTC-USD"
+   ],
+   "macro": false
+  },
+  {
+   "title": "Aster CEO suspects foul play after token plunges 32% in minutes",
+   "source": "Cointelegraph RSS",
+   "url": "https://cointelegraph.com/markets/aster-ceo-suspects-foul-play-after-token-plunges-32-in-minutes?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "published_london": "2026-11-16 05:28:40 GMT",
+   "via": "RSS",
+   "sentiment": -1.0,
+   "symbols": [],
+   "macro": false
+  },
+  {
+   "title": "Asian chip stocks tumble ahead of Nvidia Q3 earnings",
+   "source": "Cointelegraph RSS",
+   "url": "https://cointelegraph.com/markets/asian-chip-stocks-tumble-ahead-of-nvidia-q3-earnings?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "published_london": "2026-11-16 04:42:07 GMT",
+   "via": "RSS",
+   "sentiment": -1.0,
+   "symbols": [],
+   "macro": true
+  },
+  {
+   "title": "Luxor CEO warns of AI \u2018dark forest\u2019 following Bitcoin miner hijack",
+   "source": "Cointelegraph RSS",
+   "url": "https://cointelegraph.com/news/luxor-ceo-warns-of-ai-dark-forest-after-bitcoin-miner-hijack?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "published_london": "2026-11-16 02:33:07 GMT",
+   "via": "RSS",
+   "sentiment": -1.0,
+   "symbols": [
+    "BTC-USD"
+   ],
+   "macro": false
+  },
+  {
+   "title": "Jensen Huang weighs Nvidia comeback days after shock exit: FT",
+   "source": "Cointelegraph RSS",
+   "url": "https://cointelegraph.com/news/jensen-huang-weighs-nvidia-comeback-days-after-shock-exit?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "published_london": "2026-11-15 23:47:45 GMT",
+   "via": "RSS",
+   "sentiment": 0.0,
+   "symbols": [],
+   "macro": true
+  },
+  {
+   "title": "US sellers drive Bitcoin crash, Jensen plots Nvidia comeback: Hodler\u2019s Digest",
+   "source": "Cointelegraph RSS",
+   "url": "https://cointelegraph.com/magazine/us-sellers-drive-bitcoin-crash-jensen-plots-comeback-hodlers-digest?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "published_london": "2026-11-15 22:50:59 GMT",
+   "via": "RSS",
+   "sentiment": -1.0,
+   "symbols": [
+    "BTC-USD"
+   ],
+   "macro": true
+  },
+  {
+   "title": "Enterprise blockchain is going to come back from the dead",
+   "source": "Cointelegraph RSS",
+   "url": "https://cointelegraph.com/opinion/enterprise-blockchain-come-back-from-dead?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "published_london": "2026-11-15 14:30:00 GMT",
+   "via": "RSS",
+   "sentiment": 1.0,
+   "symbols": [],
+   "macro": false
+  },
+  {
+   "title": "Bitcoin falls to 4-month low near $62K as crypto selloff deepens",
+   "source": "Cointelegraph RSS",
+   "url": "https://cointelegraph.com/markets/bitcoin-four-month-low-62k-crypto-market-selloff?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "published_london": "2026-11-15 10:23:17 GMT",
+   "via": "RSS",
+   "sentiment": -1.0,
+   "symbols": [
+    "BTC-USD"
+   ],
+   "macro": false
+  },
+  {
+   "title": "Coinone warns of phishing, identity theft after customer data breach",
+   "source": "Cointelegraph RSS",
+   "url": "https://cointelegraph.com/news/coinone-data-breach-phishing-identity-theft-customer-information?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound",
+   "published_london": "2026-11-15 08:07:58 GMT",
+   "via": "RSS",
+   "sentiment": -1.0,
+   "symbols": [],
+   "macro": false
+  },
+  {
+   "title": "Solana Drops 'Mainnet Beta' After Six Years: Here's What 1.0 Is All About",
+   "source": "Decrypt RSS",
+   "url": "https://decrypt.co/383322/solana-drops-mainnet-beta-after-six-years",
+   "published_london": "2026-11-16 16:14:22 GMT",
+   "via": "RSS",
+   "sentiment": -1.0,
+   "symbols": [
+    "SOL-USD"
+   ],
+   "macro": false
+  },
+  {
+   "title": "'Nobody Knows Who's in Charge': Boris Johnson Stands by Bitcoin Skepticism at Breakpoint",
+   "source": "Decrypt RSS",
+   "url": "https://decrypt.co/383307/nobody-knows-whos-in-charge-boris-johnson-stands-by-bitcoin-skepticism-at-breakpoint",
+   "published_london": "2026-11-16 15:04:56 GMT",
+   "via": "RSS",
+   "sentiment": 0.0,
+   "symbols": [
+    "BTC-USD"
+   ],
+   "macro": false
+  },
+  {
+   "title": "Morning Minute: Crypto Hits Extreme Fear as Bitcoin Plunges",
+   "source": "Decrypt RSS",
+   "url": "https://decrypt.co/383301/morning-minute-crypto-hits-extreme-fear-as-bitcoin-plunges",
+   "published_london": "2026-11-16 13:23:17 GMT",
+   "via": "RSS",
+   "sentiment": -1.0,
+   "symbols": [
+    "BTC-USD"
+   ],
+   "macro": false
+  },
+  {
+   "title": "Ledger Brings Clear Signing to Solana, Ending 'Blind' Signing for Jupiter Swaps",
+   "source": "Decrypt RSS",
+   "url": "https://decrypt.co/383302/ledger-brings-clear-signing-to-solana-ending-blind-signing-for-jupiter-swaps",
+   "published_london": "2026-11-16 13:12:08 GMT",
+   "via": "RSS",
+   "sentiment": 0.0,
+   "symbols": [
+    "SOL-USD"
+   ],
+   "macro": false
+  },
+  {
+   "title": "Vitalik Buterin Now \u2018a Total Bull\u2019 on leanPCS as Fast Track to Quantum-Safe Ethereum",
+   "source": "Decrypt RSS",
+   "url": "https://decrypt.co/383294/vitalik-buterin-now-a-total-bull-on-leanpcs-as-fast-track-to-quantum-safe-ethereum",
+   "published_london": "2026-11-16 09:54:55 GMT",
+   "via": "RSS",
+   "sentiment": 1.0,
+   "symbols": [
+    "ETH-USD"
+   ],
+   "macro": false
+  },
+  {
+   "title": "Elon Musk Joins 160,000 Backing Petition to Bring Jensen Huang Back to Nvidia",
+   "source": "Decrypt RSS",
+   "url": "https://decrypt.co/383286/elon-musk-joins-160000-backing-petition-to-bring-jensen-huang-back-to-nvidia",
+   "published_london": "2026-11-16 09:25:01 GMT",
+   "via": "RSS",
+   "sentiment": 0.0,
+   "symbols": [],
+   "macro": true
+  },
+  {
+   "title": "How Wall Street Is Racing to Claim the Onchain Dollar",
+   "source": "Decrypt RSS",
+   "url": "https://decrypt.co/383284/how-wall-street-racing-onchain-dollar-stablecoins",
+   "published_london": "2026-11-15 16:01:02 GMT",
+   "via": "RSS",
+   "sentiment": 0.0,
+   "symbols": [],
+   "macro": true
+  },
+  {
+   "title": "Bitcoin ETFs Lose $2.1 Billion in November as Outflow Streak Hits Seven Days",
+   "source": "Decrypt RSS",
+   "url": "https://decrypt.co/383282/bitcoin-etfs-lose-2-1-billion-november-outflow-streak-seven-days",
+   "published_london": "2026-11-15 14:01:02 GMT",
+   "via": "RSS",
+   "sentiment": -1.0,
+   "symbols": [
+    "BTC-USD"
+   ],
+   "macro": false
+  },
+  {
+   "title": "'Nobody Knows Who's in Charge': Boris Johnson Stands by Bitcoin Skepticism at Breakpoint - Decrypt",
+   "source": "Google News RSS (bitcoin, 1d)",
+   "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPenVxRDJtdlluVlFGb3g2cFlwU0g2dW1UczQ2UlRRLU1FNHZMbFJMaUhWRmlNTmNYNUNINHU3aGl6MHFpdFNsaXFabXROSzNob3I0STg3d2VnRUdGMWt4QlZMMHJ0ek14V0l4dWx5b041OVlFRWVLdDItdGNzeFIycHp6azlDTmpzZzFsMGZ5MFNxbThLYW1OaXVneVBCUVVQM1ZWYklteE5POThFQ1FZ?oc=5",
+   "published_london": "2026-11-16 15:04:56 GMT",
+   "via": "RSS",
+   "sentiment": 0.0,
+   "symbols": [
+    "BTC-USD"
+   ],
+   "macro": false
+  },
+  {
+   "title": "\u2018It Needs To Hold\u2019\u2014Bitcoin Is Suddenly Braced For A Massive $500 Billion Price Crash - Forbes",
+   "source": "Google News RSS (bitcoin, 1d)",
+   "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxNZ3FhbWw2cWVCR0JCM2hYcWlET2sxb1E4a2dZb21wZWxpYTRBTUREMnBONXlxcWpwQXpQMm9MNDBDR0pCYU91NnZfdDRRMlhqdWNtb2hReDZIUVlraFlKVG1iZUNRR3BfLWRwVTB3czR3Nk5jZ0FxLVJhODNESzhIMWtKZ1NtYl9iMnJTemFmcEZSY0xia3M1QnlDZmtpWmJTcDFVRUVoTFVCYkxpTDFjb1M5LTRHWmFUcHVia0UxZFNrMXFRekIzM1NrdW40c2hRaHlF?oc=5",
+   "published_london": "2026-11-16 13:29:30 GMT",
+   "via": "RSS",
+   "sentiment": -1.0,
+   "symbols": [
+    "BTC-USD"
+   ],
+   "macro": false
+  },
+  {
+   "title": "Bitcoin, Ether Slump Further - WSJ",
+   "source": "Google News RSS (bitcoin, 1d)",
+   "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxNemJKTlE0N1hQT0Z3amttWTkyZmJNMi1rQlZKSkVGeUpvWFlEUl9QY0pZVGVvWjQ2dWZOemtNdjVULUpsNjNWdlBCZHBMUndmZ0pfazNhT2hRZDBqUmkxbEc0VDk2ZVNxYzBLTUhsSEdWMG1GbEZ3a1plN2dDRkx2UnNFdXJhZ1g0blU4YkV5T29FUG80QkE0a3pjc2ZSM29adWc?oc=5",
+   "published_london": "2026-11-16 12:57:00 GMT",
+   "via": "RSS",
+   "sentiment": -1.0,
+   "symbols": [
+    "BTC-USD",
+    "ETH-USD"
+   ],
+   "macro": false
+  },
+  {
+   "title": "Bitcoin slides to $62,000 following liquidation cascade, then rebounds slightly - CNBC",
+   "source": "Google News RSS (bitcoin, 1d)",
+   "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxPQlo2VlBtaV9NV21sUjRUYjVQek5hc0ppTjFySzhnQmxpZzlUcXZOa0wzQlZ3X3FMWkNLTHptMDN0TV9Jd1p4N1V4ZFdvdTUxeDJZY3B4Nm5jRE5TbEw5UER0akkya1lqbGlEeUFFVWhxTS1GakhOX01BaElXQnlEX214S3NGQnRkR1NLMFVhMnBMb285UzJRLTZlMV9PT25janpzSVBYbjR6Vkd6ZjZIMHZZY9IBuAFBVV95cUxOZEZpNy1nOG9RUVVHbFJGaWE4dGpqNDFHSWxLZmJUVXM4WHZRVjFqMmJVUTFyUEhGRkZFY1FuU0dxZ1NUR29MdFUybThHOUNOakdpc2RmN2R1VmdTQkZ4ZFBuVk5hMFp1RDk4VW4wQnl6NkQ4ZU1JbFF6M0RKTVUyWnpOMTVqRjdsX3FRY0VvLXE3VlhsVHowMldpTDNCeTFyODdwQjZqNVl3NWp4eEtYYllpaWM5QjRT?oc=5",
+   "published_london": "2026-11-16 14:29:09 GMT",
+   "via": "RSS",
+   "sentiment": -0.333,
+   "symbols": [
+    "BTC-USD"
+   ],
+   "macro": false
+  },
+  {
+   "title": "Bitwise CIO says bitcoin may fall further in the near term but still calls it the best risk-adjusted trade of the next decade - The Block",
+   "source": "Google News RSS (bitcoin, 1d)",
+   "url": "https://news.google.com/rss/articles/CBMijAJBVV95cUxQU2tNMTUySVBtQ09rRFhXeTZvbTgwdnp2cDN6S3Q5OEdJVm9ESDVMd244MERhOHNzNnJ4N0ZnVE9UYjFkSnQ0cE5ERmliYnNhMHlpdmdnZTFpaFQtVld6WGZmUTNRODJNZk9CcDc1R3lFM0JmVmN4RGczN2dNakhacGRWWm9TQ2RrTU5jLUFWWmJXVF9QbW1tQjhzQjBHb1EwSkpqTkxNbWFIUkdLVDloX0NfTmVmZ19ITXZSaGsydWFEYlRJSEQ5Ny03ZTBQZGJab2xJcFlfNFJkeFRyMEpKT2FubnF6Rm9DM3RnNUNXeDctUDAwZVJFTE1SNk1tSmRoSUlEd0Joc1BEakhz?oc=5",
+   "published_london": "2026-11-16 14:52:00 GMT",
+   "via": "RSS",
+   "sentiment": -1.0,
+   "symbols": [
+    "BTC-USD"
+   ],
+   "macro": false
+  },
+  {
+   "title": "Bitcoin's November rout echoes past crypto downturns - Yahoo Finance",
+   "source": "Google News RSS (bitcoin, 1d)",
+   "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPWFM1RFZURXdyZUlzalo1dW1CcWhaWjJFTEFxVk9EUDFoYjhKS3ZPdlFxMDRWRHZIVy12SExteV9NZ2RiZThpZ0RNdDNCNlJZSGpFZFdLV1JONlBETkhNUXhSWTRCNHY2V05zUVBHVVl5X1ZfZnJpZW41OFdVTmlDRmlLakVTZGhqSlVFWWhLV2FLUjN2WnBzSjNFandleW8wTHlXQnBLUG9rRHZD?oc=5",
+   "published_london": "2026-11-16 14:29:26 GMT",
+   "via": "RSS",
+   "sentiment": 0.0,
+   "symbols": [
+    "BTC-USD"
+   ],
+   "macro": false
+  },
+  {
+   "title": "Bitcoin remains below $65,000 as crypto market sentiment falters - Anadolu Ajans\u0131",
+   "source": "Google News RSS (bitcoin, 1d)",
+   "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxNXzVCNUVoYVBWcmZ3aDFxLWZqMk01Q1cwWkFya2VYZWVTWFBualhraWpRZW5KUjRQX2l4dGlBR05XXzhmN21PaUhiQTJBYlpjcHpoNGtlbG5LMzluNENlNDUwZl9VVEFUeTItcThuRnM4SHJpUVF0a1R0ZkhlQlM4dTdPS0xjbjU5RU00LUtNVWc5amlUb3VIMDdJQkctVi1JVkE?oc=5",
+   "published_london": "2026-11-16 09:07:20 GMT",
+   "via": "RSS",
+   "sentiment": -1.0,
+   "symbols": [
+    "BTC-USD"
+   ],
+   "macro": false
+  },
+  {
+   "title": "Is the Bitcoin sell-off over as Gold holds support? - FXStreet",
+   "source": "Google News RSS (bitcoin, 1d)",
+   "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxPLXV0cUtzMU83YTJaU3ZkY2FqNUV0dGxlUXdUMkpzTEdRR2FlSDdGWEg1TldnbkdCdXQtbHFYTHFPaXd5RWZUejlmME5PMzlOQngtOHY5M2pWZzBzVlZxVHdlMDFveFZwYXBnc3FScktpanA5SkhLdFR2N3JkVXFKYVBfTTRHRUlNVGZ3MjhlbjBCbUM2amNDc1BscUdyV19qMU9GaUpIS2lvdC1HWkpSLU4yQWhFLXVIdXZEc05rbzBvamZORlc0dWN3UlVyNnY0?oc=5",
+   "published_london": "2026-11-16 16:13:38 GMT",
+   "via": "RSS",
+   "sentiment": -1.0,
+   "symbols": [
+    "BTC-USD"
+   ],
+   "macro": false
+  },
+  {
+   "title": "Strategy (MSTR) Adds 485 Bitcoin for $33.4 Million as It Spends $228 Million Buying Back Preferred Stock - Bitcoin Magazine",
+   "source": "Google News RSS (bitcoin, 1d)",
+   "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE55eUNXWWYwR09ua0cxaUFxZmpzT0hDd3dmUFVuX21jQ0lORXZuZUhCWEgyMUFUbjZQb1d2cThCb0c3V3l1a1EzWTNvbUlPclNLZ0tVMmxOVTZrUUhMNkdnOEZ1ajhNaGljVDFQQ2RtVTltV1N5WHhHVjB4VGU?oc=5",
+   "published_london": "2026-11-16 13:38:30 GMT",
+   "via": "RSS",
+   "sentiment": 1.0,
+   "symbols": [
+    "BTC-USD"
+   ],
+   "macro": false
+  },
+  {
+   "title": "Bitcoin Tumbles Ahead Of Anthropic IPO. Is It Paralleling Its SpaceX Sell Off? - Investor's Business Daily",
+   "source": "Google News RSS (bitcoin, 1d)",
+   "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxNMEVodHE0bjlsNW9qcmxpcDQzYXoyb0FZcjF5cm94b242TV9aOFRjUkMwRXI0LUhpRl8ta0xPSTN3SVA2VG9tcE5Yd1FZMFhfcldCVm5HSmJyMjNVZVhYZm5fX2c4V2hZRTNka1AyX3JtNFJxS0tOQXRaWnA5Y3FOUm1ScUVNTElZMjRVVk10V1RXRmpqLTBSZHZ2dDlzekg0cGZYTS1ra2w0R3VyQi10a0lwdkxTYTk4MHpWUw?oc=5",
+   "published_london": "2026-11-16 14:19:00 GMT",
+   "via": "RSS",
+   "sentiment": -1.0,
+   "symbols": [
+    "BTC-USD"
+   ],
+   "macro": false
+  },
+  {
+   "title": "Bitcoin muted at $64.4k as crypto sentiment dithers, ETF outflows persist - Investing.com UK",
+   "source": "Google News RSS (bitcoin, 1d)",
+   "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxPbkgxcmJfNkFOOG9KbUhlUFRGS3FZU3JwNlVfbENiMWRJdDgwVUZaMnd4dG5mMmZDMDNfZ2E4eG1QVjVUZ0pmSU1xdXYyRjRPNGNHaFI1QzhuYjMtbXpzZ0xMX3lOLVVnR0hpX2lueHpiR0ZZU1ZwMjNNYWJOaFFIelNKbTUzOHhwT3pDNkFSbFJScWRSVjN3U0R4YmlBYmxCTDhhYUY1YmNvOXJ0M1RPMnFsYU9qdE9GOVBQNmJsT2tzZUJ5U1pWUg?oc=5",
+   "published_london": "2026-11-16 10:08:00 GMT",
+   "via": "RSS",
+   "sentiment": -1.0,
+   "symbols": [
+    "BTC-USD"
+   ],
+   "macro": false
+  },
+  {
+   "title": "Current price of Bitcoin for November 16, 2026 - Fortune",
+   "source": "Google News RSS (bitcoin, 1d)",
+   "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9nV25Edng4OEdJYUx0X2pPOEhLNGE4bnVZQm4tX1d1SVZ3Y3NFbjJpNzdERDVRQlBVSmZOU0VHWmhoWi03MWtZZHNZbHBYaHNTZ0UzRHprU05YZ18xMW04M0Nsck5NOTg?oc=5",
+   "published_london": "2026-11-16 12:45:00 GMT",
+   "via": "RSS",
+   "sentiment": 0.0,
+   "symbols": [
+    "BTC-USD"
+   ],
+   "macro": false
+  },
+  {
+   "title": "Did Bitcoin Prices Bottom at $62,000? Strategy Has Bought the Decline. - Barron's",
+   "source": "Google News RSS (bitcoin, 1d)",
+   "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTE0yS0RmaHF4aWFYdWEwa1Z4TmZ0dzdqM1NPR21vdTZvc3dZNlVDalJHdHROUjJEcm03V0YtdHhEdC01T0tpS0RDLWZNRFpLNWlnZVJPeXlXY3k0Tk1NNW1hUEtrOE9DaWp6OU44VGpQclQtQW9pTF9jazVRNVV2UDA?oc=5",
+   "published_london": "2026-11-16 15:16:00 GMT",
+   "via": "RSS",
+   "sentiment": -1.0,
+   "symbols": [
+    "BTC-USD"
+   ],
+   "macro": false
+  },
+  {
+   "title": "Bitcoin Options Traders Brace for Slide to $60,000 After Selloff - Bloomberg",
+   "source": "Google News RSS (bitcoin, 1d)",
+   "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxPLWdwVWxaMG5xZ2JlN1c1dURPTENWQjBQa2R0TC1PMUNybXczejBzSTMxWXg5NVhkUTBBTmRrVUozZ2M3bGdYNDVNd3Z0eTVIUlNpb0JCel9LbW8wM0dfZUhfWEh3MTdOUzV5MzgyVHNyWXhWd1Y3N3IwV25DUjQ2X0J2Z1h2VWxWWFhVTlJ4Y2tLX3ZaU1lSLWFMTEF5N0ZWaVF1ZkN5bE4?oc=5",
+   "published_london": "2026-11-16 11:19:39 GMT",
+   "via": "RSS",
+   "sentiment": -1.0,
+   "symbols": [
+    "BTC-USD"
+   ],
+   "macro": false
+  }
+ ],
+ "snapshot": {
+  "BTC-USD": {
+   "price_currency": "USD",
+   "bid": 64642.45,
+   "ask": 64642.46,
+   "mid": 64642.5,
+   "price_source": "Coinbase connector best_bid_ask",
+   "price_time": "2026-11-16 16:33:08 GMT",
+   "chg24_pct": 0.16,
+   "chg24_source": "Coinbase connector products_get",
+   "chg7d_pct": -14.11,
+   "d_rsi": 23.7,
+   "h4_rsi": 32.6,
+   "h1_rsi": 49.0,
+   "d_ema20": 73032.0,
+   "d_atr": 2673.08,
+   "h4_atr": 1313.03,
+   "lo20": 61946.17,
+   "hi20": 81890.0,
+   "spread_bps": 0.0,
+   "book_imb_1pct": -0.067,
+   "taker_imb": -0.595,
+   "corr_btc_30d": 1.0
+  },
+  "ETH-USD": {
+   "price_currency": "USD",
+   "bid": 1822.98,
+   "ask": 1823.14,
+   "mid": 1823.06,
+   "price_source": "Coinbase connector best_bid_ask",
+   "price_time": "2026-11-16 16:33:08 GMT",
+   "chg24_pct": 0.57,
+   "chg24_source": "Coinbase connector products_get",
+   "chg7d_pct": -14.5,
+   "d_rsi": 25.8,
+   "h4_rsi": 38.7,
+   "h1_rsi": 52.1,
+   "d_ema20": 2095.88,
+   "d_atr": 105.499,
+   "h4_atr": 47.4775,
+   "lo20": 1709.48,
+   "hi20": 2448.26,
+   "spread_bps": 0.88,
+   "book_imb_1pct": 0.316,
+   "taker_imb": -0.514,
+   "corr_btc_30d": 0.94
+  },
+  "SOL-USD": {
+   "price_currency": "USD",
+   "bid": 70.97,
+   "ask": 70.98,
+   "mid": 70.975,
+   "price_source": "Coinbase connector best_bid_ask",
+   "price_time": "2026-11-16 16:33:08 GMT",
+   "chg24_pct": -0.56,
+   "chg24_source": "Coinbase connector products_get",
+   "chg7d_pct": -18.06,
+   "d_rsi": 20.1,
+   "h4_rsi": 33.7,
+   "h1_rsi": 46.4,
+   "d_ema20": 85.6176,
+   "d_atr": 4.77353,
+   "h4_atr": 2.10661,
+   "lo20": 67.37,
+   "hi20": 103.77,
+   "spread_bps": 1.41,
+   "book_imb_1pct": 0.033,
+   "taker_imb": -0.57,
+   "corr_btc_30d": 0.91
+  },
+  "XRP-USD": {
+   "price_currency": "USD",
+   "bid": 0.9546,
+   "ask": 0.9548,
+   "mid": 0.9547,
+   "price_source": "Coinbase connector best_bid_ask",
+   "price_time": "2026-11-16 16:33:08 GMT",
+   "chg24_pct": 0.33,
+   "chg24_source": "Coinbase connector products_get",
+   "chg7d_pct": -13.01,
+   "d_rsi": 26.0,
+   "h4_rsi": 39.5,
+   "h1_rsi": 48.8,
+   "d_ema20": 1.11492,
+   "d_atr": 0.0603384,
+   "h4_atr": 0.0260806,
+   "lo20": 0.8922,
+   "hi20": 1.3431,
+   "spread_bps": 2.09,
+   "book_imb_1pct": 0.393,
+   "taker_imb": 0.274,
+   "corr_btc_30d": 0.84
+  },
+  "DOGE-USD": {
+   "price_currency": "USD",
+   "bid": 0.05912,
+   "ask": 0.05914,
+   "mid": 0.05913,
+   "price_source": "Coinbase connector best_bid_ask",
+   "price_time": "2026-11-16 16:33:08 GMT",
+   "chg24_pct": 1.25,
+   "chg24_source": "Coinbase connector products_get",
+   "chg7d_pct": -15.49,
+   "d_rsi": 26.1,
+   "h4_rsi": 38.1,
+   "h1_rsi": 52.1,
+   "d_ema20": 0.0688855,
+   "d_atr": 0.00393177,
+   "h4_atr": 0.00165642,
+   "lo20": 0.05539,
+   "hi20": 0.08138,
+   "spread_bps": 3.38,
+   "book_imb_1pct": 0.288,
+   "taker_imb": -0.231,
+   "corr_btc_30d": 0.88
+  },
+  "AVAX-USD": {
+   "price_currency": "USD",
+   "bid": 7.133,
+   "ask": 7.136,
+   "mid": 7.1345,
+   "price_source": "Coinbase connector best_bid_ask",
+   "price_time": "2026-11-16 16:33:08 GMT",
+   "chg24_pct": -0.75,
+   "chg24_source": "Coinbase connector products_get",
+   "chg7d_pct": -17.47,
+   "d_rsi": 32.6,
+   "h4_rsi": 30.6,
+   "h1_rsi": 45.8,
+   "d_ema20": 8.23693,
+   "d_atr": 0.597305,
+   "h4_atr": 0.225268,
+   "lo20": 6.736,
+   "hi20": 9.155,
+   "spread_bps": 4.2,
+   "book_imb_1pct": 0.488,
+   "taker_imb": -0.061,
+   "corr_btc_30d": 0.78
+  },
+  "LINK-USD": {
+   "price_currency": "USD",
+   "bid": 9.151,
+   "ask": 9.153,
+   "mid": 9.152,
+   "price_source": "Coinbase connector best_bid_ask",
+   "price_time": "2026-11-16 16:33:08 GMT",
+   "chg24_pct": -0.54,
+   "chg24_source": "Coinbase connector products_get",
+   "chg7d_pct": -14.08,
+   "d_rsi": 31.8,
+   "h4_rsi": 37.2,
+   "h1_rsi": 48.9,
+   "d_ema20": 10.4345,
+   "d_atr": 0.674839,
+   "h4_atr": 0.248847,
+   "lo20": 8.573,
+   "hi20": 11.999,
+   "spread_bps": 2.19,
+   "book_imb_1pct": 0.039,
+   "taker_imb": -0.095,
+   "corr_btc_30d": 0.77
+  },
+  "ADA-USD": {
+   "price_currency": "USD",
+   "bid": 0.15241,
+   "ask": 0.15244,
+   "mid": 0.152425,
+   "price_source": "Coinbase connector best_bid_ask",
+   "price_time": "2026-11-16 16:33:08 GMT",
+   "chg24_pct": -0.36,
+   "chg24_source": "Coinbase connector products_get",
+   "chg7d_pct": -14.04,
+   "d_rsi": 27.3,
+   "h4_rsi": 34.9,
+   "h1_rsi": 48.1,
+   "d_ema20": 0.178569,
+   "d_atr": 0.0118587,
+   "h4_atr": 0.00449032,
+   "lo20": 0.14245,
+   "hi20": 0.20977,
+   "spread_bps": 1.97,
+   "book_imb_1pct": 0.419,
+   "taker_imb": 0.238,
+   "corr_btc_30d": 0.86
+  },
+  "SUI-USD": {
+   "price_currency": "USD",
+   "bid": 0.7186,
+   "ask": 0.7188,
+   "mid": 0.7187,
+   "price_source": "Coinbase connector best_bid_ask",
+   "price_time": "2026-11-16 16:33:08 GMT",
+   "chg24_pct": -0.15,
+   "chg24_source": "Coinbase connector products_get",
+   "chg7d_pct": -14.87,
+   "d_rsi": 32.0,
+   "h4_rsi": 36.4,
+   "h1_rsi": 47.3,
+   "d_ema20": 0.833295,
+   "d_atr": 0.0601272,
+   "h4_atr": 0.0221077,
+   "lo20": 0.6759,
+   "hi20": 0.9618,
+   "spread_bps": 2.78,
+   "book_imb_1pct": 0.339,
+   "taker_imb": -0.083,
+   "corr_btc_30d": 0.85
+  },
+  "PEPE-USD": {
+   "price_currency": "USD",
+   "bid": 3.85e-06,
+   "ask": 3.87e-06,
+   "mid": 3.86e-06,
+   "price_source": "Coinbase connector best_bid_ask",
+   "price_time": "2026-11-16 16:33:08 GMT",
+   "chg24_pct": -2.28,
+   "chg24_source": "Coinbase connector products_get",
+   "chg7d_pct": -24.61,
+   "d_rsi": 37.2,
+   "h4_rsi": 33.2,
+   "h1_rsi": 51.6,
+   "d_ema20": 4.50024e-06,
+   "d_atr": 4.48371e-07,
+   "h4_atr": 1.54974e-07,
+   "lo20": 3.69e-06,
+   "hi20": 5.68e-06,
+   "spread_bps": 51.81,
+   "book_imb_1pct": -0.223,
+   "taker_imb": 0.068,
+   "corr_btc_30d": 0.49
+  }
+ },
+ "data_gaps": [
+  "Today's daily and current 4h/1h bars are still open; their last close is marked to the live mid and their volume is partial (volume sub-bots use the last closed bar).",
+  "News sentiment is a simple keyword lexicon on headline text (no NLP model); it can misread phrases such as 'yields fall'. Treat news sub-bot scores as coarse.",
+  "Recent-trades window (last 1000 public trades) covers under 5 minutes for: BTC-USD 1m; tape sub-bots read very short-term flow."
+ ],
+ "sources": [
+  {
+   "input": "Coinbase connector snapshot (best_bid_ask + products_get)",
+   "source": "user-Coinbase-xai coinbase_products_best_bid_ask / coinbase_products_get",
+   "fetched": "2026-11-16 16:33:10 GMT",
+   "age_min": 0.6
+  },
+  {
+   "input": "BTC-USD daily candles",
+   "source": "https://api.exchange.coinbase.com/products/BTC-USD/candles?granularity=86400",
+   "fetched": "2026-11-16 16:33:46 GMT",
+   "rows": 299
+  },
+  {
+   "input": "BTC-USD 1h candles",
+   "source": "https://api.exchange.coinbase.com/products/BTC-USD/candles?granularity=3600 (3 pages)",
+   "fetched": "2026-11-16 16:33:46 GMT",
+   "rows": 897
+  },
+  {
+   "input": "BTC-USD stats",
+   "source": "https://api.exchange.coinbase.com/products/BTC-USD/stats",
+   "fetched": "2026-11-16 16:33:47 GMT"
+  },
+  {
+   "input": "BTC-USD ticker",
+   "source": "https://api.exchange.coinbase.com/products/BTC-USD/ticker",
+   "fetched": "2026-11-16 16:33:47 GMT"
+  },
+  {
+   "input": "BTC-USD book",
+   "source": "https://api.exchange.coinbase.com/products/BTC-USD/book?level=2",
+   "fetched": "2026-11-16 16:33:47 GMT"
+  },
+  {
+   "input": "BTC-USD trades",
+   "source": "https://api.exchange.coinbase.com/products/BTC-USD/trades?limit=1000",
+   "fetched": "2026-11-16 16:33:47 GMT"
+  },
+  {
+   "input": "ETH-USD daily candles",
+   "source": "https://api.exchange.coinbase.com/products/ETH-USD/candles?granularity=86400",
+   "fetched": "2026-11-16 16:33:47 GMT",
+   "rows": 299
+  },
+  {
+   "input": "ETH-USD 1h candles",
+   "source": "https://api.exchange.coinbase.com/products/ETH-USD/candles?granularity=3600 (3 pages)",
+   "fetched": "2026-11-16 16:33:48 GMT",
+   "rows": 897
+  },
+  {
+   "input": "ETH-USD stats",
+   "source": "https://api.exchange.coinbase.com/products/ETH-USD/stats",
+   "fetched": "2026-11-16 16:33:48 GMT"
+  },
+  {
+   "input": "ETH-USD ticker",
+   "source": "https://api.exchange.coinbase.com/products/ETH-USD/ticker",
+   "fetched": "2026-11-16 16:33:48 GMT"
+  },
+  {
+   "input": "ETH-USD book",
+   "source": "https://api.exchange.coinbase.com/products/ETH-USD/book?level=2",
+   "fetched": "2026-11-16 16:33:49 GMT"
+  },
+  {
+   "input": "ETH-USD trades",
+   "source": "https://api.exchange.coinbase.com/products/ETH-USD/trades?limit=1000",
+   "fetched": "2026-11-16 16:33:49 GMT"
+  },
+  {
+   "input": "SOL-USD daily candles",
+   "source": "https://api.exchange.coinbase.com/products/SOL-USD/candles?granularity=86400",
+   "fetched": "2026-11-16 16:33:49 GMT",
+   "rows": 299
+  },
+  {
+   "input": "SOL-USD 1h candles",
+   "source": "https://api.exchange.coinbase.com/products/SOL-USD/candles?granularity=3600 (3 pages)",
+   "fetched": "2026-11-16 16:33:50 GMT",
+   "rows": 897
+  },
+  {
+   "input": "SOL-USD stats",
+   "source": "https://api.exchange.coinbase.com/products/SOL-USD/stats",
+   "fetched": "2026-11-16 16:33:50 GMT"
+  },
+  {
+   "input": "SOL-USD ticker",
+   "source": "https://api.exchange.coinbase.com/products/SOL-USD/ticker",
+   "fetched": "2026-11-16 16:33:50 GMT"
+  },
+  {
+   "input": "SOL-USD book",
+   "source": "https://api.exchange.coinbase.com/products/SOL-USD/book?level=2",
+   "fetched": "2026-11-16 16:33:51 GMT"
+  },
+  {
+   "input": "SOL-USD trades",
+   "source": "https://api.exchange.coinbase.com/products/SOL-USD/trades?limit=1000",
+   "fetched": "2026-11-16 16:33:51 GMT"
+  },
+  {
+   "input": "XRP-USD daily candles",
+   "source": "https://api.exchange.coinbase.com/products/XRP-USD/candles?granularity=86400",
+   "fetched": "2026-11-16 16:33:51 GMT",
+   "rows": 299
+  },
+  {
+   "input": "XRP-USD 1h candles",
+   "source": "https://api.exchange.coinbase.com/products/XRP-USD/candles?granularity=3600 (3 pages)",
+   "fetched": "2026-11-16 16:33:52 GMT",
+   "rows": 897
+  },
+  {
+   "input": "XRP-USD stats",
+   "source": "https://api.exchange.coinbase.com/products/XRP-USD/stats",
+   "fetched": "2026-11-16 16:33:52 GMT"
+  },
+  {
+   "input": "XRP-USD ticker",
+   "source": "https://api.exchange.coinbase.com/products/XRP-USD/ticker",
+   "fetched": "2026-11-16 16:33:52 GMT"
+  },
+  {
+   "input": "XRP-USD book",
+   "source": "https://api.exchange.coinbase.com/products/XRP-USD/book?level=2",
+   "fetched": "2026-11-16 16:33:52 GMT"
+  },
+  {
+   "input": "XRP-USD trades",
+   "source": "https://api.exchange.coinbase.com/products/XRP-USD/trades?limit=1000",
+   "fetched": "2026-11-16 16:33:53 GMT"
+  },
+  {
+   "input": "DOGE-USD daily candles",
+   "source": "https://api.exchange.coinbase.com/products/DOGE-USD/candles?granularity=86400",
+   "fetched": "2026-11-16 16:33:53 GMT",
+   "rows": 299
+  },
+  {
+   "input": "DOGE-USD 1h candles",
+   "source": "https://api.exchange.coinbase.com/products/DOGE-USD/candles?granularity=3600 (3 pages)",
+   "fetched": "2026-11-16 16:33:54 GMT",
+   "rows": 897
+  },
+  {
+   "input": "DOGE-USD stats",
+   "source": "https://api.exchange.coinbase.com/products/DOGE-USD/stats",
+   "fetched": "2026-11-16 16:33:54 GMT"
+  },
+  {
+   "input": "DOGE-USD ticker",
+   "source": "https://api.exchange.coinbase.com/products/DOGE-USD/ticker",
+   "fetched": "2026-11-16 16:33:54 GMT"
+  },
+  {
+   "input": "DOGE-USD book",
+   "source": "https://api.exchange.coinbase.com/products/DOGE-USD/book?level=2",
+   "fetched": "2026-11-16 16:33:54 GMT"
+  },
+  {
+   "input": "DOGE-USD trades",
+   "source": "https://api.exchange.coinbase.com/products/DOGE-USD/trades?limit=1000",
+   "fetched": "2026-11-16 16:33:54 GMT"
+  },
+  {
+   "input": "AVAX-USD daily candles",
+   "source": "https://api.exchange.coinbase.com/products/AVAX-USD/candles?granularity=86400",
+   "fetched": "2026-11-16 16:33:55 GMT",
+   "rows": 299
+  },
+  {
+   "input": "AVAX-USD 1h candles",
+   "source": "https://api.exchange.coinbase.com/products/AVAX-USD/candles?granularity=3600 (3 pages)",
+   "fetched": "2026-11-16 16:33:55 GMT",
+   "rows": 897
+  },
+  {
+   "input": "AVAX-USD stats",
+   "source": "https://api.exchange.coinbase.com/products/AVAX-USD/stats",
+   "fetched": "2026-11-16 16:33:56 GMT"
+  },
+  {
+   "input": "AVAX-USD ticker",
+   "source": "https://api.exchange.coinbase.com/products/AVAX-USD/ticker",
+   "fetched": "2026-11-16 16:33:56 GMT"
+  },
+  {
+   "input": "AVAX-USD book",
+   "source": "https://api.exchange.coinbase.com/products/AVAX-USD/book?level=2",
+   "fetched": "2026-11-16 16:33:56 GMT"
+  },
+  {
+   "input": "AVAX-USD trades",
+   "source": "https://api.exchange.coinbase.com/products/AVAX-USD/trades?limit=1000",
+   "fetched": "2026-11-16 16:33:56 GMT"
+  },
+  {
+   "input": "LINK-USD daily candles",
+   "source": "https://api.exchange.coinbase.com/products/LINK-USD/candles?granularity=86400",
+   "fetched": "2026-11-16 16:33:56 GMT",
+   "rows": 299
+  },
+  {
+   "input": "LINK-USD 1h candles",
+   "source": "https://api.exchange.coinbase.com/products/LINK-USD/candles?granularity=3600 (3 pages)",
+   "fetched": "2026-11-16 16:33:57 GMT",
+   "rows": 897
+  },
+  {
+   "input": "LINK-USD stats",
+   "source": "https://api.exchange.coinbase.com/products/LINK-USD/stats",
+   "fetched": "2026-11-16 16:33:57 GMT"
+  },
+  {
+   "input": "LINK-USD ticker",
+   "source": "https://api.exchange.coinbase.com/products/LINK-USD/ticker",
+   "fetched": "2026-11-16 16:33:57 GMT"
+  },
+  {
+   "input": "LINK-USD book",
+   "source": "https://api.exchange.coinbase.com/products/LINK-USD/book?level=2",
+   "fetched": "2026-11-16 16:33:57 GMT"
+  },
+  {
+   "input": "LINK-USD trades",
+   "source": "https://api.exchange.coinbase.com/products/LINK-USD/trades?limit=1000",
+   "fetched": "2026-11-16 16:33:58 GMT"
+  },
+  {
+   "input": "ADA-USD daily candles",
+   "source": "https://api.exchange.coinbase.com/products/ADA-USD/candles?granularity=86400",
+   "fetched": "2026-11-16 16:33:58 GMT",
+   "rows": 299
+  },
+  {
+   "input": "ADA-USD 1h candles",
+   "source": "https://api.exchange.coinbase.com/products/ADA-USD/candles?granularity=3600 (3 pages)",
+   "fetched": "2026-11-16 16:33:59 GMT",
+   "rows": 897
+  },
+  {
+   "input": "ADA-USD stats",
+   "source": "https://api.exchange.coinbase.com/products/ADA-USD/stats",
+   "fetched": "2026-11-16 16:33:59 GMT"
+  },
+  {
+   "input": "ADA-USD ticker",
+   "source": "https://api.exchange.coinbase.com/products/ADA-USD/ticker",
+   "fetched": "2026-11-16 16:33:59 GMT"
+  },
+  {
+   "input": "ADA-USD book",
+   "source": "https://api.exchange.coinbase.com/products/ADA-USD/book?level=2",
+   "fetched": "2026-11-16 16:33:59 GMT"
+  },
+  {
+   "input": "ADA-USD trades",
+   "source": "https://api.exchange.coinbase.com/products/ADA-USD/trades?limit=1000",
+   "fetched": "2026-11-16 16:33:59 GMT"
+  },
+  {
+   "input": "SUI-USD daily candles",
+   "source": "https://api.exchange.coinbase.com/products/SUI-USD/candles?granularity=86400",
+   "fetched": "2026-11-16 16:34:00 GMT",
+   "rows": 299
+  },
+  {
+   "input": "SUI-USD 1h candles",
+   "source": "https://api.exchange.coinbase.com/products/SUI-USD/candles?granularity=3600 (3 pages)",
+   "fetched": "2026-11-16 16:34:00 GMT",
+   "rows": 897
+  },
+  {
+   "input": "SUI-USD stats",
+   "source": "https://api.exchange.coinbase.com/products/SUI-USD/stats",
+   "fetched": "2026-11-16 16:34:01 GMT"
+  },
+  {
+   "input": "SUI-USD ticker",
+   "source": "https://api.exchange.coinbase.com/products/SUI-USD/ticker",
+   "fetched": "2026-11-16 16:34:01 GMT"
+  },
+  {
+   "input": "SUI-USD book",
+   "source": "https://api.exchange.coinbase.com/products/SUI-USD/book?level=2",
+   "fetched": "2026-11-16 16:34:01 GMT"
+  },
+  {
+   "input": "SUI-USD trades",
+   "source": "https://api.exchange.coinbase.com/products/SUI-USD/trades?limit=1000",
+   "fetched": "2026-11-16 16:34:01 GMT"
+  },
+  {
+   "input": "PEPE-USD daily candles",
+   "source": "https://api.exchange.coinbase.com/products/PEPE-USD/candles?granularity=86400",
+   "fetched": "2026-11-16 16:34:02 GMT",
+   "rows": 299
+  },
+  {
+   "input": "PEPE-USD 1h candles",
+   "source": "https://api.exchange.coinbase.com/products/PEPE-USD/candles?granularity=3600 (3 pages)",
+   "fetched": "2026-11-16 16:34:02 GMT",
+   "rows": 897
+  },
+  {
+   "input": "PEPE-USD stats",
+   "source": "https://api.exchange.coinbase.com/products/PEPE-USD/stats",
+   "fetched": "2026-11-16 16:34:02 GMT"
+  },
+  {
+   "input": "PEPE-USD ticker",
+   "source": "https://api.exchange.coinbase.com/products/PEPE-USD/ticker",
+   "fetched": "2026-11-16 16:34:02 GMT"
+  },
+  {
+   "input": "PEPE-USD book",
+   "source": "https://api.exchange.coinbase.com/products/PEPE-USD/book?level=2",
+   "fetched": "2026-11-16 16:34:03 GMT"
+  },
+  {
+   "input": "PEPE-USD trades",
+   "source": "https://api.exchange.coinbase.com/products/PEPE-USD/trades?limit=1000",
+   "fetched": "2026-11-16 16:34:04 GMT"
+  },
+  {
+   "input": "news: Cointelegraph RSS",
+   "source": "https://cointelegraph.com/rss",
+   "fetched": "2026-11-16 16:34:04 GMT",
+   "rows": 21
+  },
+  {
+   "input": "news: Decrypt RSS",
+   "source": "https://decrypt.co/feed",
+   "fetched": "2026-11-16 16:34:04 GMT",
+   "rows": 10
+  },
+  {
+   "input": "news: Google News RSS (bitcoin, 1d)",
+   "source": "https://news.google.com/rss/search?q=bitcoin+when:1d&hl=en-GB&gl=GB&ceid=GB:en",
+   "fetched": "2026-11-16 16:34:04 GMT",
+   "rows": 25
+  },
+  {
+   "input": "news: Google News RSS (crypto, 1d)",
+   "source": "https://news.google.com/rss/search?q=crypto+market+when:1d&hl=en-GB&gl=GB&ceid=GB:en",
+   "fetched": "2026-11-16 16:34:05 GMT",
+   "rows": 25
+  },
+  {
+   "input": "news: Google News RSS (Fed/macro, 1d)",
+   "source": "https://news.google.com/rss/search?q=federal+reserve+markets+when:1d&hl=en-GB&gl=GB&ceid=GB:en",
+   "fetched": "2026-11-16 16:34:05 GMT",
+   "rows": 21
+  },
+  {
+   "input": "news: WebSearch headlines",
+   "source": "WebSearch queries: crypto market news today November 16 2026 bitcoin; Federal Reserve dollar stocks macro markets news November 16 2026",
+   "fetched": "2026-11-16 16:27 GMT",
+   "rows": 9
+  }
+ ]
+}
