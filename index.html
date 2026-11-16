@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Grok Quant Dashboard</title>
+<title>BOTTY QUANTER.grok</title>
 <style>
 :root {
   --bg: #05070a;
@@ -53,9 +53,22 @@ body {
   backdrop-filter: blur(10px);
   border: 1px solid rgba(0,240,255,0.15);
   box-shadow: 0 0 40px rgba(0,240,255,0.05);
+  text-align: center;
 }
-.login-box h1 { font-size: 22px; font-weight: 400; letter-spacing: 2px; }
-.login-box p { color: var(--muted); font-size: 11px; margin: 8px 0 36px; letter-spacing: 1px; }
+.login-box h1 { 
+  font-size: 20px; 
+  font-weight: 400; 
+  letter-spacing: 1.5px; 
+  text-align: center;
+  margin-bottom: 4px;
+}
+.login-box p { 
+  color: var(--muted); 
+  font-size: 11px; 
+  margin: 6px 0 32px; 
+  letter-spacing: 1.2px; 
+  text-align: center;
+}
 .login-box input {
   width: 100%;
   background: #07090d;
@@ -66,6 +79,7 @@ body {
   font-size: 13px;
   margin-bottom: 12px;
   outline: none;
+  text-align: left;
 }
 .login-box input:focus { border-color: var(--accent); }
 .login-box button {
@@ -80,7 +94,7 @@ body {
   cursor: pointer;
   margin-top: 8px;
 }
-.login-box .alt { margin-top: 20px; text-align: center; font-size: 10px; color: var(--muted); letter-spacing: 1px; }
+.login-box .alt { margin-top: 22px; text-align: center; font-size: 10px; color: var(--muted); letter-spacing: 1px; }
 .app { display: none; padding: 20px; }
 .header {
   display: flex;
@@ -186,7 +200,7 @@ body {
 
 <div class="login-screen" id="loginScreen">
   <div class="login-box">
-    <h1>GROK QUANT</h1>
+    <h1>BOTTY QUANTER.grok</h1>
     <p>PERSONAL TRADING SYSTEM</p>
     <input type="text" id="username" placeholder="USERNAME" value="trader">
     <input type="password" id="password" placeholder="PASSWORD" value="quant">
@@ -197,7 +211,7 @@ body {
 
 <div class="app" id="app">
   <div class="header">
-    <h1>GROK QUANT // DASHBOARD</h1>
+    <h1>BOTTY QUANTER.grok // DASHBOARD</h1>
     <div>
       <span class="status">● ONLINE · PAPER</span>
       <button class="logout" onclick="logout()">LOGOUT</button>
