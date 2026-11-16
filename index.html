@@ -5,238 +5,52 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BOTTY QUANTER.grok</title>
 <style>
-:root {
-  --bg: #04060a;
-  --panel: rgba(12,16,24,0.82);
-  --border: #2a3548;
-  --text: #e6edf3;
-  --muted: #8b9bb4;
-  --accent: #00e5ff;
-  --green: #00ff9d;
-  --red: #ff4d6a;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
-  font-weight: 500;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-#bg-canvas {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-.login-screen, .app, .overlay {
-  position: relative;
-  z-index: 1;
-}
-.login-screen {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.login-box {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  padding: 56px 48px;
-  width: 440px;
-  text-align: center;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 8px 40px rgba(0,0,0,0.4);
-}
-.login-box h1 {
-  font-size: 26px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  margin-bottom: 6px;
-}
-.login-box p {
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 600;
-  margin: 0 0 36px;
-  letter-spacing: 1.2px;
-}
-.login-box input {
-  width: 100%;
-  background: #070a10;
-  border: 1px solid var(--border);
-  padding: 16px 18px;
-  color: var(--text);
-  font-family: inherit;
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 14px;
-  outline: none;
-}
-.login-box input:focus { border-color: var(--accent); }
-.login-box button {
-  width: 100%;
-  background: transparent;
-  border: 2px solid var(--accent);
-  color: var(--accent);
-  padding: 16px;
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  cursor: pointer;
-  margin-top: 6px;
-}
-.login-box .alt {
-  margin-top: 24px;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--muted);
-  letter-spacing: 1px;
-}
-.app { display: none; padding: 28px; }
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 28px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--border);
-}
-.header h1 {
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-}
-.status {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--accent);
-  letter-spacing: 1px;
-}
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1.2fr;
-  gap: 16px;
-  margin-bottom: 16px;
-}
-.card, .team-card {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  padding: 22px;
-  cursor: pointer;
-  backdrop-filter: blur(10px);
-  transition: border-color 0.2s;
-}
-.card:hover, .team-card:hover { border-color: var(--accent); }
-.card h2, .team-card h3 {
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 1.2px;
-  color: var(--accent);
-  margin-bottom: 16px;
-}
-.news-item, .trade-row {
-  font-size: 14.5px;
-  font-weight: 600;
-  padding: 10px 0;
-  border-bottom: 1px solid #1a2230;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.tag {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--accent);
-  letter-spacing: 0.5px;
-}
-.balance-big {
-  font-size: 36px;
-  font-weight: 700;
-  margin: 8px 0;
-}
-.pnl.pos { color: var(--green); font-weight: 700; }
-.pnl.neg { color: var(--red); font-weight: 700; }
-.split-controls { display: flex; gap: 8px; margin-top: 16px; }
-.split-controls input {
-  flex: 1;
-  background: #070a10;
-  border: 1px solid var(--border);
-  padding: 10px;
-  color: var(--text);
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 600;
-  text-align: center;
-}
-.teams { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-.team-card .risk {
-  font-size: 12.5px;
-  font-weight: 600;
-  color: var(--muted);
-  letter-spacing: 0.5px;
-}
-.logout {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--muted);
-  padding: 8px 16px;
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-}
-.overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(4,6,10,0.96);
-  z-index: 100;
-  padding: 40px;
-  overflow-y: auto;
-}
-.overlay.open { display: block; }
-.overlay-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 28px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--border);
-}
-.overlay-header h2 {
-  font-size: 24px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-}
-.close-btn {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--muted);
-  padding: 10px 18px;
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  cursor: pointer;
-}
-.overlay-content {
-  font-size: 15.5px;
-  font-weight: 600;
-  line-height: 1.75;
-  max-width: 900px;
-}
-@media (max-width: 1000px) {
-  .grid, .teams { grid-template-columns: 1fr; }
-}
+:root{--bg:#04060a;--panel:rgba(12,16,24,.85);--border:#2a3548;--text:#e6edf3;--muted:#8b9bb4;--accent:#00e5ff;--green:#00ff9d;--red:#ff4d6a;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:"JetBrains Mono","SF Mono",ui-monospace,monospace;font-weight:500;min-height:100vh;overflow-x:hidden;}
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
+.login-screen,.app,.overlay{position:relative;z-index:1;}
+.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;}
+.login-box{background:var(--panel);border:1px solid var(--border);padding:48px 40px;width:420px;text-align:center;backdrop-filter:blur(12px);}
+.login-box h1{font-size:24px;font-weight:700;letter-spacing:1px;margin-bottom:6px;}
+.login-box p{color:var(--muted);font-size:12px;font-weight:600;margin:0 0 32px;letter-spacing:1px;}
+.login-box input{width:100%;background:#070a10;border:1px solid var(--border);padding:14px 16px;color:var(--text);font-family:inherit;font-size:14px;font-weight:600;margin-bottom:12px;outline:none;}
+.login-box input:focus{border-color:var(--accent);}
+.login-box button{width:100%;background:transparent;border:2px solid var(--accent);color:var(--accent);padding:14px;font-family:inherit;font-size:13px;font-weight:700;letter-spacing:1px;cursor:pointer;}
+.login-box .alt{margin-top:20px;font-size:11px;font-weight:600;color:var(--muted);}
+.app{display:none;padding:24px;}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+.header h1{font-size:18px;font-weight:700;}
+.status{font-size:12px;font-weight:700;color:var(--accent);}
+.grid{display:grid;grid-template-columns:1fr 1fr 1.15fr;gap:12px;margin-bottom:12px;}
+.card,.team-card{background:var(--panel);border:1px solid var(--border);padding:16px;cursor:pointer;backdrop-filter:blur(8px);}
+.card:hover,.team-card:hover{border-color:var(--accent);}
+.card h2,.team-card h3{font-size:13px;font-weight:700;color:var(--accent);margin-bottom:10px;letter-spacing:.5px;}
+.news-item,.trade-row{font-size:13px;font-weight:600;padding:7px 0;border-bottom:1px solid #1a2230;display:flex;justify-content:space-between;}
+.tag{font-size:10px;font-weight:700;color:var(--accent);}
+.balance-big{font-size:32px;font-weight:700;}
+.pnl.pos{color:var(--green);font-weight:700;}
+.pnl.neg{color:var(--red);font-weight:700;}
+.split-controls{display:flex;gap:6px;margin-top:10px;}
+.split-controls input{flex:1;background:#070a10;border:1px solid var(--border);padding:8px;color:var(--text);font-family:inherit;font-size:13px;font-weight:600;text-align:center;}
+.teams{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+.team-card .risk{font-size:11px;font-weight:600;color:var(--muted);}
+.team-card .pnl-mini{font-size:16px;font-weight:700;margin-top:6px;}
+.logout{background:transparent;border:1px solid var(--border);color:var(--muted);padding:6px 12px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;}
+.overlay{display:none;position:fixed;inset:0;background:rgba(4,6,10,.97);z-index:100;padding:32px;overflow-y:auto;}
+.overlay.open{display:block;}
+.overlay-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border);}
+.overlay-header h2{font-size:20px;font-weight:700;}
+.close-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:8px 14px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;}
+.overlay-content{font-size:14px;font-weight:600;line-height:1.7;max-width:860px;}
+.search-bar{margin-bottom:16px;}
+.search-bar input{width:100%;max-width:320px;background:#070a10;border:1px solid var(--border);padding:12px 14px;color:var(--text);font-family:inherit;font-size:14px;font-weight:600;}
+.bot-status{font-size:12px;color:var(--muted);margin-top:4px;}
+@media(max-width:900px){.grid,.teams{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
-
 <canvas id="bg-canvas"></canvas>
-
 <div class="login-screen" id="loginScreen">
   <div class="login-box">
     <h1>BOTTY QUANTER.grok</h1>
@@ -247,62 +61,60 @@ body {
     <div class="alt">TOUCH ID / FACE ID AVAILABLE</div>
   </div>
 </div>
-
 <div class="app" id="app">
   <div class="header">
-    <h1>BOTTY QUANTER.grok // DASHBOARD</h1>
+    <h1>BOTTY QUANTER.grok // PAPER TRADING</h1>
     <div>
-      <span class="status">● ONLINE · PAPER</span>
+      <span class="status" id="statusDot">● ONLINE · PAPER</span>
       <button class="logout" onclick="logout()">LOGOUT</button>
     </div>
   </div>
-
+  <div class="search-bar">
+    <input type="text" id="symbolInput" placeholder="Symbol (WTI, GOLD, BTC, NVDA...)" value="WTI" onchange="setSymbol()">
+  </div>
   <div class="grid">
     <div class="card" onclick="openOverlay('news')">
       <h2>HOT NEWS</h2>
-      <div class="news-item"><span>Oil inventories draw larger than expected</span><span class="tag">WTI</span></div>
-      <div class="news-item"><span>Fed speakers signal cautious path</span><span class="tag">MACRO</span></div>
-      <div class="news-item"><span>Gold holds support ahead of data</span><span class="tag">GOLD</span></div>
-      <div class="news-item"><span>BTC volume rising on key level</span><span class="tag">CRYPTO</span></div>
+      <div id="newsList"></div>
     </div>
-
     <div class="card" onclick="openOverlay('trades')">
       <h2>TRADE LOG</h2>
-      <div class="trade-row"><span>WTI Long · High</span><span class="pnl pos">+1.8%</span></div>
-      <div class="trade-row"><span>NVDA Short · Mid</span><span class="pnl neg">-0.6%</span></div>
-      <div class="trade-row"><span>GOLD Long · Low</span><span class="pnl pos">+0.4%</span></div>
+      <div id="tradeList"></div>
     </div>
-
     <div class="card" onclick="openOverlay('account')">
       <h2>ACCOUNT</h2>
-      <div class="balance-big">$50,000</div>
-      <div class="pnl pos">+$1,240 · 2.48%</div>
-      <div style="margin-top:16px; font-size:12px; color:var(--muted); letter-spacing:1px; font-weight:700;">CAPITAL ALLOCATION</div>
+      <div class="balance-big" id="balance">$50,000</div>
+      <div class="pnl pos" id="totalPnl">+$0 · 0.00%</div>
+      <div style="margin-top:10px;font-size:11px;color:var(--muted);font-weight:700;">ALLOCATION %</div>
       <div class="split-controls">
         <input type="number" id="highAlloc" value="40">
         <input type="number" id="midAlloc" value="35">
         <input type="number" id="lowAlloc" value="25">
       </div>
-      <button onclick="event.stopPropagation(); updateAlloc()" style="margin-top:12px; background:transparent; border:2px solid var(--accent); color:var(--accent); padding:8px 16px; font-size:13px; font-weight:700; cursor:pointer; font-family:inherit;">APPLY</button>
+      <button onclick="event.stopPropagation();updateAlloc()" style="margin-top:8px;background:transparent;border:2px solid var(--accent);color:var(--accent);padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">APPLY</button>
     </div>
   </div>
-
   <div class="teams">
     <div class="team-card" onclick="openOverlay('high')">
       <h3>HIGH RISK</h3>
-      <div class="risk">AGGRESSIVE · LARGER SIZE · LOWER FILTERS</div>
+      <div class="risk">Min 55% · Size up to 2.5%</div>
+      <div class="pnl-mini" id="highPnl">$0</div>
+      <div class="bot-status" id="highStatus">Scanning...</div>
     </div>
     <div class="team-card" onclick="openOverlay('mid')">
       <h3>MID RISK</h3>
-      <div class="risk">BALANCED · STANDARD FILTERS</div>
+      <div class="risk">Min 65% · Size up to 1.5%</div>
+      <div class="pnl-mini" id="midPnl">$0</div>
+      <div class="bot-status" id="midStatus">Scanning...</div>
     </div>
     <div class="team-card" onclick="openOverlay('low')">
       <h3>LOW RISK</h3>
-      <div class="risk">CONSERVATIVE · HIGH PROBABILITY ONLY</div>
+      <div class="risk">Min 75% · Size up to 0.8%</div>
+      <div class="pnl-mini" id="lowPnl">$0</div>
+      <div class="bot-status" id="lowStatus">Scanning...</div>
     </div>
   </div>
 </div>
-
 <div class="overlay" id="overlay">
   <div class="overlay-header">
     <h2 id="overlayTitle"></h2>
@@ -310,130 +122,94 @@ body {
   </div>
   <div class="overlay-content" id="overlayContent"></div>
 </div>
-
 <script>
-const canvas = document.getElementById("bg-canvas");
-const ctx = canvas.getContext("2d");
-let w, h, time = 0;
-
-function resize() {
-  w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
-}
-window.addEventListener("resize", resize);
-resize();
-
-const chars = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ+-*/=<>[]{}#$%&@";
-const cols = Math.ceil(w / 14);
-const drops = Array(cols).fill(0).map(() => Math.random() * -100);
-
-function draw() {
-  ctx.fillStyle = "rgba(4,6,10,0.18)";
-  ctx.fillRect(0, 0, w, h);
-
-  ctx.strokeStyle = "rgba(0,229,255,0.08)";
-  ctx.lineWidth = 1;
-  const horizon = h * 0.65;
-  for (let i = 0; i < 20; i++) {
-    const y = horizon + (i * 18) * (1 + Math.sin(time * 0.3 + i) * 0.02);
-    const spread = (y - horizon) * 1.8;
-    ctx.beginPath();
-    ctx.moveTo(w/2 - spread, y);
-    ctx.lineTo(w/2 + spread, y);
-    ctx.stroke();
-  }
-  for (let i = -12; i <= 12; i++) {
-    ctx.beginPath();
-    ctx.moveTo(w/2 + i * 40, horizon);
-    ctx.lineTo(w/2 + i * 140, h);
-    ctx.stroke();
-  }
-
-  ctx.font = "13px JetBrains Mono, monospace";
-  ctx.fillStyle = "rgba(0,229,255,0.22)";
-  for (let i = 0; i < cols; i++) {
-    const ch = chars[Math.floor(Math.random() * chars.length)];
-    const x = i * 14;
-    const y = drops[i] * 16;
-    ctx.fillText(ch, x, y);
-    if (y > h && Math.random() > 0.975) drops[i] = 0;
-    drops[i] += 0.35;
-  }
-
-  time += 0.016;
-  requestAnimationFrame(draw);
+const canvas=document.getElementById("bg-canvas"),ctx=canvas.getContext("2d");
+let w,h,time=0;
+function resize(){w=canvas.width=innerWidth;h=canvas.height=innerHeight;}
+addEventListener("resize",resize);resize();
+const chars="01ABCDEFGHIJKLMNOPQRSTUVWXYZ+-*/=<>[]{}#$%&@",cols=Math.ceil(w/14),drops=Array(cols).fill(0).map(()=>Math.random()*-100);
+function draw(){
+  ctx.fillStyle="rgba(4,6,10,.18)";ctx.fillRect(0,0,w,h);
+  ctx.strokeStyle="rgba(0,229,255,.08)";ctx.lineWidth=1;
+  const horizon=h*.65;
+  for(let i=0;i<20;i++){const y=horizon+(i*18)*(1+Math.sin(time*.3+i)*.02);const spread=(y-horizon)*1.8;ctx.beginPath();ctx.moveTo(w/2-spread,y);ctx.lineTo(w/2+spread,y);ctx.stroke();}
+  for(let i=-12;i<=12;i++){ctx.beginPath();ctx.moveTo(w/2+i*40,horizon);ctx.lineTo(w/2+i*140,h);ctx.stroke();}
+  ctx.font="13px JetBrains Mono,monospace";ctx.fillStyle="rgba(0,229,255,.22)";
+  for(let i=0;i<cols;i++){const ch=chars[Math.floor(Math.random()*chars.length)];ctx.fillText(ch,i*14,drops[i]*16);if(drops[i]*16>h&&Math.random()>.975)drops[i]=0;drops[i]+=.35;}
+  time+=.016;requestAnimationFrame(draw);
 }
 draw();
 
-const overlays = {
-  news: {
-    title: "HOT NEWS",
-    content: `<strong>WTI</strong><br>EIA draw of 4.2M barrels vs 1.1M expected. Bullish short-term. Price holding above key level.<br><br>
-<strong>MACRO</strong><br>Multiple Fed members reiterating data-dependence. No rate cut priced for this meeting. Watch upcoming prints.<br><br>
-<strong>GOLD</strong><br>Holding 2650 zone. DXY soft. Positioning light ahead of data.<br><br>
-<strong>CRYPTO</strong><br>BTC consolidating above 95k. Volume expanding on higher timeframe. Risk-on tone.`
-  },
-  trades: {
-    title: "TRADE LOG",
-    content: `<strong>WTI Long · High Risk</strong><br>Entry: 86.12 · Exit: 87.67 · Size: 2 lots · P&L: +$1,240<br><br>
-<strong>NVDA Short · Mid Risk</strong><br>Entry: 142.30 · Exit: 143.15 · Size: 50 shares · P&L: -$42.50<br><br>
-<strong>GOLD Long · Low Risk</strong><br>Entry: 2648 · Exit: 2659 · Size: 1 lot · P&L: +$110`
-  },
-  account: {
-    title: "ACCOUNT",
-    content: `<strong>Balance</strong><br>$50,000<br><br>
-<strong>Total P&L</strong><br>+$1,240 (2.48%)<br><br>
-<strong>Allocation</strong><br>High Risk: 40% = $20,000<br>Mid Risk: 35% = $17,500<br>Low Risk: 25% = $12,500<br><br>
-Open risk across all teams: 1.8% of capital<br>Max daily drawdown limit: 3%`
-  },
-  high: {
-    title: "HIGH RISK TEAM",
-    content: `<strong>Strategy</strong><br>Focuses on breakouts and momentum continuation. Accepts lower confluence. Larger position sizing relative to other teams. Willing to take more trades per session.<br><br>
-<strong>Parameters</strong><br>Min confluence: 55%<br>Max size: 2.5% risk<br>Stops: tighter<br>Targets: 2.5–3R`
-  },
-  mid: {
-    title: "MID RISK TEAM",
-    content: `<strong>Strategy</strong><br>Requires solid agreement from specialists. Medium size. Aims for consistent returns with controlled drawdowns. Mix of breakout and mean-reversion setups.<br><br>
-<strong>Parameters</strong><br>Min confluence: 65%<br>Max size: 1.5% risk<br>Stops: standard<br>Targets: 2R`
-  },
-  low: {
-    title: "LOW RISK TEAM",
-    content: `<strong>Strategy</strong><br>Only highest-probability setups. Smaller size. Wider stops or tighter filters. Prioritizes capital preservation. Fewer trades, higher quality.<br><br>
-<strong>Parameters</strong><br>Min confluence: 75%<br>Max size: 0.8% risk<br>Stops: wider<br>Targets: 1.5–2R`
-  }
-};
+let balance=50000,trades=[],symbol="WTI",alloc={high:40,mid:35,low:25};
+const teams={high:{pnl:0,minConf:55,maxRisk:.025,status:"Scanning"},mid:{pnl:0,minConf:65,maxRisk:.015,status:"Scanning"},low:{pnl:0,minConf:75,maxRisk:.008,status:"Scanning"}};
+const newsPool=["Oil inventories draw larger than expected","Fed speakers signal cautious path","Gold holds support ahead of data","BTC volume rising on key level","WTI breakout above 87","NVDA momentum continuation","DXY softens","Risk-on tone in crypto"];
 
-function openOverlay(key) {
-  const data = overlays[key];
-  document.getElementById("overlayTitle").textContent = data.title;
-  document.getElementById("overlayContent").innerHTML = data.content;
+function setSymbol(){symbol=document.getElementById("symbolInput").value.toUpperCase()||"WTI";}
+function updateAlloc(){
+  const h=+document.getElementById("highAlloc").value||0,m=+document.getElementById("midAlloc").value||0,l=+document.getElementById("lowAlloc").value||0;
+  if(h+m+l!==100){alert("Must total 100%");return;}
+  alloc={high:h,mid:m,low:l};
+}
+function render(){
+  document.getElementById("balance").textContent="$"+balance.toLocaleString();
+  const totalPnl=trades.reduce((s,t)=>s+t.pnl,0);
+  const el=document.getElementById("totalPnl");
+  el.textContent=(totalPnl>=0?"+":"")+"$"+Math.round(totalPnl)+" · "+(totalPnl/500).toFixed(2)+"%";
+  el.className="pnl "+(totalPnl>=0?"pos":"neg");
+  document.getElementById("newsList").innerHTML=newsPool.slice(0,4).map(n=>`<div class="news-item"><span>${n}</span><span class="tag">${symbol}</span></div>`).join("");
+  document.getElementById("tradeList").innerHTML=trades.slice(-3).reverse().map(t=>`<div class="trade-row"><span>${t.sym} ${t.side} · ${t.team}</span><span class="pnl ${t.pnl>=0?"pos":"neg"}">${t.pnl>=0?"+":""}$${Math.round(t.pnl)}</span></div>`).join("")||"<div class='news-item'>No trades yet</div>";
+  ["high","mid","low"].forEach(k=>{
+    document.getElementById(k+"Pnl").textContent=(teams[k].pnl>=0?"+":"")+"$"+Math.round(teams[k].pnl);
+    document.getElementById(k+"Pnl").className="pnl-mini "+(teams[k].pnl>=0?"pnl pos":"pnl neg");
+    document.getElementById(k+"Status").textContent=teams[k].status;
+  });
+}
+function simulateTrade(){
+  const teamKeys=["high","mid","low"];
+  const team=teamKeys[Math.floor(Math.random()*3)];
+  const conf=50+Math.random()*45;
+  if(conf<teams[team].minConf){teams[team].status="No setup ("+Math.round(conf)+"%)";return;}
+  const side=Math.random()>.5?"Long":"Short";
+  const risk=balance*(alloc[team]/100)*teams[team].maxRisk;
+  const rr=1.5+Math.random()*1.5;
+  const win=Math.random()<.55;
+  const pnl=win?risk*rr:-risk*.8;
+  trades.push({sym:symbol,side,team,pnl,conf:Math.round(conf),time:Date.now()});
+  teams[team].pnl+=pnl;
+  balance+=pnl;
+  teams[team].status=side+" "+symbol+" · "+Math.round(conf)+"% · "+(win?"WIN":"LOSS");
+  if(trades.length>50)trades.shift();
+  render();
+}
+setInterval(simulateTrade,4500);
+render();
+
+const overlays={
+  news:{title:"HOT NEWS",content:newsPool.map(n=>`<strong>${symbol}</strong><br>${n}<br><br>`).join("")},
+  trades:{title:"TRADE LOG",content:()=>trades.slice().reverse().map(t=>`<strong>${t.sym} ${t.side} · ${t.team}</strong><br>Conf: ${t.conf}% · P&L: ${t.pnl>=0?"+":""}$${Math.round(t.pnl)}<br><br>`).join("")||"No trades yet."},
+  account:{title:"ACCOUNT",content:`<strong>Balance</strong><br>$${balance.toLocaleString()}<br><br><strong>Allocation</strong><br>High ${alloc.high}% · Mid ${alloc.mid}% · Low ${alloc.low}%`},
+  high:{title:"HIGH RISK TEAM",content:"Aggressive breakout/momentum focus. Lower confluence threshold. Larger relative size."},
+  mid:{title:"MID RISK TEAM",content:"Balanced filters. Mix of setups. Standard risk."},
+  low:{title:"LOW RISK TEAM",content:"High-probability only. Smaller size. Capital preservation first."}
+};
+function openOverlay(key){
+  const d=overlays[key];
+  document.getElementById("overlayTitle").textContent=d.title;
+  document.getElementById("overlayContent").innerHTML=typeof d.content==="function"?d.content():d.content;
   document.getElementById("overlay").classList.add("open");
 }
-function closeOverlay() {
-  document.getElementById("overlay").classList.remove("open");
-}
-function login() {
-  const u = document.getElementById("username").value;
-  const p = document.getElementById("password").value;
-  if (u && p) {
-    document.getElementById("loginScreen").style.display = "none";
-    document.getElementById("app").style.display = "block";
+function closeOverlay(){document.getElementById("overlay").classList.remove("open");}
+function login(){
+  if(document.getElementById("username").value&&document.getElementById("password").value){
+    document.getElementById("loginScreen").style.display="none";
+    document.getElementById("app").style.display="block";
   }
 }
-function logout() {
-  document.getElementById("app").style.display = "none";
-  document.getElementById("loginScreen").style.display = "flex";
+function logout(){
+  document.getElementById("app").style.display="none";
+  document.getElementById("loginScreen").style.display="flex";
 }
-function updateAlloc() {
-  const h = +document.getElementById("highAlloc").value || 0;
-  const m = +document.getElementById("midAlloc").value || 0;
-  const l = +document.getElementById("lowAlloc").value || 0;
-  if (h + m + l !== 100) { alert("Must total 100%"); return; }
-  alert(`Split: High ${h}% · Mid ${m}% · Low ${l}%`);
-}
-if (window.PublicKeyCredential) {
-  document.querySelector(".alt").textContent = "TOUCH ID / FACE ID SUPPORTED";
-}
+if(window.PublicKeyCredential)document.querySelector(".alt").textContent="TOUCH ID / FACE ID SUPPORTED";
 </script>
 </body>
 </html>
