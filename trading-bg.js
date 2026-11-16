@@ -217,10 +217,8 @@
     }
 
     function loadQuotes() {
-      if (!window.fetch) return;
-      fetch("data/latest.json?t=" + Date.now(), { cache: "no-store" }).then(function (r) {
-        return r.ok ? r.json() : null;
-      }).then(function (d) {
+      // prices only after sign-in (decrypted data from bq-crypto.js); symbols only before
+      Promise.resolve(window.BQ && window.BQ.data).then(function (d) {
         var snap = d ? d.snapshot : null;
         if (!snap) return;
         for (var i = 0; i < SYMBOLS.length; i++) {
@@ -245,6 +243,8 @@
 
     resize();
     loadQuotes();
+    window.addEventListener("bq:data", loadQuotes);
+    window.addEventListener("bq:lock", function () { quotes = {}; });
     setInterval(loadQuotes, 300000);
     run();
   }
