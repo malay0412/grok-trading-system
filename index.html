@@ -6,167 +6,195 @@
 <title>BOTTY QUANTER.grok</title>
 <style>
 :root {
-  --bg: #05070a;
-  --panel: #0a0d12;
-  --border: #1a2030;
-  --text: #c9d1d9;
-  --muted: #6b7280;
-  --accent: #00f0ff;
+  --bg: #04060a;
+  --panel: rgba(12,16,24,0.82);
+  --border: #2a3548;
+  --text: #e6edf3;
+  --muted: #8b9bb4;
+  --accent: #00e5ff;
   --green: #00ff9d;
-  --red: #ff4d4d;
-  --yellow: #ffd000;
+  --red: #ff4d6a;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
   background: var(--bg);
   color: var(--text);
   font-family: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+  font-weight: 500;
   min-height: 100vh;
   overflow-x: hidden;
+}
+#bg-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.login-screen, .app, .overlay {
+  position: relative;
+  z-index: 1;
 }
 .login-screen {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: 
-    radial-gradient(circle at 30% 20%, rgba(0,240,255,0.08) 0%, transparent 40%),
-    radial-gradient(circle at 70% 80%, rgba(0,100,255,0.06) 0%, transparent 40%),
-    linear-gradient(180deg, #05070a 0%, #0a0f18 100%);
-  position: relative;
-  overflow: hidden;
-}
-.login-screen::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: 
-    linear-gradient(rgba(0,240,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,240,255,0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
-  pointer-events: none;
 }
 .login-box {
-  position: relative;
-  z-index: 1;
-  background: rgba(10,13,18,0.75);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(0,240,255,0.15);
-  box-shadow: 0 0 40px rgba(0,240,255,0.05);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 56px 48px;
+  width: 440px;
   text-align: center;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.4);
 }
-.login-box h1 { 
-  font-size: 20px; 
-  font-weight: 400; 
-  letter-spacing: 1.5px; 
-  text-align: center;
-  margin-bottom: 4px;
+.login-box h1 {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  margin-bottom: 6px;
 }
-.login-box p { 
-  color: var(--muted); 
-  font-size: 11px; 
-  margin: 6px 0 32px; 
-  letter-spacing: 1.2px; 
-  text-align: center;
+.login-box p {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0 0 36px;
+  letter-spacing: 1.2px;
 }
 .login-box input {
   width: 100%;
-  background: #07090d;
+  background: #070a10;
   border: 1px solid var(--border);
-  padding: 14px 16px;
+  padding: 16px 18px;
   color: var(--text);
   font-family: inherit;
-  font-size: 13px;
-  margin-bottom: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 14px;
   outline: none;
-  text-align: left;
 }
 .login-box input:focus { border-color: var(--accent); }
 .login-box button {
   width: 100%;
   background: transparent;
-  border: 1px solid var(--accent);
+  border: 2px solid var(--accent);
   color: var(--accent);
-  padding: 14px;
+  padding: 16px;
   font-family: inherit;
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: 700;
   letter-spacing: 1.5px;
   cursor: pointer;
-  margin-top: 8px;
+  margin-top: 6px;
 }
-.login-box .alt { margin-top: 22px; text-align: center; font-size: 10px; color: var(--muted); letter-spacing: 1px; }
-.app { display: none; padding: 20px; }
+.login-box .alt {
+  margin-top: 24px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+.app { display: none; padding: 28px; }
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  padding-bottom: 12px;
+  margin-bottom: 28px;
+  padding-bottom: 16px;
   border-bottom: 1px solid var(--border);
 }
-.header h1 { font-size: 16px; font-weight: 400; letter-spacing: 2px; }
-.status { font-size: 11px; color: var(--accent); letter-spacing: 1px; }
+.header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
+.status {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 1px;
+}
 .grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1.2fr;
-  gap: 12px;
-  margin-bottom: 12px;
+  gap: 16px;
+  margin-bottom: 16px;
 }
 .card, .team-card {
   background: var(--panel);
   border: 1px solid var(--border);
-  padding: 16px;
+  padding: 22px;
   cursor: pointer;
-  position: relative;
+  backdrop-filter: blur(10px);
+  transition: border-color 0.2s;
 }
-.card:hover, .team-card:hover { border-color: #2a3a50; }
+.card:hover, .team-card:hover { border-color: var(--accent); }
 .card h2, .team-card h3 {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 1.5px;
-  color: var(--muted);
-  margin-bottom: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: var(--accent);
+  margin-bottom: 16px;
 }
 .news-item, .trade-row {
-  font-size: 12px;
-  padding: 8px 0;
-  border-bottom: 1px solid #12161f;
+  font-size: 14.5px;
+  font-weight: 600;
+  padding: 10px 0;
+  border-bottom: 1px solid #1a2230;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
-.tag { font-size: 9px; color: var(--accent); letter-spacing: 0.5px; }
-.balance-big { font-size: 28px; margin: 6px 0; }
-.pnl.pos { color: var(--green); }
-.pnl.neg { color: var(--red); }
-.split-controls { display: flex; gap: 6px; margin-top: 12px; }
+.tag {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+}
+.balance-big {
+  font-size: 36px;
+  font-weight: 700;
+  margin: 8px 0;
+}
+.pnl.pos { color: var(--green); font-weight: 700; }
+.pnl.neg { color: var(--red); font-weight: 700; }
+.split-controls { display: flex; gap: 8px; margin-top: 16px; }
 .split-controls input {
   flex: 1;
-  background: #07090d;
+  background: #070a10;
   border: 1px solid var(--border);
-  padding: 8px;
+  padding: 10px;
   color: var(--text);
   font-family: inherit;
-  font-size: 12px;
+  font-size: 14px;
+  font-weight: 600;
   text-align: center;
 }
-.teams { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-.team-card .risk { font-size: 10px; color: var(--muted); letter-spacing: 0.5px; }
+.teams { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.team-card .risk {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.5px;
+}
 .logout {
   background: transparent;
   border: 1px solid var(--border);
   color: var(--muted);
-  padding: 6px 12px;
+  padding: 8px 16px;
   font-family: inherit;
-  font-size: 11px;
+  font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
 }
 .overlay {
   display: none;
   position: fixed;
   inset: 0;
-  background: #05070a;
+  background: rgba(4,6,10,0.96);
   z-index: 100;
-  padding: 32px;
+  padding: 40px;
   overflow-y: auto;
 }
 .overlay.open { display: block; }
@@ -174,29 +202,40 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
   padding-bottom: 16px;
   border-bottom: 1px solid var(--border);
 }
-.overlay-header h2 { font-size: 18px; letter-spacing: 2px; font-weight: 400; }
+.overlay-header h2 {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+}
 .close-btn {
   background: transparent;
   border: 1px solid var(--border);
   color: var(--muted);
-  padding: 8px 16px;
+  padding: 10px 18px;
   font-family: inherit;
-  font-size: 11px;
+  font-size: 13px;
+  font-weight: 700;
   letter-spacing: 1px;
   cursor: pointer;
 }
-.overlay-content { font-size: 13px; line-height: 1.7; max-width: 900px; }
-.overlay-content strong { color: var(--text); }
+.overlay-content {
+  font-size: 15.5px;
+  font-weight: 600;
+  line-height: 1.75;
+  max-width: 900px;
+}
 @media (max-width: 1000px) {
   .grid, .teams { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
+
+<canvas id="bg-canvas"></canvas>
 
 <div class="login-screen" id="loginScreen">
   <div class="login-box">
@@ -238,13 +277,13 @@ body {
       <h2>ACCOUNT</h2>
       <div class="balance-big">$50,000</div>
       <div class="pnl pos">+$1,240 · 2.48%</div>
-      <div style="margin-top:14px; font-size:10px; color:var(--muted); letter-spacing:1px;">CAPITAL ALLOCATION</div>
+      <div style="margin-top:16px; font-size:12px; color:var(--muted); letter-spacing:1px; font-weight:700;">CAPITAL ALLOCATION</div>
       <div class="split-controls">
         <input type="number" id="highAlloc" value="40">
         <input type="number" id="midAlloc" value="35">
         <input type="number" id="lowAlloc" value="25">
       </div>
-      <button onclick="event.stopPropagation(); updateAlloc()" style="margin-top:10px; background:transparent; border:1px solid var(--accent); color:var(--accent); padding:6px 12px; font-size:11px; cursor:pointer; font-family:inherit;">APPLY</button>
+      <button onclick="event.stopPropagation(); updateAlloc()" style="margin-top:12px; background:transparent; border:2px solid var(--accent); color:var(--accent); padding:8px 16px; font-size:13px; font-weight:700; cursor:pointer; font-family:inherit;">APPLY</button>
     </div>
   </div>
 
@@ -273,6 +312,59 @@ body {
 </div>
 
 <script>
+const canvas = document.getElementById("bg-canvas");
+const ctx = canvas.getContext("2d");
+let w, h, time = 0;
+
+function resize() {
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resize);
+resize();
+
+const chars = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ+-*/=<>[]{}#$%&@";
+const cols = Math.ceil(w / 14);
+const drops = Array(cols).fill(0).map(() => Math.random() * -100);
+
+function draw() {
+  ctx.fillStyle = "rgba(4,6,10,0.18)";
+  ctx.fillRect(0, 0, w, h);
+
+  ctx.strokeStyle = "rgba(0,229,255,0.08)";
+  ctx.lineWidth = 1;
+  const horizon = h * 0.65;
+  for (let i = 0; i < 20; i++) {
+    const y = horizon + (i * 18) * (1 + Math.sin(time * 0.3 + i) * 0.02);
+    const spread = (y - horizon) * 1.8;
+    ctx.beginPath();
+    ctx.moveTo(w/2 - spread, y);
+    ctx.lineTo(w/2 + spread, y);
+    ctx.stroke();
+  }
+  for (let i = -12; i <= 12; i++) {
+    ctx.beginPath();
+    ctx.moveTo(w/2 + i * 40, horizon);
+    ctx.lineTo(w/2 + i * 140, h);
+    ctx.stroke();
+  }
+
+  ctx.font = "13px JetBrains Mono, monospace";
+  ctx.fillStyle = "rgba(0,229,255,0.22)";
+  for (let i = 0; i < cols; i++) {
+    const ch = chars[Math.floor(Math.random() * chars.length)];
+    const x = i * 14;
+    const y = drops[i] * 16;
+    ctx.fillText(ch, x, y);
+    if (y > h && Math.random() > 0.975) drops[i] = 0;
+    drops[i] += 0.35;
+  }
+
+  time += 0.016;
+  requestAnimationFrame(draw);
+}
+draw();
+
 const overlays = {
   news: {
     title: "HOT NEWS",
