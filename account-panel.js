@@ -62,6 +62,22 @@
     return out;
   }
 
+  function cashHtml(a) {
+    var fc = a.free_cash, rows = (fc && fc.rows) || [], t = (fc && fc.total) || {};
+    var out = "<div class='ap-card'><h2>FREE CASH \u00b7 AVAILABLE BALANCE</h2><div class='ap-sub'>Cash available to trade or buy \u00b7 as of " + esc(a.generated_london) + "</div>";
+    if (!fc) return out + "<div class='empty'>Free cash not in this snapshot yet.</div></div>";
+    out += "<div class='ap-kpis' style='grid-template-columns:1fr 1fr'><div class='ap-kpi'><b>AVAILABLE (USD)</b><span>" + usd(t.value_usd) + "</span></div>" +
+      "<div class='ap-kpi'><b>AVAILABLE (\u00a3 EST.)</b><span>" + gbp(t.value_gbp_est) + "</span></div></div>";
+    if (rows.length) {
+      out += "<div class='ap-tw'><table class='ap-t' style='min-width:300px'><thead><tr><th>CURRENCY</th><th>AVAILABLE</th><th>ON HOLD</th><th>VALUE (USD)</th></tr></thead><tbody>";
+      rows.forEach(function (r) {
+        out += "<tr><td>" + esc(r.currency) + "</td><td>" + (num(r.available) ? r.available.toFixed(2) : "\u2014") + "</td><td>" + (num(r.on_hold) ? r.on_hold.toFixed(2) : "\u2014") + "</td><td>" + usd(r.value_usd) + "</td></tr>";
+      });
+      out += "</tbody></table></div>";
+    }
+    return out + "<div class='ap-note'>" + esc(fc.note || "") + (num(t.coinbase_reported_cash_usd) ? ". Coinbase-reported cash total " + usd(t.coinbase_reported_cash_usd) + "." : ".") + "</div></div>";
+  }
+
   function perfHtml(a) {
     var p = a.performance || {}, d = p.daily, lo = p.from_low, w = p.win_rate;
     var out = "<div class='ap-card'><h2>PERFORMANCE</h2><div class='ap-sub'>From Coinbase fills and balance snapshots \u00b7 " + esc(p.snapshots) + " snapshot(s)</div>";
@@ -85,7 +101,8 @@
     var a = window.BQ && window.BQ.account;
     if (!box) return;
     if (!a) { box.innerHTML = ""; return; }
-    box.innerHTML = "<div class='section-label'>Holdings \x26amp; Performance</div><div class='ap-grid'>" + holdingsHtml(a) + perfHtml(a) + "</div>";
+    box.innerHTML = "<div class='section-label'>Holdings \x26amp; Free cash</div><div class='ap-grid'>" + holdingsHtml(a) + cashHtml(a) + "</div>" +
+      "<div class='section-label'>Performance</div><div class='ap-grid' style='grid-template-columns:1fr'>" + perfHtml(a) + "</div>";
   }
 
   function mount() {

@@ -47,7 +47,7 @@
     if (t.ranking) h += "<br><strong>Ranking</strong><br><small>" + esc(t.ranking.map(function (r) { return r.side + " " + r.symbol + " " + r.net_score + " (" + r.agree + "/10)"; }).join(" · ")) + "</small>";
     return h;
   }
-  function acctGbp() { var a = window.BQ && window.BQ.account, t = a && a.holdings && a.holdings.total; return t && typeof t.value_gbp_est === "number" ? t.value_gbp_est : null; }
+  function acctGbp() { var a = window.BQ && window.BQ.account, t = a && (a.wealth || (a.holdings && a.holdings.total)); return t && typeof t.value_gbp_est === "number" ? t.value_gbp_est : null; }
   function apply(d) {
     var keys = { a: "A", b: "B", c: "C" };
     var payload = {
@@ -72,7 +72,7 @@
         return "<strong>" + esc(n.title) + "</strong><br><small>" + esc(n.source) + " · " + esc(n.published_london || "time n/a") + " · sentiment " + n.sentiment +
           (n.url ? " · <a href='" + esc(n.url) + "' target='_blank' rel='noopener'>source</a>" : "") + "</small><br><br>"; }).join("") || "No headlines this cycle." };
       ov.trades = { title: "TRADE LOG", content: esc(d.trade_log.label) + ". No orders are placed by the engine." };
-      ov.account = { title: "ACCOUNT", content: "Account currency: " + esc(d.currency.account) + " (" + esc(d.currency.account_symbol) + ")<br>Balance: " + (acctGbp() === null ? "—" : "\u00a3" + acctGbp().toFixed(2) + " (estimate from Coinbase USD value; see Holdings)") + " · P\x26amp;L: —<br><small>" + esc(d.account.note) + " " + esc(d.currency.note) + "</small>" };
+      ov.account = { title: "ACCOUNT", content: "Account currency: " + esc(d.currency.account) + " (" + esc(d.currency.account_symbol) + ")<br>Balance: " + (acctGbp() === null ? "—" : "\u00a3" + acctGbp().toFixed(2) + " (estimate from Coinbase USD value: holdings + free cash)") + " · P\x26amp;L: —<br><small>" + esc(d.account.note) + " " + esc(d.currency.note) + "</small>" };
     }
   }
   // Data now arrives decrypted from bq-crypto.js (window.BQ.data + "bq:data" event, re-fetched every 60s). No plaintext fetch.
