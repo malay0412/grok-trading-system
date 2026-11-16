@@ -160,7 +160,8 @@
   function mount() {
     var st = document.createElement("style"); st.id = "bp-style"; st.textContent = CSS; document.head.appendChild(st);
     var teams = document.querySelector(".teams");
-    if (teams && teams.parentNode) {
+    // Main-page roster disabled (Malay: cards only inside Team A/B/C views). Set window.BP_MAIN_ROSTER = true to re-enable.
+    if (window.BP_MAIN_ROSTER && teams && teams.parentNode) {
       var label = document.createElement("div"); label.className = "section-label"; label.textContent = "Sub-bot roster";
       var box = document.createElement("div"); box.id = "bpPanel";
       teams.parentNode.insertBefore(box, teams.nextSibling);
