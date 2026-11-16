@@ -181,7 +181,7 @@ input:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline
   </div>
 
   <div class="search-bar">
-    <input type="text" id="symbolInput" placeholder="Symbol (WTI, GOLD, BTC, NVDA...)" value="WTI" onchange="setSymbol()">
+    <input type="text" id="symbolInput" placeholder="BTC-USD" value="BTC-USD" readonly title="Paper trading is BTC-USD only" onchange="setSymbol()">
   </div>
 
   <div class="section-label">Teams</div>
@@ -221,12 +221,7 @@ input:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline
       <div class="balance-big" id="balance">£—</div>
       <div class="pnl none" id="totalPnl">P&L · Awaiting data</div>
       <div class="alloc-label">ALLOCATION %</div>
-      <div class="split-controls">
-        <label class="split-field"><span>TEAM A</span><input type="number" id="highAlloc" value="40"></label>
-        <label class="split-field"><span>TEAM B</span><input type="number" id="midAlloc" value="35"></label>
-        <label class="split-field"><span>TEAM C</span><input type="number" id="lowAlloc" value="25"></label>
-      </div>
-      <button class="apply-btn" onclick="event.stopPropagation();updateAlloc()">APPLY</button>
+      <div class="bot-status" id="allocSummary">Set in Team allocation (bottom of page)</div>
     </div>
   </div>
 </div>
@@ -297,7 +292,7 @@ input:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline
 
 /* ---------- State: no demo data. Populated only by render(data) with real data. ---------- */
 const NO_DATA="£—";
-let balance=null,trades=[],news=[],symbol="WTI",alloc={a:40,b:35,c:25},chiefStatus="Waiting for team reports";
+let balance=null,trades=[],news=[],symbol="BTC-USD",alloc={a:33.33,b:33.33,c:33.34},chiefStatus="Waiting for team reports";
 const teams={a:{pnl:null,minConf:55,maxRisk:.025,status:"Awaiting data",label:"Team A"},b:{pnl:null,minConf:65,maxRisk:.015,status:"Awaiting data",label:"Team B"},c:{pnl:null,minConf:75,maxRisk:.008,status:"Awaiting data",label:"Team C"}};
 
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"\x26amp;","<":"\x26lt;",">":"\x26gt;",'"':"\x26quot;","'":"\x26#39;"}[c]));}
@@ -308,7 +303,8 @@ function gbp(v,signed){
   return (v<0?"−":signed?"+":"")+"£"+s;
 }
 
-function setSymbol(){symbol=document.getElementById("symbolInput").value.toUpperCase()||"WTI";render();}
+function setSymbol(){symbol=document.getElementById("symbolInput").value.toUpperCase()||"BTC-USD";render();}
+function setAllocFromPlanner(o){alloc=o;}
 function updateAlloc(){
   const a=+document.getElementById("highAlloc").value||0,b=+document.getElementById("midAlloc").value||0,c=+document.getElementById("lowAlloc").value||0;
   if(a+b+c!==100){alert("Must total 100%");return;}
@@ -394,5 +390,6 @@ if(window.BQ&&BQ.hasSession())login(true);
 <script src="bots-panel.js"></script>
 <script src="account-panel.js"></script>
 <script src="paper-panel.js"></script>
+<script src="planner.js"></script>
 </body>
 </html>
