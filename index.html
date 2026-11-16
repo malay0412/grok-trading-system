@@ -4,52 +4,152 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BOTTY QUANTER.grok</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#04060a;--panel:rgba(12,16,24,.85);--border:#2a3548;--text:#e6edf3;--muted:#8b9bb4;--accent:#00e5ff;--green:#00ff9d;--red:#ff4d6a;}
+:root{
+  --bg:#0a0d14;--bg-2:#0e131d;
+  --panel:#121826;--panel-2:#161d2e;--panel-hover:#182033;
+  --border:#222b3d;--border-strong:#2e3a52;
+  --text:#e7ecf3;--text-2:#b4bfd0;--muted:#7a879c;
+  --accent:#4f8cff;--accent-2:#7aa7ff;--accent-soft:rgba(79,140,255,.12);
+  --green:#22c55e;--green-soft:rgba(34,197,94,.12);
+  --red:#ef4444;--red-soft:rgba(239,68,68,.12);
+  --amber:#f59e0b;
+  --team-a:#f97316;--team-b:#a78bfa;--team-c:#22d3ee;
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:"JetBrains Mono","SF Mono",ui-monospace,Menlo,Consolas,monospace;
+  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:32px;--s7:48px;
+  --r-sm:8px;--r:12px;--r-lg:16px;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--text);font-family:"JetBrains Mono","SF Mono",ui-monospace,monospace;font-weight:500;min-height:100vh;overflow-x:hidden;}
-#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
+html{-webkit-text-size-adjust:100%;}
+body{
+  background:radial-gradient(1200px 600px at 10% -10%,rgba(79,140,255,.10),transparent 60%),
+             radial-gradient(900px 500px at 110% 10%,rgba(167,139,250,.07),transparent 60%),
+             var(--bg);
+  background-attachment:fixed;
+  color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.5;font-weight:400;
+  min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+}
+/* decorative animated nano-space background (behind everything) */
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.7;filter:blur(1.2px);}
 .login-screen,.app,.overlay{position:relative;z-index:1;}
-.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;}
-.login-box{background:var(--panel);border:1px solid var(--border);padding:48px 40px;width:420px;text-align:center;backdrop-filter:blur(12px);}
-.login-box h1{font-size:24px;font-weight:700;letter-spacing:1px;margin-bottom:6px;}
-.login-box p{color:var(--muted);font-size:12px;font-weight:600;margin:0 0 32px;letter-spacing:1px;}
-.login-box input{width:100%;background:#070a10;border:1px solid var(--border);padding:14px 16px;color:var(--text);font-family:inherit;font-size:14px;font-weight:600;margin-bottom:12px;outline:none;}
-.login-box input:focus{border-color:var(--accent);}
-.login-box button{width:100%;background:transparent;border:2px solid var(--accent);color:var(--accent);padding:14px;font-family:inherit;font-size:13px;font-weight:700;letter-spacing:1px;cursor:pointer;}
-.login-box .alt{margin-top:20px;font-size:11px;font-weight:600;color:var(--muted);}
-.app{display:none;padding:24px;}
-.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border);}
-.header h1{font-size:18px;font-weight:700;}
-.status{font-size:12px;font-weight:700;color:var(--accent);}
-.chief{background:var(--panel);border:1px solid var(--accent);padding:20px;margin-bottom:16px;backdrop-filter:blur(8px);}
-.chief h2{font-size:16px;font-weight:700;color:var(--accent);margin-bottom:6px;letter-spacing:1px;}
-.chief .sub{font-size:12px;color:var(--muted);font-weight:600;}
-.grid{display:grid;grid-template-columns:1fr 1fr 1.15fr;gap:12px;margin-bottom:16px;}
-.card,.team-card{background:var(--panel);border:1px solid var(--border);padding:16px;cursor:pointer;backdrop-filter:blur(8px);}
-.card:hover,.team-card:hover{border-color:var(--accent);}
-.card h2,.team-card h3{font-size:13px;font-weight:700;color:var(--accent);margin-bottom:10px;letter-spacing:.5px;}
-.news-item,.trade-row{font-size:13px;font-weight:600;padding:7px 0;border-bottom:1px solid #1a2230;display:flex;justify-content:space-between;}
-.tag{font-size:10px;font-weight:700;color:var(--accent);}
-.balance-big{font-size:32px;font-weight:700;}
-.pnl.pos{color:var(--green);font-weight:700;}
-.pnl.neg{color:var(--red);font-weight:700;}
-.split-controls{display:flex;gap:6px;margin-top:10px;}
-.split-controls input{flex:1;background:#070a10;border:1px solid var(--border);padding:8px;color:var(--text);font-family:inherit;font-size:13px;font-weight:600;text-align:center;}
-.teams{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
-.team-card .risk{font-size:11px;font-weight:600;color:var(--muted);}
-.team-card .pnl-mini{font-size:16px;font-weight:700;margin-top:6px;}
-.logout{background:transparent;border:1px solid var(--border);color:var(--muted);padding:6px 12px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;}
-.overlay{display:none;position:fixed;inset:0;background:rgba(4,6,10,.97);z-index:100;padding:32px;overflow-y:auto;}
-.overlay.open{display:block;}
-.overlay-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--border);}
-.overlay-header h2{font-size:20px;font-weight:700;}
-.close-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:8px 14px;font-family:inherit;font-size:12px;font-weight:700;cursor:pointer;}
-.overlay-content{font-size:14px;font-weight:600;line-height:1.7;max-width:860px;}
-.search-bar{margin-bottom:16px;}
-.search-bar input{width:100%;max-width:320px;background:#070a10;border:1px solid var(--border);padding:12px 14px;color:var(--text);font-family:inherit;font-size:14px;font-weight:600;}
-.bot-status{font-size:12px;color:var(--muted);margin-top:4px;}
-@media(max-width:900px){.grid,.teams{grid-template-columns:1fr;}}
+button{font-family:var(--sans);}
+input{font-family:var(--sans);}
+input:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+
+/* ---------- Login ---------- */
+.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:var(--s5);}
+.login-box{background:var(--panel);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--s7) var(--s6);width:100%;max-width:400px;text-align:center;box-shadow:var(--shadow);}
+.login-box h1{font-size:24px;font-weight:800;letter-spacing:-.02em;margin-bottom:var(--s1);}
+.login-box p{color:var(--muted);font-size:12px;font-weight:600;margin:0 0 var(--s6);letter-spacing:.12em;}
+.login-box input{width:100%;background:var(--bg-2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;color:var(--text);font-size:14px;margin-bottom:var(--s3);outline:none;transition:border-color .15s,box-shadow .15s;}
+.login-box input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.login-box button{width:100%;margin-top:var(--s2);background:var(--accent);border:0;border-radius:var(--r-sm);color:#fff;padding:13px;font-size:14px;font-weight:600;letter-spacing:.02em;cursor:pointer;transition:background .15s,transform .05s;}
+.login-box button:hover{background:#3d7af0;}
+.login-box button:active{transform:translateY(1px);}
+.login-box .alt{margin-top:var(--s5);font-size:12px;color:var(--muted);}
+
+/* ---------- App shell ---------- */
+.app{display:none;max-width:1240px;margin:0 auto;padding:var(--s5);}
+.header{display:flex;justify-content:space-between;align-items:center;gap:var(--s4);margin-bottom:var(--s5);padding-bottom:var(--s4);border-bottom:1px solid var(--border);flex-wrap:wrap;}
+.header h1{font-size:18px;font-weight:700;letter-spacing:-.01em;}
+.header > div{display:flex;align-items:center;gap:var(--s3);}
+.status{display:inline-flex;align-items:center;font-size:12px;font-weight:600;color:var(--amber);background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.3);padding:5px 10px;border-radius:999px;white-space:nowrap;}
+.logout{background:transparent;border:1px solid var(--border-strong);color:var(--text-2);padding:6px 12px;border-radius:var(--r-sm);font-size:12px;font-weight:600;cursor:pointer;transition:background .15s,color .15s;}
+.logout:hover{background:var(--panel-2);color:var(--text);}
+
+/* ---------- Section labels ---------- */
+.section-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 var(--s3);}
+
+/* ---------- Chief Bot hero ---------- */
+.chief{position:relative;overflow:hidden;cursor:pointer;margin-bottom:var(--s5);padding:var(--s5) var(--s6);border-radius:var(--r-lg);
+  background:linear-gradient(135deg,rgba(79,140,255,.16),rgba(79,140,255,.04) 55%,rgba(167,139,250,.08)),var(--panel);
+  border:1px solid rgba(79,140,255,.35);box-shadow:var(--shadow);transition:border-color .15s,transform .15s;}
+.chief:hover{border-color:var(--accent);transform:translateY(-1px);}
+.chief::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(79,140,255,.25),transparent 70%);pointer-events:none;}
+.chief h2{font-size:12px;font-weight:700;color:var(--accent-2);margin-bottom:var(--s2);letter-spacing:.14em;}
+.chief .sub{font-size:14px;color:var(--text-2);}
+.chief .bot-status{margin-top:var(--s4);font-size:clamp(18px,2.4vw,24px);font-weight:700;color:var(--text);letter-spacing:-.01em;}
+
+/* ---------- Symbol input ---------- */
+.search-bar{margin-bottom:var(--s5);display:flex;align-items:center;gap:var(--s3);}
+.search-bar::before{content:"Symbol";font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.search-bar input{width:100%;max-width:320px;background:var(--panel);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 14px;color:var(--text);font-family:var(--mono);font-size:14px;font-weight:600;letter-spacing:.04em;outline:none;transition:border-color .15s,box-shadow .15s;}
+.search-bar input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+
+/* ---------- Cards ---------- */
+.card,.team-card{background:var(--panel);border:1px solid var(--border);border-radius:var(--r);padding:var(--s5);cursor:pointer;box-shadow:var(--shadow);transition:border-color .15s,background .15s,transform .15s;}
+.card:hover,.team-card:hover{border-color:var(--border-strong);background:var(--panel-hover);transform:translateY(-1px);}
+.card h2,.team-card h3{font-size:12px;font-weight:700;color:var(--text-2);margin-bottom:var(--s4);letter-spacing:.12em;}
+
+/* ---------- Teams ---------- */
+.teams{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-bottom:var(--s5);}
+.team-card{position:relative;overflow:hidden;}
+.team-card::before{content:"";position:absolute;left:0;top:0;right:0;height:3px;background:var(--team-color,var(--accent));}
+.team-card:nth-child(1){--team-color:var(--team-a);}
+.team-card:nth-child(2){--team-color:var(--team-b);}
+.team-card:nth-child(3){--team-color:var(--team-c);}
+.team-card h3{display:flex;align-items:center;gap:var(--s2);color:var(--text);margin-bottom:var(--s1);}
+.team-card h3::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--team-color);}
+.team-card .risk{font-size:12px;color:var(--muted);}
+.team-card .pnl-mini{font-family:var(--mono);font-size:26px;font-weight:700;margin-top:var(--s4);letter-spacing:-.02em;font-variant-numeric:tabular-nums;}
+.team-card .bot-status{margin-top:var(--s3);padding-top:var(--s3);border-top:1px solid var(--border);font-family:var(--mono);font-size:12px;color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+/* ---------- Lower grid ---------- */
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--s4);margin-bottom:var(--s5);}
+.news-item,.trade-row{display:flex;justify-content:space-between;align-items:center;gap:var(--s3);font-size:13px;padding:10px 0;border-bottom:1px solid var(--border);color:var(--text-2);}
+.news-item:last-child,.trade-row:last-child{border-bottom:0;}
+.trade-row > span:first-child{font-family:var(--mono);font-size:12px;}
+.trade-row .pnl{font-family:var(--mono);font-variant-numeric:tabular-nums;}
+.tag{flex-shrink:0;font-family:var(--mono);font-size:10px;font-weight:600;color:var(--accent-2);background:var(--accent-soft);border:1px solid rgba(79,140,255,.25);padding:2px 7px;border-radius:999px;}
+.balance-big{font-family:var(--mono);font-size:32px;font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1.15;}
+.pnl.pos{color:var(--green);font-weight:600;}
+.pnl.neg{color:var(--red);font-weight:600;}
+.pnl.none{color:var(--muted);font-weight:500;}
+.empty{padding:var(--s4) 0;font-size:13px;color:var(--muted);font-style:italic;}
+#totalPnl.none{background:var(--panel-2);font-family:var(--sans);font-size:12px;}
+#totalPnl{display:inline-block;margin-top:var(--s2);font-family:var(--mono);font-size:13px;padding:3px 8px;border-radius:6px;}
+#totalPnl.pos{background:var(--green-soft);}
+#totalPnl.neg{background:var(--red-soft);}
+.alloc-label{margin-top:var(--s5);font-size:11px;font-weight:600;letter-spacing:.1em;color:var(--muted);}
+.split-controls{display:flex;gap:var(--s2);margin-top:var(--s2);}
+.split-field{flex:1;min-width:0;display:flex;flex-direction:column;gap:var(--s1);}
+.split-field span{font-size:10px;font-weight:600;letter-spacing:.08em;color:var(--muted);text-align:center;}
+.split-controls input{width:100%;min-width:0;background:var(--bg-2);border:1px solid var(--border);border-radius:var(--r-sm);padding:8px 6px;color:var(--text);font-family:var(--mono);font-size:14px;font-weight:600;text-align:center;outline:none;}
+.split-controls input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.apply-btn{margin-top:var(--s3);width:100%;background:var(--accent-soft);border:1px solid rgba(79,140,255,.4);border-radius:var(--r-sm);color:var(--accent-2);padding:8px 12px;font-size:12px;font-weight:700;letter-spacing:.06em;cursor:pointer;transition:background .15s,color .15s;}
+.apply-btn:hover{background:var(--accent);color:#fff;}
+
+/* ---------- Overlay / modal ---------- */
+.overlay{display:none;position:fixed;inset:0;z-index:100;padding:var(--s7) var(--s4);overflow-y:auto;background:rgba(5,8,14,.72);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
+.overlay.open{display:block;animation:fade .15s ease-out;}
+.overlay-header,.overlay-content{max-width:720px;margin-left:auto;margin-right:auto;background:var(--panel);border:1px solid var(--border-strong);}
+.overlay-header{display:flex;justify-content:space-between;align-items:center;gap:var(--s4);padding:var(--s5) var(--s5) var(--s4);border-bottom:1px solid var(--border);border-radius:var(--r-lg) var(--r-lg) 0 0;border-bottom-color:var(--border);box-shadow:0 20px 60px rgba(0,0,0,.5);animation:pop .18s ease-out;}
+.overlay-header h2{font-size:18px;font-weight:700;letter-spacing:.04em;}
+.close-btn{background:var(--panel-2);border:1px solid var(--border-strong);border-radius:var(--r-sm);color:var(--text-2);padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer;transition:background .15s,color .15s;}
+.close-btn:hover{background:var(--border-strong);color:var(--text);}
+.overlay-content{border-top:0;border-radius:0 0 var(--r-lg) var(--r-lg);padding:var(--s5);font-size:14px;line-height:1.7;color:var(--text-2);box-shadow:0 20px 60px rgba(0,0,0,.5);animation:pop .18s ease-out;}
+.overlay-content strong{color:var(--text);font-weight:600;}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes pop{from{opacity:0;transform:translateY(8px) scale(.99)}to{opacity:1;transform:none}}
+
+/* ---------- Responsive ---------- */
+@media(max-width:960px){.grid{grid-template-columns:1fr 1fr;}.grid .card:last-child{grid-column:1 / -1;}}
+@media(max-width:720px){
+  .app{padding:var(--s4);}
+  .teams,.grid{grid-template-columns:1fr;gap:var(--s3);}
+  .grid .card:last-child{grid-column:auto;}
+  .chief{padding:var(--s5);}
+  .header h1{font-size:15px;}
+  .search-bar input{max-width:none;}
+  .overlay{padding:var(--s4) var(--s3);}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
 </style>
 </head>
 <body>
@@ -66,7 +166,7 @@ body{background:var(--bg);color:var(--text);font-family:"JetBrains Mono","SF Mon
 </div>
 <div class="app" id="app">
   <div class="header">
-    <h1>BOTTY QUANTER.grok // PAPER TRADING</h1>
+    <h1>BOTTY QUANTER.grok // PAPER TRADING · GBP</h1>
     <div>
       <span class="status" id="statusDot">● ONLINE · PAPER</span>
       <button class="logout" onclick="logout()">LOGOUT</button>
@@ -76,13 +176,36 @@ body{background:var(--bg);color:var(--text);font-family:"JetBrains Mono","SF Mon
   <div class="chief" onclick="openOverlay('chief')">
     <h2>CHIEF BOT</h2>
     <div class="sub">Final decision engine · Aggregates Team A / B / C</div>
-    <div class="bot-status" id="chiefStatus">Awaiting team reports...</div>
+    <div class="bot-status" id="chiefStatus">Waiting for team reports</div>
   </div>
 
   <div class="search-bar">
     <input type="text" id="symbolInput" placeholder="Symbol (WTI, GOLD, BTC, NVDA...)" value="WTI" onchange="setSymbol()">
   </div>
 
+  <div class="section-label">Teams</div>
+  <div class="teams">
+    <div class="team-card" onclick="openOverlay('a')">
+      <h3>TEAM A</h3>
+      <div class="risk">High Risk · Min 55% · Size up to 2.5%</div>
+      <div class="pnl-mini" id="aPnl">£—</div>
+      <div class="bot-status" id="aStatus">Awaiting data</div>
+    </div>
+    <div class="team-card" onclick="openOverlay('b')">
+      <h3>TEAM B</h3>
+      <div class="risk">Mid Risk · Min 65% · Size up to 1.5%</div>
+      <div class="pnl-mini" id="bPnl">£—</div>
+      <div class="bot-status" id="bStatus">Awaiting data</div>
+    </div>
+    <div class="team-card" onclick="openOverlay('c')">
+      <h3>TEAM C</h3>
+      <div class="risk">Low Risk · Min 75% · Size up to 0.8%</div>
+      <div class="pnl-mini" id="cPnl">£—</div>
+      <div class="bot-status" id="cStatus">Awaiting data</div>
+    </div>
+  </div>
+
+  <div class="section-label">Markets & Account</div>
   <div class="grid">
     <div class="card" onclick="openOverlay('news')">
       <h2>HOT NEWS</h2>
@@ -95,35 +218,14 @@ body{background:var(--bg);color:var(--text);font-family:"JetBrains Mono","SF Mon
     <div class="card" onclick="openOverlay('account')">
       <h2>ACCOUNT</h2>
       <div class="balance-big" id="balance">£—</div>
-      <div class="pnl pos" id="totalPnl">Awaiting data</div>
-      <div style="margin-top:10px;font-size:11px;color:var(--muted);font-weight:700;">ALLOCATION %</div>
+      <div class="pnl none" id="totalPnl">P&L · Awaiting data</div>
+      <div class="alloc-label">ALLOCATION %</div>
       <div class="split-controls">
-        <input type="number" id="highAlloc" value="40">
-        <input type="number" id="midAlloc" value="35">
-        <input type="number" id="lowAlloc" value="25">
+        <label class="split-field"><span>TEAM A</span><input type="number" id="highAlloc" value="40"></label>
+        <label class="split-field"><span>TEAM B</span><input type="number" id="midAlloc" value="35"></label>
+        <label class="split-field"><span>TEAM C</span><input type="number" id="lowAlloc" value="25"></label>
       </div>
-      <button onclick="event.stopPropagation();updateAlloc()" style="margin-top:8px;background:transparent;border:2px solid var(--accent);color:var(--accent);padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">APPLY</button>
-    </div>
-  </div>
-
-  <div class="teams">
-    <div class="team-card" onclick="openOverlay('a')">
-      <h3>TEAM A</h3>
-      <div class="risk">High Risk · Min 55% · Size up to 2.5%</div>
-      <div class="pnl-mini" id="aPnl">£—</div>
-      <div class="bot-status" id="aStatus">Scanning...</div>
-    </div>
-    <div class="team-card" onclick="openOverlay('b')">
-      <h3>TEAM B</h3>
-      <div class="risk">Mid Risk · Min 65% · Size up to 1.5%</div>
-      <div class="pnl-mini" id="bPnl">£—</div>
-      <div class="bot-status" id="bStatus">Scanning...</div>
-    </div>
-    <div class="team-card" onclick="openOverlay('c')">
-      <h3>TEAM C</h3>
-      <div class="risk">Low Risk · Min 75% · Size up to 0.8%</div>
-      <div class="pnl-mini" id="cPnl">£—</div>
-      <div class="bot-status" id="cStatus">Scanning...</div>
+      <button class="apply-btn" onclick="event.stopPropagation();updateAlloc()">APPLY</button>
     </div>
   </div>
 </div>
@@ -135,73 +237,125 @@ body{background:var(--bg);color:var(--text);font-family:"JetBrains Mono","SF Mon
   <div class="overlay-content" id="overlayContent"></div>
 </div>
 <script>
-const canvas=document.getElementById("bg-canvas"),ctx=canvas.getContext("2d");
-let w,h,time=0;
-function resize(){w=canvas.width=innerWidth;h=canvas.height=innerHeight;}
-addEventListener("resize",resize);resize();
-const chars="01ABCDEFGHIJKLMNOPQRSTUVWXYZ+-*/=<>[]{}#$%&@",cols=Math.ceil(w/14),drops=Array(cols).fill(0).map(()=>Math.random()*-100);
-function draw(){
-  ctx.fillStyle="rgba(4,6,10,.18)";ctx.fillRect(0,0,w,h);
-  ctx.strokeStyle="rgba(0,229,255,.08)";ctx.lineWidth=1;
-  const horizon=h*.65;
-  for(let i=0;i<20;i++){const y=horizon+(i*18)*(1+Math.sin(time*.3+i)*.02);const spread=(y-horizon)*1.8;ctx.beginPath();ctx.moveTo(w/2-spread,y);ctx.lineTo(w/2+spread,y);ctx.stroke();}
-  for(let i=-12;i<=12;i++){ctx.beginPath();ctx.moveTo(w/2+i*40,horizon);ctx.lineTo(w/2+i*140,h);ctx.stroke();}
-  ctx.font="13px JetBrains Mono,monospace";ctx.fillStyle="rgba(0,229,255,.22)";
-  for(let i=0;i<cols;i++){const ch=chars[Math.floor(Math.random()*chars.length)];ctx.fillText(ch,i*14,drops[i]*16);if(drops[i]*16>h&&Math.random()>.975)drops[i]=0;drops[i]+=.35;}
-  time+=.016;requestAnimationFrame(draw);
+/* Decorative "nano-space" background: 3 parallax particle layers, faint drifting grid and
+   constellation lines. Single canvas, <=140 particles, DPR capped, paused when the tab is hidden,
+   static frame under prefers-reduced-motion. Purely visual; no data involved. */
+(function(){
+  const canvas=document.getElementById("bg-canvas"),ctx=canvas.getContext("2d");
+  const reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const LAYERS=[{n:70,r:[.4,.9],v:.010,a:.45},{n:45,r:[.8,1.4],v:.022,a:.65},{n:25,r:[1.2,2.0],v:.040,a:.9}];
+  const LINK=110;let w=0,h=0,dpr=1,parts=[],raf=0,last=0,t=0;
+  function rnd(a,b){return a+Math.random()*(b-a);}
+  function seed(){
+    parts=[];const scale=Math.min(1,(w*h)/(1280*800));
+    LAYERS.forEach((L,li)=>{const n=Math.max(12,Math.round(L.n*Math.max(.45,scale)));
+      for(let i=0;i<n;i++)parts.push({x:Math.random()*w,y:Math.random()*h,r:rnd(L.r[0],L.r[1]),l:li,
+        vx:L.v*rnd(.6,1.2),vy:L.v*rnd(-.35,.35),ph:Math.random()*6.28,a:L.a});});
+  }
+  function resize(){
+    dpr=Math.min(window.devicePixelRatio||1,1.5);w=innerWidth;h=innerHeight;
+    canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);
+    canvas.style.width=w+"px";canvas.style.height=h+"px";ctx.setTransform(dpr,0,0,dpr,0,0);
+    seed();frame(0);
+  }
+  function frame(dt){
+    t+=dt;ctx.clearRect(0,0,w,h);
+    // faint drifting grid
+    const g=56,ox=(t*.006)%g,oy=(t*.003)%g;
+    ctx.strokeStyle="rgba(122,167,255,.05)";ctx.lineWidth=1;ctx.beginPath();
+    for(let x=-g+ox;x<w;x+=g){ctx.moveTo(x,0);ctx.lineTo(x,h);}
+    for(let y=-g+oy;y<h;y+=g){ctx.moveTo(0,y);ctx.lineTo(w,y);}
+    ctx.stroke();
+    // move particles
+    for(const p of parts){
+      p.x+=p.vx*dt;p.y+=p.vy*dt+Math.sin(t*.0004+p.ph)*.02;
+      if(p.x>w+10)p.x=-10;if(p.x<-10)p.x=w+10;if(p.y>h+10)p.y=-10;if(p.y<-10)p.y=h+10;
+    }
+    // constellation lines (front two layers only)
+    ctx.lineWidth=.6;
+    for(let i=0;i<parts.length;i++){const p=parts[i];if(p.l===0)continue;
+      for(let j=i+1;j<parts.length;j++){const q=parts[j];if(q.l!==p.l)continue;
+        const dx=p.x-q.x,dy=p.y-q.y,d2=dx*dx+dy*dy;if(d2>LINK*LINK)continue;
+        ctx.strokeStyle="rgba(122,167,255,"+(.16*(1-Math.sqrt(d2)/LINK)).toFixed(3)+")";
+        ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke();}}
+    // particles with gentle twinkle
+    for(const p of parts){
+      const tw=.75+.25*Math.sin(t*.0012+p.ph*3);
+      ctx.fillStyle=p.l===2?"rgba(167,139,250,"+(p.a*tw*.8).toFixed(3)+")":"rgba(190,210,255,"+(p.a*tw).toFixed(3)+")";
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.283);ctx.fill();
+    }
+  }
+  function loop(now){const dt=last?Math.min(now-last,50):16;last=now;frame(dt);raf=requestAnimationFrame(loop);}
+  function start(){if(reduce||raf||document.hidden)return;last=0;raf=requestAnimationFrame(loop);}
+  function stop(){if(raf)cancelAnimationFrame(raf);raf=0;}
+  let rt;addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(resize,120);});
+  document.addEventListener("visibilitychange",()=>document.hidden?stop():start());
+  resize();start();
+})();
+
+/* ---------- State: no demo data. Populated only by render(data) with real data. ---------- */
+const NO_DATA="£—";
+let balance=null,trades=[],news=[],symbol="WTI",alloc={a:40,b:35,c:25},chiefStatus="Waiting for team reports";
+const teams={a:{pnl:null,minConf:55,maxRisk:.025,status:"Awaiting data",label:"Team A"},b:{pnl:null,minConf:65,maxRisk:.015,status:"Awaiting data",label:"Team B"},c:{pnl:null,minConf:75,maxRisk:.008,status:"Awaiting data",label:"Team C"}};
+
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&","<":"<",">":">",'"':""","'":"&#39;"}[c]));}
+function isNum(v){return typeof v==="number"&&isFinite(v);}
+function gbp(v,signed){
+  if(!isNum(v))return NO_DATA;
+  const s=Math.abs(v).toLocaleString("en-GB",{minimumFractionDigits:2,maximumFractionDigits:2});
+  return (v<0?"−":signed?"+":"")+"£"+s;
 }
-draw();
 
-let liveData=false,balance=0,trades=[],symbol="WTI",alloc={a:40,b:35,c:25};
-const teams={a:{pnl:0,minConf:55,maxRisk:.025,status:"Awaiting data",label:"Team A"},b:{pnl:0,minConf:65,maxRisk:.015,status:"Awaiting data",label:"Team B"},c:{pnl:0,minConf:75,maxRisk:.008,status:"Awaiting data",label:"Team C"}};
-const newsPool=["Oil inventories draw larger than expected","Fed speakers signal cautious path","Gold holds support ahead of data","BTC volume rising on key level","WTI breakout above 87","NVDA momentum continuation","DXY softens","Risk-on tone in crypto"];
-
-function setSymbol(){symbol=document.getElementById("symbolInput").value.toUpperCase()||"WTI";}
+function setSymbol(){symbol=document.getElementById("symbolInput").value.toUpperCase()||"WTI";render();}
 function updateAlloc(){
   const a=+document.getElementById("highAlloc").value||0,b=+document.getElementById("midAlloc").value||0,c=+document.getElementById("lowAlloc").value||0;
   if(a+b+c!==100){alert("Must total 100%");return;}
   alloc={a,b,c};
 }
-function render(){
-  document.getElementById("balance").textContent=liveData?"£"+balance.toLocaleString("en-GB"):"£—";
-  const totalPnl=trades.reduce((s,t)=>s+t.pnl,0);
-  const el=document.getElementById("totalPnl");
-  el.textContent=liveData?(totalPnl>=0?"+":"")+"£"+Math.round(totalPnl)+" · "+(totalPnl/500).toFixed(2)+"%":"Awaiting data";
-  el.className="pnl "+(totalPnl>=0?"pos":"neg");
-  document.getElementById("newsList").innerHTML=liveData?newsPool.slice(0,4).map(n=>`<div class="news-item"><span>${n}</span><span class="tag">${symbol}</span></div>`).join(""):"<div class='news-item'>Awaiting live news</div>";
-  document.getElementById("tradeList").innerHTML=trades.slice(-3).reverse().map(t=>`<div class="trade-row"><span>${t.sym} ${t.side} · ${t.team}</span><span class="pnl ${t.pnl>=0?"pos":"neg"}">${t.pnl>=0?"+":""}£${Math.round(t.pnl)}</span></div>`).join("")||"<div class='news-item'>No trades yet · awaiting live data</div>";
+
+/* Hook for real data. Call render(data) with any subset of:
+   { balance: number (GBP), totalPnl: number (GBP), totalPnlPct: number,
+     chiefStatus: string,
+     teams: { a:{pnl:number,status:string}, b:{...}, c:{...} },
+     trades: [{sym, side, team, pnl:number(GBP), conf:number, time}],
+     news:   [{headline, tag}] or ["headline", ...] }
+   Called with no argument it just redraws the current state. */
+function render(data){
+  if(data&&typeof data==="object"){
+    if("balance" in data)balance=isNum(data.balance)?data.balance:null;
+    if(typeof data.chiefStatus==="string")chiefStatus=data.chiefStatus;
+    if(Array.isArray(data.trades))trades=data.trades.slice(-50);
+    if(Array.isArray(data.news))news=data.news.map(n=>typeof n==="string"?{headline:n}:n);
+    if(data.teams)["a","b","c"].forEach(k=>{const t=data.teams[k];if(!t)return;if("pnl" in t)teams[k].pnl=isNum(t.pnl)?t.pnl:null;if(typeof t.status==="string")teams[k].status=t.status;});
+    if("totalPnl" in data)render._totalPnl=isNum(data.totalPnl)?data.totalPnl:null;
+    if("totalPnlPct" in data)render._totalPnlPct=isNum(data.totalPnlPct)?data.totalPnlPct:null;
+  }
+  document.getElementById("balance").textContent=isNum(balance)?gbp(balance):NO_DATA;
+  const el=document.getElementById("totalPnl"),tp=render._totalPnl,pct=render._totalPnlPct;
+  if(isNum(tp)){el.textContent=gbp(tp,true)+(isNum(pct)?" · "+(pct>=0?"+":"")+pct.toFixed(2)+"%":"");el.className="pnl "+(tp>=0?"pos":"neg");}
+  else{el.textContent="P&L · Awaiting data";el.className="pnl none";}
+  document.getElementById("chiefStatus").textContent=chiefStatus;
+  document.getElementById("newsList").innerHTML=news.length
+    ?news.slice(0,4).map(n=>`<div class="news-item"><span>${esc(n.headline)}</span><span class="tag">${esc(n.tag||symbol)}</span></div>`).join("")
+    :"<div class='empty'>Awaiting live news</div>";
+  document.getElementById("tradeList").innerHTML=trades.length
+    ?trades.slice(-3).reverse().map(t=>`<div class="trade-row"><span>${esc(t.sym)} ${esc(t.side)} · ${esc(t.team)}</span><span class="pnl ${t.pnl>=0?"pos":"neg"}">${gbp(t.pnl,true)}</span></div>`).join("")
+    :"<div class='empty'>No trades yet, waiting for live data</div>";
   ["a","b","c"].forEach(k=>{
-    document.getElementById(k+"Pnl").textContent=liveData?(teams[k].pnl>=0?"+":"")+"£"+Math.round(teams[k].pnl):"£—";
-    document.getElementById(k+"Pnl").className="pnl-mini "+(teams[k].pnl>=0?"pnl pos":"pnl neg");
+    const p=teams[k].pnl,pe=document.getElementById(k+"Pnl");
+    pe.textContent=gbp(p,true);
+    pe.className="pnl-mini "+(isNum(p)?(p>=0?"pnl pos":"pnl neg"):"pnl none");
     document.getElementById(k+"Status").textContent=teams[k].status;
   });
 }
-function simulateTrade(){
-  const teamKeys=["a","b","c"];
-  const team=teamKeys[Math.floor(Math.random()*3)];
-  const conf=50+Math.random()*45;
-  if(conf<teams[team].minConf){teams[team].status="No setup ("+Math.round(conf)+"%)";document.getElementById("chiefStatus").textContent="Waiting for stronger signals...";return;}
-  const side=Math.random()>.5?"Long":"Short";
-  const risk=balance*(alloc[team]/100)*teams[team].maxRisk;
-  const rr=1.5+Math.random()*1.5;
-  const win=Math.random()<.55;
-  const pnl=win?risk*rr:-risk*.8;
-  trades.push({sym:symbol,side,team:teams[team].label,pnl,conf:Math.round(conf),time:Date.now()});
-  teams[team].pnl+=pnl;
-  balance+=pnl;
-  teams[team].status=side+" "+symbol+" · "+Math.round(conf)+"% · "+(win?"WIN":"LOSS");
-  document.getElementById("chiefStatus").textContent="Approved "+teams[team].label+" "+side+" "+symbol;
-  if(trades.length>50)trades.shift();
-  render();
-}
-/* demo trade simulation disabled: analysis only, awaiting live data */
+render._totalPnl=null;render._totalPnlPct=null;
 render();
 
 const overlays={
   chief:{title:"CHIEF BOT",content:"Final decision engine. Receives reports from Team A, Team B, and Team C. Applies final filters and issues the trade."},
-  news:{title:"HOT NEWS",content:"Awaiting live news."},
-  trades:{title:"TRADE LOG",content:()=>trades.slice().reverse().map(t=>`<strong>${t.sym} ${t.side} · ${t.team}</strong><br>Conf: ${t.conf}% · P&L: ${t.pnl>=0?"+":""}£${Math.round(t.pnl)}<br><br>`).join("")||"No trades yet."},
-  account:{title:"ACCOUNT",content:`<strong>Balance</strong><br>Awaiting data<br><br><strong>Allocation</strong><br>Team A ${alloc.a}% · Team B ${alloc.b}% · Team C ${alloc.c}%`},
+  news:{title:"HOT NEWS",content:()=>news.length?news.map(n=>`<strong>${esc(n.tag||symbol)}</strong><br>${esc(n.headline)}<br><br>`).join(""):"Awaiting live news."},
+  trades:{title:"TRADE LOG",content:()=>trades.length?trades.slice().reverse().map(t=>`<strong>${esc(t.sym)} ${esc(t.side)} · ${esc(t.team)}</strong><br>Conf: ${isNum(t.conf)?Math.round(t.conf)+"%":"—"} · P&L: ${gbp(t.pnl,true)}<br><br>`).join(""):"No trades yet, waiting for live data."},
+  account:{title:"ACCOUNT",content:()=>`<strong>Balance</strong><br>${isNum(balance)?gbp(balance):NO_DATA+" (awaiting data)"}<br><br><strong>Allocation</strong><br>Team A ${alloc.a}% · Team B ${alloc.b}% · Team C ${alloc.c}%`},
   a:{title:"TEAM A",content:"High-risk specialist. Aggressive breakout and momentum focus. Lower confluence threshold. Larger relative size."},
   b:{title:"TEAM B",content:"Mid-risk specialist. Balanced filters. Mix of setups. Standard risk."},
   c:{title:"TEAM C",content:"Low-risk specialist. High-probability only. Smaller size. Capital preservation first."}
