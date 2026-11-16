@@ -4,7 +4,8 @@
    screener.py + chief_screener_review.py). All three classes are precomputed; the selector only switches the view.
    The selected class is remembered in this browser only (localStorage "bq_screener_class"). Prices: GBP first, USD small.
    Refresh re-fetches data/latest.enc.json (cache-bust) and decrypts with the existing session key via BQ.restore(); no re-login.
-   Picks render as one compact row each; tap/click a row to expand or collapse details. */
+   Picks render as one compact row each; tap/click a row to expand or collapse details.
+   Auto-scan on/off comes from payload.screener_auto (Chief Bot flips it); the header light is display-only. */
 (function () {
   "use strict";
   if (window.__screenerPanel) return;
@@ -12,7 +13,7 @@
   var KEY = "bq_screener_class", CLASSES = [["stocks", "STOCKS"], ["commodities", "COMMODITIES"], ["crypto", "CRYPTO"]];
   var box = null, sel = "stocks", openRank = null, loading = false, msg = "", msgKind = "", ageTimer = 0, autoTimer = 0;
   try { var s0 = localStorage.getItem(KEY); if (s0 === "stocks" || s0 === "commodities" || s0 === "crypto") sel = s0; } catch (e) { /* ignore */ }
-  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "\x26amp;", "<": "\x26lt;", ">": "\x26gt;", '"': "\x26quot;", "'": "\x26#39;" }[c]; }); }
+  function esc(s) { return String(s == null ? "" : s).replace(/[\x26<>"']/g, function (c) { return { "\x26": "\x26amp;", "<": "\x26lt;", ">": "\x26gt;", '"': "\x26quot;", "'": "\x26#39;" }[c]; }); }
   function num(v) { return typeof v === "number" && isFinite(v); }
   function dp(v) { var a = Math.abs(v); return a >= 1000 ? 2 : a >= 1 ? (a >= 100 ? 2 : 3) : (a >= 0.01 ? 4 : 6); }
   function fmt(v, sym, loc) { if (!num(v)) return sym + "\u2014"; var d = dp(v); return (v < 0 ? "-" : "") + sym + Math.abs(v).toLocaleString(loc, { minimumFractionDigits: Math.min(d, 2), maximumFractionDigits: d }); }
@@ -25,9 +26,16 @@
   function gbpOnly(gbpV, usdV, sc) { var g = gbpVal(gbpV, usdV, sc); return num(g) ? fmt(g, "\u00a3", "en-GB") : fmt(usdV, "$", "en-US"); }
   function lon(iso) { try { return new Date(iso).toLocaleString("en-GB", { timeZone: "Europe/London", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", timeZoneName: "short" }); } catch (e) { return iso || "\u2014"; } }
   function hm(iso) { try { return new Date(iso).toLocaleString("en-GB", { timeZone: "Europe/London", hour: "2-digit", minute: "2-digit", hour12: false }); } catch (e) { return "\u2014"; } }
+  function autoInfo() {
+    var a = window.BQ && window.BQ.payload && window.BQ.payload.screener_auto;
+    var iv = (a && typeof a.interval_min === "number" && isFinite(a.interval_min) && a.interval_min > 0) ? a.interval_min : 15;
+    if (!a || a.auto_rescan === "unknown" || a.status === "unknown" || (a.auto_rescan !== true && a.auto_rescan !== false))
+      return { state: "unknown", interval: iv };
+    return { state: a.auto_rescan ? "on" : "off", interval: iv };
+  }
   function nextHm(iso) {
     try {
-      var step = 15 * 60 * 1000, t = new Date(iso).getTime() + step, now = Date.now();
+      var step = autoInfo().interval * 60 * 1000, t = new Date(iso).getTime() + step, now = Date.now();
       if (!isFinite(t)) return "\u2014";
       while (t < now - 30000) t += step;
       return hm(new Date(t).toISOString());
@@ -36,7 +44,13 @@
   function metaText(sc) {
     if (!sc || !sc.generated_utc) return "";
     var n = Math.max(0, Math.round((Date.now() - new Date(sc.generated_utc).getTime()) / 60000));
-    return "Last screened " + hm(sc.generated_utc) + " (London) \u00b7 " + n + " min ago \u00b7 Next scan ~" + nextHm(sc.generated_utc);
+    var next = autoInfo().state === "off" ? "Auto-scan paused" : ("Next scan ~" + nextHm(sc.generated_utc));
+    return "Last screened " + hm(sc.generated_utc) + " (London) \u00b7 " + n + " min ago \u00b7 " + next;
+  }
+  function autoHtml() {
+    var info = autoInfo(), st = info.state;
+    var label = st === "on" ? ("Auto-scan on \u00b7 every " + info.interval + " min") : (st === "off" ? "Auto-scan off" : "Auto-scan unknown");
+    return "<span class='sc-auto " + st + "' id='scAuto' title='Ask Chief Bot to turn on/off' aria-label='" + esc(label) + ". Ask Chief Bot to turn on/off'><span class='sc-dot' aria-hidden='true'></span>" + esc(label) + "</span>";
   }
   function fingerprint(sc) { return sc ? String(sc.generated_utc || "") : ""; }
   function safeUrl(u) { return /^https?:\/\//i.test(String(u || "")) ? u : null; }
@@ -48,6 +62,13 @@
     ".sc-refresh{flex:0 0 auto;background:var(--panel-2);border:1px solid var(--border);border-radius:var(--r-sm);color:var(--text);font-size:10px;font-weight:700;letter-spacing:.1em;padding:5px 9px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;}",
     ".sc-refresh:disabled{opacity:.55;cursor:default;}",
     ".sc-refresh:not(:disabled):hover{border-color:var(--green);}",
+    ".sc-head-right{display:flex;align-items:center;gap:8px;flex:0 1 auto;min-width:0;flex-wrap:wrap;justify-content:flex-end;}",
+    ".sc-auto{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:700;letter-spacing:.04em;color:var(--muted);flex:0 0 auto;white-space:nowrap;cursor:help;line-height:1;}",
+    ".sc-dot{width:7px;height:7px;border-radius:50%;flex:0 0 auto;background:#8a8a8a;}",
+    ".sc-auto.off .sc-dot{background:#d45454;box-shadow:0 0 0 1px rgba(212,84,84,.25);}",
+    ".sc-auto.on .sc-dot{background:var(--green);box-shadow:0 0 6px var(--green);animation:sc-pulse 1.6s ease-in-out infinite;}",
+    ".sc-auto.unknown .sc-dot{background:#8a8a8a;}",
+    "@keyframes sc-pulse{0%,100%{opacity:1}50%{opacity:.4}}",
     ".sc-spin{width:10px;height:10px;border:2px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:sc-spin .7s linear infinite;}",
     "@keyframes sc-spin{to{transform:rotate(360deg)}}",
     ".sc-sub{font-size:11.5px;color:var(--muted);margin:0 0 6px;line-height:1.4;}",
@@ -79,7 +100,7 @@
     ".sc-chief{font-size:12px;color:var(--muted);line-height:1.45;margin-top:3px;}",
     ".sc-news{font-size:12px;line-height:1.45;margin-top:4px;}.sc-news a{color:#38c8ff;text-decoration:none;}.sc-news a:hover{text-decoration:underline;}",
     ".sc-na{color:var(--red);font-weight:700;font-size:13px;}",
-    "@media(max-width:600px){.sc-card{padding:10px 10px;}.sc-tab{font-size:10px;padding:7px 2px;letter-spacing:.04em;}.sc-sum{flex-wrap:wrap;gap:4px 7px;min-height:32px;}.sc-px{flex-basis:auto;}.sc-refresh{padding:7px 10px;font-size:11px;}.sc-row{font-size:12px;}}"
+    "@media(max-width:600px){.sc-card{padding:10px 10px;}.sc-tab{font-size:10px;padding:7px 2px;letter-spacing:.04em;}.sc-sum{flex-wrap:wrap;gap:4px 7px;min-height:32px;}.sc-px{flex-basis:auto;}.sc-refresh{padding:7px 10px;font-size:11px;}.sc-row{font-size:12px;}.sc-auto{font-size:9.5px;letter-spacing:0;}.sc-head-right{gap:6px;}}"
   ].join("\n");
   function pickHtml(p, sc) {
     var long = String(p.bias || "").indexOf("long") === 0, c = p.chief || {};
@@ -106,8 +127,9 @@
     var sc = window.BQ && window.BQ.payload && window.BQ.payload.screener;
     if (!window.BQ || !window.BQ.payload) { box.innerHTML = ""; return; }
     var h = "<div class='sc-card' id='screenerCard'><div class='sc-head'><h2>SCREENER BOT<span class='sc-tag'>IDEAS \u2014 NO ORDERS</span></h2>";
+    h += "<div class='sc-head-right'>" + autoHtml();
     h += "<button type='button' class='sc-refresh' id='scRefresh'" + (loading ? " disabled" : "") + " aria-busy='" + loading + "' aria-label='Refresh screener results'>";
-    h += (loading ? "<span class='sc-spin' aria-hidden='true'></span>REFRESHING" : "REFRESH") + "</button></div>";
+    h += (loading ? "<span class='sc-spin' aria-hidden='true'></span>REFRESHING" : "REFRESH") + "</button></div></div>";
     if (sc && sc.generated_utc) h += "<div class='sc-sub' id='scMeta'>" + esc(metaText(sc)) + "</div>";
     if (msg) h += "<div class='sc-msg " + esc(msgKind) + "' id='scMsg'>" + esc(msg) + "</div>";
     h += "<div class='sc-tabs' role='tablist'>" + CLASSES.map(function (c) { return "<button type='button' role='tab' class='sc-tab" + (c[0] === sel ? " on" : "") + "' id='scTab_" + c[0] + "' data-c='" + c[0] + "' aria-selected='" + (c[0] === sel) + "'>" + c[1] + "</button>"; }).join("") + "</div>";
