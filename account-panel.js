@@ -10,6 +10,9 @@
   function num(v) { return typeof v === "number" && isFinite(v); }
   function usd(v, dp) { return num(v) ? (v < 0 ? "-$" : "$") + Math.abs(v).toLocaleString("en-US", { minimumFractionDigits: dp == null ? 2 : dp, maximumFractionDigits: dp == null ? 2 : dp }) : "—"; }
   function gbp(v) { return num(v) ? (v < 0 ? "-\u00a3" : "\u00a3") + Math.abs(v).toLocaleString("en-GB", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "—"; }
+  function fxRate() { var fx = window.BQ && ((window.BQ.payload && window.BQ.payload.fx) || (window.BQ.account && window.BQ.account.fx)); return fx && num(fx.rate) ? fx.rate : null; }
+  function toGbp(u) { var r = fxRate(); return num(u) && num(r) ? u * r : null; }
+  function money(u, g) { if (!num(g)) g = toGbp(u); return num(g) ? gbp(g) + (num(u) ? " <small style='opacity:.7'>(\u2248 " + usd(u) + ")</small>" : "") : usd(u); }
   function amt(v) { return num(v) ? (Math.abs(v) >= 1 ? v.toLocaleString("en-US", { maximumFractionDigits: 4 }) : String(+v.toPrecision(8))) : "—"; }
   function pct(v) { return num(v) ? (v >= 0 ? "+" : "") + v.toFixed(2) + "%" : "—"; }
   function cls(v) { return num(v) ? (v >= 0 ? "pos" : "neg") : ""; }
@@ -89,16 +92,16 @@
     var p = a.performance || {}, d = p.daily, lo = p.from_low, w = p.win_rate;
     var out = "<div class='ap-card'><h2>PERFORMANCE</h2><div class='ap-sub'>From Coinbase fills and balance snapshots \u00b7 " + esc(p.snapshots) + " snapshot(s)</div>";
     out += "<div class='ap-status'>" + esc(p.status || "") + "</div><div class='ap-kpis'>";
-    out += "<div class='ap-kpi'><b>DAILY P\x26amp;L</b>" + (d ? "<span class='" + cls(d.pnl_usd) + "'>" + usd(d.pnl_usd) + "</span><small>" + gbp(d.pnl_gbp_est) + " est. \u00b7 " + pct(d.pct) + " since " + esc(d.since) + (d.net_flows_usd ? " \u00b7 excl. " + usd(d.net_flows_usd) + " probable deposits" : "") + "</small>" : "<span>\u2014</span><small>Needs 24h of snapshots</small>") + "</div>";
-    out += "<div class='ap-kpi'><b>FROM PERIOD LOW</b>" + (lo ? "<span class='" + cls(lo.pct) + "'>" + pct(lo.pct) + "</span><small>low " + usd(lo.low_usd) + " at " + esc(lo.low_time) + " (" + esc(lo.note) + ")</small>" : "<span>\u2014</span><small>Needs 2+ snapshots</small>") + "</div>";
-    out += "<div class='ap-kpi'><b>WIN RATE</b>" + (w ? "<span>" + w.pct.toFixed(0) + "%</span><small>" + w.wins + "/" + w.closed + " closed trades \u00b7 realised " + usd(w.realised_usd) + "</small>" : "<span>\u2014</span><small>No closed trades yet</small>") + "</div></div>";
+    out += "<div class='ap-kpi'><b>DAILY P\x26amp;L</b>" + (d ? "<span class='" + cls(d.pnl_usd) + "'>" + money(d.pnl_usd, d.pnl_gbp_est) + "</span><small>" + pct(d.pct) + " since " + esc(d.since) + (d.net_flows_usd ? " \u00b7 excl. " + money(d.net_flows_usd) + " probable deposits" : "") + "</small>" : "<span>\u2014</span><small>Needs 24h of snapshots</small>") + "</div>";
+    out += "<div class='ap-kpi'><b>FROM PERIOD LOW</b>" + (lo ? "<span class='" + cls(lo.pct) + "'>" + pct(lo.pct) + "</span><small>low " + money(lo.low_usd) + " at " + esc(lo.low_time) + " (" + esc(lo.note) + ")</small>" : "<span>\u2014</span><small>Needs 2+ snapshots</small>") + "</div>";
+    out += "<div class='ap-kpi'><b>WIN RATE</b>" + (w ? "<span>" + w.pct.toFixed(0) + "%</span><small>" + w.wins + "/" + w.closed + " closed trades \u00b7 realised " + money(w.realised_usd) + "</small>" : "<span>\u2014</span><small>No closed trades yet</small>") + "</div></div>";
     var tr = a.trades || [];
     out += "<h2 style='margin-top:4px'>TRADE HISTORY</h2><div class='ap-list'>" + (tr.length ? tr.slice(0, 15).map(function (x) {
       return "<div>" + esc(lon(x.time)) + " \u00b7 " + esc(x.side) + " " + esc(x.size) + " " + esc(x.product) + " @ " + esc(x.price) + (x.fee ? " \u00b7 fee " + esc(x.fee) : "") + "</div>";
     }).join("") : "<div class='empty' style='font-family:var(--sans)'>No fills on Coinbase yet \u00b7 " + esc(a.orders_total || 0) + " orders, " + esc((a.open_orders || []).length) + " open</div>") + "</div>";
     var fl = a.flows || [];
     if (fl.length) out += "<h2 style='margin-top:12px'>BALANCE CHANGES NOT FROM TRADES</h2><div class='ap-list'>" + fl.map(function (f) {
-      return "<div>" + esc(lon(f.time)) + " \u00b7 " + esc(f.kind) + " " + amt(f.amount) + " " + esc(f.asset) + (num(f.value_usd) ? " (" + usd(f.value_usd) + ")" : "") + "</div>";
+      return "<div>" + esc(lon(f.time)) + " \u00b7 " + esc(f.kind) + " " + amt(f.amount) + " " + esc(f.asset) + (num(f.value_usd) ? " (" + money(f.value_usd) + ")" : "") + "</div>";
     }).join("") + "</div>";
     out += "<div class='ap-note'>" + esc(a.deposit_note || "") + "</div></div>";
     return out;

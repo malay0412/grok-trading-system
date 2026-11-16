@@ -4,18 +4,23 @@
    - calls the page's render(data) hook if present (chief status, team statuses, news, empty trade log),
    - replaces overlays.chief / a / b / c / news / trades / account content with real engine output,
    - falls back to writing element ids directly (#chiefStatus, #aStatus.., #newsList, #tradeList) if render() is absent.
-   Currency: account fields are GBP (£) and stay empty (no account data). Instrument prices are USD per Coinbase pair, never converted. */
+   Currency: money figures display in GBP (£) first, with USD shown small, using the live Coinbase GBP/USD rate in the encrypted payload. Engine figures stay in USD. */
 (function () {
   var URL_ = (window.BOTTY_DATA_URL || "data/latest.json");
   var REFRESH_MS = window.BOTTY_REFRESH_MS || 60000;
   function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return { "&": "\x26amp;", "<": "\x26lt;", ">": "\x26gt;", '"': "\x26quot;", "'": "\x26#39;" }[c]; }); }
-  function usd(v) { return (typeof v === "number" && isFinite(v)) ? "$" + (Math.abs(v) >= 1 ? v.toLocaleString("en-GB", { maximumFractionDigits: 4 }) : String(v)) : "—"; }
+  function usd(v) { return (typeof v === "number" && isFinite(v)) ? "$" + Math.abs(v).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "—"; }
+  function fxRate() { var fx = window.BQ && ((window.BQ.payload && window.BQ.payload.fx) || (window.BQ.account && window.BQ.account.fx)); return fx && typeof fx.rate === "number" && isFinite(fx.rate) ? fx.rate : null; }
+  function toGbp(u) { var r = fxRate(); return (typeof u === "number" && isFinite(u) && r) ? u * r : null; }
+  function gbp(v) { return (typeof v === "number" && isFinite(v)) ? (v < 0 ? "-\u00a3" : "\u00a3") + Math.abs(v).toLocaleString("en-GB", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : "—"; }
+  function moneyText(u) { var g = toGbp(u); return (typeof g === "number") ? gbp(g) + " (\u2248 " + usd(u) + ")" : usd(u); }
+  function moneyHtml(u) { var g = toGbp(u); return (typeof g === "number") ? gbp(g) + " <small style='opacity:.7'>(\u2248 " + usd(u) + ")</small>" : usd(u); }
   function callLine(c) {
     if (!c || !c.symbol) {
       var b = c && c.best_candidate;
       return "NO TRADE" + (b ? " · best: " + b.side + " " + b.symbol + " (" + b.agree + "/10) rejected" : "");
     }
-    return c.decision + " " + c.symbol + " · entry " + usd(c.entry) + " · stop " + usd(c.stop) + " · T1 " + usd(c.targets[0]) +
+    return c.decision + " " + c.symbol + " · entry " + moneyText(c.entry) + " · stop " + moneyText(c.stop) + " · T1 " + moneyText(c.targets[0]) +
       " · R:R " + c.rr[0] + " · " + c.confidence + " · " + c.agreement + " agree";
   }
   function callHtml(c) {
@@ -24,10 +29,10 @@
       return "<strong>NO TRADE</strong><br>" + esc(c ? c.reason : "no data") +
         (b ? "<br>Best candidate: " + esc(b.side + " " + b.symbol) + " (" + b.agree + "/10, net " + b.net_score + ")<br>Rejected: " + esc(b.reasons.join("; ")) : "") + "<br><br>";
     }
-    var h = "<strong>" + esc(c.decision + " " + c.symbol) + "</strong> <em>(prices in USD)</em><br>" +
-      "Entry " + usd(c.entry) + " <small>(" + esc(c.entry_basis) + ")</small><br>" +
-      "Stop " + usd(c.stop) + " (" + c.stop_pct + "%) <small>" + esc(c.stop_basis) + "</small><br>" +
-      "Targets T1 " + usd(c.targets[0]) + " · T2 " + usd(c.targets[1]) + " <small>" + esc(c.t1_basis) + "</small><br>" +
+    var h = "<strong>" + esc(c.decision + " " + c.symbol) + "</strong> <em>(prices in \u00a3, USD alongside)</em><br>" +
+      "Entry " + moneyHtml(c.entry) + " <small>(" + esc(c.entry_basis) + ")</small><br>" +
+      "Stop " + moneyHtml(c.stop) + " (" + c.stop_pct + "%) <small>" + esc(c.stop_basis) + "</small><br>" +
+      "Targets T1 " + moneyHtml(c.targets[0]) + " \u00b7 T2 " + moneyHtml(c.targets[1]) + " <small>" + esc(c.t1_basis) + "</small><br>" +
       "R:R " + c.rr[0] + "R / " + c.rr[1] + "R · Confidence " + esc(c.confidence) + " (" + c.confidence_score + ")<br>" +
       "Agreement " + esc(c.agreement) + ": " + esc(c.agree_bots.join(", ")) + "<br>" +
       "Dissent: " + esc(c.dissent_bots.join(", ") || "none") + " · Neutral: " + esc(c.neutral_bots.join(", ") || "none") + "<br>";
@@ -47,7 +52,13 @@
     if (t.ranking) h += "<br><strong>Ranking</strong><br><small>" + esc(t.ranking.map(function (r) { return r.side + " " + r.symbol + " " + r.net_score + " (" + r.agree + "/10)"; }).join(" · ")) + "</small>";
     return h;
   }
-  function acctGbp() { var a = window.BQ && window.BQ.account, t = a && (a.wealth || (a.holdings && a.holdings.total)); return t && typeof t.value_gbp_est === "number" ? t.value_gbp_est : null; }
+  function acctWealth() { var a = window.BQ && window.BQ.account; return a && (a.wealth || (a.holdings && a.holdings.total) || {}); }
+  function acctGbp() { var t = acctWealth(); return t && typeof t.value_gbp === "number" ? t.value_gbp : (t && typeof t.value_gbp_est === "number" ? t.value_gbp_est : null); }
+  function acctUsd() { var t = acctWealth(); return t && typeof t.value_usd === "number" ? t.value_usd : null; }
+  function fillAccountCard() {
+    var el = document.getElementById("balance"), g = acctGbp(), u = acctUsd();
+    if (el && g !== null) el.innerHTML = gbp(g) + (u !== null ? " <small style='opacity:.7'>(\u2248 " + usd(u) + ")</small>" : "");
+  }
   function apply(d) {
     var keys = { a: "A", b: "B", c: "C" };
     var payload = {
@@ -57,7 +68,8 @@
     };
     Object.keys(keys).forEach(function (k) { payload.teams[k] = { pnl: null, status: callLine(d.teams[keys[k]].call) }; });
     if (typeof window.render === "function") window.render(payload);
-    else {
+    fillAccountCard();
+    if (typeof window.render !== "function") {
       var set = function (id, v) { var e = document.getElementById(id); if (e) e.textContent = v; };
       set("chiefStatus", payload.chiefStatus); Object.keys(keys).forEach(function (k) { set(k + "Status", payload.teams[k].status); });
     }
@@ -72,7 +84,7 @@
         return "<strong>" + esc(n.title) + "</strong><br><small>" + esc(n.source) + " · " + esc(n.published_london || "time n/a") + " · sentiment " + n.sentiment +
           (n.url ? " · <a href='" + esc(n.url) + "' target='_blank' rel='noopener'>source</a>" : "") + "</small><br><br>"; }).join("") || "No headlines this cycle." };
       ov.trades = { title: "TRADE LOG", content: esc(d.trade_log.label) + ". No orders are placed by the engine." };
-      ov.account = { title: "ACCOUNT", content: "Account currency: " + esc(d.currency.account) + " (" + esc(d.currency.account_symbol) + ")<br>Balance: " + (acctGbp() === null ? "—" : "\u00a3" + acctGbp().toFixed(2) + " (estimate from Coinbase USD value: holdings + free cash)") + " · P\x26amp;L: —<br><small>" + esc(d.account.note) + " " + esc(d.currency.note) + "</small>" };
+      ov.account = { title: "ACCOUNT", content: "Account currency: GBP (\u00a3) with USD alongside<br>Balance: " + (acctGbp() === null ? "—" : gbp(acctGbp()) + (acctUsd() !== null ? " <small style='opacity:.7'>(\u2248 " + usd(acctUsd()) + ")</small>" : "")) + " (holdings + free cash) \u00b7 P\x26amp;L: —<br><small>" + esc(d.account.note) + " " + esc(d.currency.note) + "</small>" };
     }
   }
   // Data now arrives decrypted from bq-crypto.js (window.BQ.data + "bq:data" event, re-fetched every 60s). No plaintext fetch.

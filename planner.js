@@ -80,7 +80,11 @@
     var btc = null, btcSrc = "";
     if (p && num(p.last_mid)) { btc = p.last_mid; btcSrc = "paper engine BTC-USD mid, " + p.last_mark; }
     else if (a && a.holdings && a.holdings.rows) a.holdings.rows.forEach(function (r) { if (r.asset === "BTC" && num(r.price_usd)) { btc = r.price_usd; btcSrc = "Coinbase BTC-USD mid, " + a.generated_london; } });
-    return { ok: !!a, avail: fc && num(fc.value_gbp_est) ? fc.value_gbp_est : null, asOf: a && a.generated_london, rate: fx && num(fx.rate) ? fx.rate : null, fx: fx, btc: btc, btcSrc: btcSrc };
+    var avail = fc ? (num(fc.value_gbp) ? fc.value_gbp : fc.value_gbp_est) : null;
+    var btcGbp = null;
+    if (a && a.holdings && a.holdings.rows) a.holdings.rows.forEach(function (r) { if (r.asset === "BTC" && num(r.price_gbp)) btcGbp = r.price_gbp; });
+    if (!num(btcGbp) && num(btc) && fx && num(fx.rate)) btcGbp = btc * fx.rate;
+    return { ok: !!a, avail: avail, availUsd: fc && num(fc.value_usd) ? fc.value_usd : null, asOf: a && a.generated_london, rate: fx && num(fx.rate) ? fx.rate : null, fx: fx, btc: btc, btcGbp: btcGbp, btcSrc: btcSrc };
   }
 
   function renderPlan() {
@@ -88,7 +92,7 @@
     var d = data();
     if (!d.ok) { planBox.innerHTML = ""; return; }
     var h = "<div class='pl-card' id='plannerCard'><h2>TRADE PLANNER \u00b7 BTC-USD<span class='pl-tag'>PLANNER \u2014 NO REAL ORDERS</span></h2>";
-    h += "<div class='pl-avail' id='plAvail'>Available: " + gbp(d.avail) + "</div>";
+    h += "<div class='pl-avail' id='plAvail'>Available: " + gbp(d.avail) + (num(d.availUsd) ? " <small style='opacity:.7'>(\u2248 " + usd(d.availUsd) + ")</small>" : "") + "</div>";
     h += "<div class='pl-sub'>Real Coinbase free cash (\u00a3 estimate) from the read-only account check \u00b7 as of " + esc(d.asOf) +
       (d.fx ? " \u00b7 GBP/USD " + d.rate.toFixed(4) + " (" + esc(d.fx.source) + ", " + esc(lon(d.fx.time)) + ")" : "") + "</div>";
     h += "<div class='pl-row'><label for='plAmount'>AMOUNT (\u00a3)</label><input class='pl-in' id='plAmount' type='number' inputmode='decimal' min='0' step='0.01' placeholder='e.g. 100' value='" + (num(amount) ? amount : "") + "'></div>";
@@ -117,7 +121,7 @@
     if (num(av) && amount > av) h += "<div class='pl-warn' id='plWarn'>\u26a0 Exceeds available free cash by " + gbp(amount - av) + " \u2014 planning only; add funds on Coinbase before any real trade.</div>";
     if (d.rate && d.btc) {
       var u = amount / d.rate;
-      h += "<div id='plConv'>\u2248 " + usd(u) + " \u00b7 \u2248 " + (u / d.btc).toFixed(8) + " BTC at " + usd(d.btc) + " <small style='color:var(--muted)'>(" + esc(d.btcSrc) + ")</small></div>";
+      h += "<div id='plConv'>\u2248 " + (u / d.btc).toFixed(8) + " BTC at " + (num(d.btcGbp) ? gbp(d.btcGbp) : gbp(d.btc * d.rate)) + " per BTC <small style='color:var(--muted)'>(\u2248 " + usd(u) + " at " + usd(d.btc) + " \u00b7 " + esc(d.btcSrc) + ")</small></div>";
     } else h += "<div>USD/BTC conversion unavailable (no FX rate or BTC price in the data yet).</div>";
     if (plan) {
       h += "<div class='pl-ok' id='plPlan'>PLAN ONLY: " + plan + " " + gbp(amount) + " of BTC-USD \u2014 not sent, no real order placed.";
@@ -130,11 +134,12 @@
 
   function renderAlloc() {
     if (!allocBox) return;
-    if (!data().ok) { allocBox.innerHTML = ""; return; }
+    var d = data();
+    if (!d.ok) { allocBox.innerHTML = ""; return; }
     var h = "<div class='pl-alloc-h'>TEAM ALLOCATION %</div>";
     h += "<div class='pl-sub' style='margin-bottom:8px'>Switch on one, two or all three teams. Only teams that are on get a share of the amount above (never the account balance), and their % must total 100%. " +
       "Switching teams suggests an equal split unless you have typed your own %; Reset splits evenly across the teams that are on. " +
-      "Applies to the next paper session \u2014 the current 17:53\u201319:53 window keeps A $100 / B $100. Saved in this browser only; use Copy allocation and send it to the bot.</div><div class='pl-grid'>";
+      "Applies to the next paper session \u2014 the current 17:53\u201319:53 window keeps A " + (d.rate ? gbp(100 * d.rate) + " / B " + gbp(100 * d.rate) + " <small>(\u2248 $100 / $100)</small>" : "A $100 / B $100") + ". Saved in this browser only; use Copy allocation and send it to the bot.</div><div class='pl-grid'>";
     TEAMS.forEach(function (k) {
       h += "<div class='pl-team' id='allocBox_" + k + "'><b><label class='pl-sw'><input type='checkbox' id='allocOn_" + k + "'" + (on[k] ? " checked" : "") + "><span class='pl-knob'></span></label>" + NAMES[k] + "</b>" +
         "<input class='pl-in' type='number' inputmode='decimal' min='0' max='100' step='0.01' id='alloc_" + k + "' value='" + alloc[k] + "'><small id='allocAmt_" + k + "'></small></div>";
@@ -187,7 +192,7 @@
     planBox = document.createElement("div"); planBox.id = "plannerSection";
     var sb = app.querySelector(".search-bar");
     if (sb && sb.parentNode) sb.parentNode.insertBefore(planBox, sb.nextSibling); else app.appendChild(planBox);
-    window.addEventListener("bq:data", function () { if (document.getElementById("plannerCard")) { document.getElementById("plAvail").textContent = "Available: " + gbp(data().avail); updatePlan(); } else renderPlan(); renderAllocOut(); syncAccountCard(); });
+    window.addEventListener("bq:data", function () { if (document.getElementById("plannerCard")) { var d = data(); document.getElementById("plAvail").innerHTML = "Available: " + gbp(d.avail) + (num(d.availUsd) ? " <small style='opacity:.7'>(\u2248 " + usd(d.availUsd) + ")</small>" : ""); updatePlan(); } else renderPlan(); renderAllocOut(); syncAccountCard(); });
     window.addEventListener("bq:lock", function () { amount = null; plan = null; if (planBox) planBox.innerHTML = ""; allocBox = null; });
     renderAll();
   }
