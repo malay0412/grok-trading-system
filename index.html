@@ -158,8 +158,8 @@ input:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline
   <div class="login-box">
     <h1>BOTTY QUANTER.grok</h1>
     <p>PERSONAL TRADING SYSTEM</p>
-    <input type="text" id="username" placeholder="USERNAME" autocomplete="username" onkeydown="if(event.key==='Enter')login()">
-    <input type="password" id="password" placeholder="PASSWORD" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()">
+    <input type="text" id="username" placeholder="USERNAME" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false" onkeydown="if(event.key==='Enter')login()">
+    <input type="password" id="password" placeholder="PASSWORD" autocomplete="current-password" autocapitalize="none" autocorrect="off" onkeydown="if(event.key==='Enter')login()">
     <button onclick="login()">ENTER</button>
     <div id="loginError" role="alert" style="color:var(--red);font-size:13px;font-weight:600;min-height:18px;margin-top:10px;"></div>
     <div class="alt">TOUCH ID / FACE ID AVAILABLE</div>
