@@ -20,7 +20,7 @@
     s.position = "fixed"; s.top = "0"; s.left = "0"; s.right = "0"; s.bottom = "0";
     s.width = "100%"; s.height = "100%";
     s.zIndex = "0"; s.pointerEvents = "none";
-    s.filter = "blur(2.5px)"; s.webkitFilter = "blur(2.5px)"; s.opacity = "0.75";
+    s.filter = "blur(0.7px)"; s.webkitFilter = "blur(0.7px)"; s.opacity = "0.98";
     var ctx = canvas.getContext ? canvas.getContext("2d") : null;
     if (!ctx) { // no canvas: static SVG fallback
       document.body.style.backgroundImage = "url(bg.svg)";
@@ -147,7 +147,7 @@
           for (i = 0; i < widths.length; i++) {
             var e = widths[i];
             if (x + e.w > 0 && x < W) {
-              ctx.globalAlpha = 0.28;
+              ctx.globalAlpha = 0.56;
               ctx.fillStyle = e.it.chg === null ? C.muted : (e.it.chg >= 0 ? C.green : C.red);
               ctx.fillText(e.txt, x, tp.y);
             }
@@ -169,9 +169,9 @@
           var up = c.c >= c.o, col = up ? C.green : C.red;
           var yH = cl.y + (1 - c.h) * cl.h, yL = cl.y + (1 - c.l) * cl.h;
           var yO = cl.y + (1 - c.o) * cl.h, yC = cl.y + (1 - c.c) * cl.h;
-          ctx.globalAlpha = 0.22; ctx.strokeStyle = col; ctx.lineWidth = 1;
+          ctx.globalAlpha = 0.44; ctx.strokeStyle = col; ctx.lineWidth = 1;
           ctx.beginPath(); ctx.moveTo(cx + cl.cw / 2, yH); ctx.lineTo(cx + cl.cw / 2, yL); ctx.stroke();
-          ctx.globalAlpha = 0.26; ctx.fillStyle = col;
+          ctx.globalAlpha = 0.52; ctx.fillStyle = col;
           ctx.fillRect(cx, Math.min(yO, yC), cl.cw, Math.max(1.5, Math.abs(yC - yO)));
         }
       }
