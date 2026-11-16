@@ -35,8 +35,8 @@ body{
   color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.5;font-weight:400;
   min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;
 }
-/* static faint grid background */
-#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.08;-webkit-mask-image:radial-gradient(ellipse at 50% 0%,#000 30%,transparent 75%);mask-image:radial-gradient(ellipse at 50% 0%,#000 30%,transparent 75%);}
+/* decorative animated nano-space background (behind everything) */
+#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.7;filter:blur(1.2px);}
 .login-screen,.app,.overlay{position:relative;z-index:1;}
 button{font-family:var(--sans);}
 input{font-family:var(--sans);}
@@ -237,16 +237,61 @@ input:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline
   <div class="overlay-content" id="overlayContent"></div>
 </div>
 <script>
-/* Subtle static background grid (replaces the noisy matrix rain; no animation, no randomness). */
-const canvas=document.getElementById("bg-canvas"),ctx=canvas.getContext("2d");
-let w,h;
-function drawBg(){
-  ctx.clearRect(0,0,w,h);ctx.strokeStyle="rgba(122,167,255,.35)";ctx.lineWidth=1;
-  for(let x=0;x<w;x+=48){ctx.beginPath();ctx.moveTo(x+.5,0);ctx.lineTo(x+.5,h);ctx.stroke();}
-  for(let y=0;y<h;y+=48){ctx.beginPath();ctx.moveTo(0,y+.5);ctx.lineTo(w,y+.5);ctx.stroke();}
-}
-function resize(){w=canvas.width=innerWidth;h=canvas.height=innerHeight;drawBg();}
-addEventListener("resize",resize);resize();
+/* Decorative "nano-space" background: 3 parallax particle layers, faint drifting grid and
+   constellation lines. Single canvas, <=140 particles, DPR capped, paused when the tab is hidden,
+   static frame under prefers-reduced-motion. Purely visual; no data involved. */
+(function(){
+  const canvas=document.getElementById("bg-canvas"),ctx=canvas.getContext("2d");
+  const reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const LAYERS=[{n:70,r:[.4,.9],v:.010,a:.45},{n:45,r:[.8,1.4],v:.022,a:.65},{n:25,r:[1.2,2.0],v:.040,a:.9}];
+  const LINK=110;let w=0,h=0,dpr=1,parts=[],raf=0,last=0,t=0;
+  function rnd(a,b){return a+Math.random()*(b-a);}
+  function seed(){
+    parts=[];const scale=Math.min(1,(w*h)/(1280*800));
+    LAYERS.forEach((L,li)=>{const n=Math.max(12,Math.round(L.n*Math.max(.45,scale)));
+      for(let i=0;i<n;i++)parts.push({x:Math.random()*w,y:Math.random()*h,r:rnd(L.r[0],L.r[1]),l:li,
+        vx:L.v*rnd(.6,1.2),vy:L.v*rnd(-.35,.35),ph:Math.random()*6.28,a:L.a});});
+  }
+  function resize(){
+    dpr=Math.min(window.devicePixelRatio||1,1.5);w=innerWidth;h=innerHeight;
+    canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);
+    canvas.style.width=w+"px";canvas.style.height=h+"px";ctx.setTransform(dpr,0,0,dpr,0,0);
+    seed();frame(0);
+  }
+  function frame(dt){
+    t+=dt;ctx.clearRect(0,0,w,h);
+    // faint drifting grid
+    const g=56,ox=(t*.006)%g,oy=(t*.003)%g;
+    ctx.strokeStyle="rgba(122,167,255,.05)";ctx.lineWidth=1;ctx.beginPath();
+    for(let x=-g+ox;x<w;x+=g){ctx.moveTo(x,0);ctx.lineTo(x,h);}
+    for(let y=-g+oy;y<h;y+=g){ctx.moveTo(0,y);ctx.lineTo(w,y);}
+    ctx.stroke();
+    // move particles
+    for(const p of parts){
+      p.x+=p.vx*dt;p.y+=p.vy*dt+Math.sin(t*.0004+p.ph)*.02;
+      if(p.x>w+10)p.x=-10;if(p.x<-10)p.x=w+10;if(p.y>h+10)p.y=-10;if(p.y<-10)p.y=h+10;
+    }
+    // constellation lines (front two layers only)
+    ctx.lineWidth=.6;
+    for(let i=0;i<parts.length;i++){const p=parts[i];if(p.l===0)continue;
+      for(let j=i+1;j<parts.length;j++){const q=parts[j];if(q.l!==p.l)continue;
+        const dx=p.x-q.x,dy=p.y-q.y,d2=dx*dx+dy*dy;if(d2>LINK*LINK)continue;
+        ctx.strokeStyle="rgba(122,167,255,"+(.16*(1-Math.sqrt(d2)/LINK)).toFixed(3)+")";
+        ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(q.x,q.y);ctx.stroke();}}
+    // particles with gentle twinkle
+    for(const p of parts){
+      const tw=.75+.25*Math.sin(t*.0012+p.ph*3);
+      ctx.fillStyle=p.l===2?"rgba(167,139,250,"+(p.a*tw*.8).toFixed(3)+")":"rgba(190,210,255,"+(p.a*tw).toFixed(3)+")";
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.283);ctx.fill();
+    }
+  }
+  function loop(now){const dt=last?Math.min(now-last,50):16;last=now;frame(dt);raf=requestAnimationFrame(loop);}
+  function start(){if(reduce||raf||document.hidden)return;last=0;raf=requestAnimationFrame(loop);}
+  function stop(){if(raf)cancelAnimationFrame(raf);raf=0;}
+  let rt;addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(resize,120);});
+  document.addEventListener("visibilitychange",()=>document.hidden?stop():start());
+  resize();start();
+})();
 
 /* ---------- State: no demo data. Populated only by render(data) with real data. ---------- */
 const NO_DATA="£—";
