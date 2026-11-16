@@ -187,19 +187,19 @@ input:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline
   <div class="teams">
     <div class="team-card" onclick="openOverlay('a')">
       <h3>TEAM A</h3>
-      <div class="risk">High Risk · Min 55% · Size up to 2.5%</div>
+      <div class="risk">High Risk · ≥5/10 agree · R:R ≥1.5</div>
       <div class="pnl-mini" id="aPnl">£—</div>
       <div class="bot-status" id="aStatus">Awaiting data</div>
     </div>
     <div class="team-card" onclick="openOverlay('b')">
       <h3>TEAM B</h3>
-      <div class="risk">Mid Risk · Min 65% · Size up to 1.5%</div>
+      <div class="risk">Mid Risk · ≥6/10 agree · R:R ≥2 · 1% risk</div>
       <div class="pnl-mini" id="bPnl">£—</div>
       <div class="bot-status" id="bStatus">Awaiting data</div>
     </div>
     <div class="team-card" onclick="openOverlay('c')">
       <h3>TEAM C</h3>
-      <div class="risk">Low Risk · Min 75% · Size up to 0.8%</div>
+      <div class="risk">Low Risk · ≥7/10 agree · R:R ≥2 · tight stops</div>
       <div class="pnl-mini" id="cPnl">£—</div>
       <div class="bot-status" id="cStatus">Awaiting data</div>
     </div>
@@ -387,5 +387,6 @@ if(window.PublicKeyCredential)document.querySelector(".alt").textContent="TOUCH 
 </script>
 <script src="botty-loader.js"></script>
 <script src="trading-bg.js"></script>
+<script src="bots-panel.js"></script>
 </body>
 </html>
