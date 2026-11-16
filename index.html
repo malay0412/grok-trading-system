@@ -3,102 +3,294 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Grok Multi-Agent Trading System</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<title>Grok Quant Dashboard</title>
+<style>
+:root {
+  --bg: #07080d;
+  --panel: #0f1117;
+  --panel-2: #161922;
+  --border: #1e2330;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --accent: #22d3ee;
+  --accent-2: #38bdf8;
+  --green: #22c55e;
+  --red: #ef4444;
+  --yellow: #f59e0b;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+}
+.login-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top, #111827 0%, #07080d 70%);
+}
+.login-box {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px 36px;
+  width: 380px;
+  box-shadow: 0 0 40px rgba(34,211,238,0.08);
+}
+.login-box h1 {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  letter-spacing: -0.3px;
+}
+.login-box p {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 28px;
+}
+.login-box input {
+  width: 100%;
+  background: #0c0e14;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  color: var(--text);
+  font-size: 14px;
+  margin-bottom: 14px;
+  outline: none;
+}
+.login-box input:focus { border-color: var(--accent); }
+.login-box button {
+  width: 100%;
+  background: linear-gradient(90deg, #0891b2, #22d3ee);
+  border: none;
+  color: #041016;
+  font-weight: 600;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 6px;
+}
+.login-box .alt {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+}
+.app { display: none; padding: 20px; max-width: 1400px; margin: 0 auto; }
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.header h1 { font-size: 20px; font-weight: 600; }
+.header .status { font-size: 12px; color: var(--accent); }
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+}
+.card h2 {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.news-item, .trade-row {
+  font-size: 13px;
+  padding: 8px 0;
+  border-bottom: 1px solid #1a1e2a;
+  display: flex;
+  justify-content: space-between;
+}
+.news-item:last-child, .trade-row:last-child { border-bottom: none; }
+.tag {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #1e293b;
+  color: var(--accent);
+}
+.balance-big { font-size: 28px; font-weight: 600; margin: 6px 0; }
+.pnl.pos { color: var(--green); }
+.pnl.neg { color: var(--red); }
+.split-controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+.split-controls input {
+  flex: 1;
+  background: #0c0e14;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px;
+  color: var(--text);
+  font-size: 13px;
+}
+.teams {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+.team-card {
+  background: var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: 0.15s;
+}
+.team-card:hover { border-color: var(--accent); }
+.team-card h3 { font-size: 16px; margin-bottom: 4px; }
+.team-card .risk { font-size: 12px; color: var(--muted); }
+.team-detail {
+  display: none;
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.team-card.open .team-detail { display: block; }
+.logout {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+}
+@media (max-width: 1000px) {
+  .grid, .teams { grid-template-columns: 1fr; }
+}
+</style>
 </head>
 <body>
-<div class="ticker-wrap">
-  <span class="ticker-title"><span class="live-dot"></span>TOP MOVERS</span>
-  <div class="ticker" id="tickerContent">
-    <span style="color:#9ca3af; font-size:13px;">Loading live prices...</span>
+
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <h1>Grok Quant</h1>
+    <p>Personal Trading System</p>
+    <input type="text" id="username" placeholder="Username" value="trader">
+    <input type="password" id="password" placeholder="Password" value="quant">
+    <button onclick="login()">Enter Dashboard</button>
+    <div class="alt">Or use Touch ID / Face ID when available on device</div>
   </div>
 </div>
-<div class="app">
-  <header class="header">
-    <div class="logo">
-      <div class="logo-icon">G</div>
-      <div>
-        <h1>Grok Multi-Agent</h1>
-        <p>Trading Decision System · Enhanced Analysis</p>
+
+<div class="app" id="app">
+  <div class="header">
+    <h1>Grok Quant Dashboard</h1>
+    <div>
+      <span class="status">● System Online · Paper Mode</span>
+      <button class="logout" onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Hot News</h2>
+      <div id="newsBox">
+        <div class="news-item"><span>Oil inventories draw larger than expected</span><span class="tag">WTI</span></div>
+        <div class="news-item"><span>Fed speakers signal cautious path on rates</span><span class="tag">MACRO</span></div>
+        <div class="news-item"><span>Gold holds support ahead of data</span><span class="tag">GOLD</span></div>
+        <div class="news-item"><span>BTC volume rising on key level</span><span class="tag">CRYPTO</span></div>
       </div>
     </div>
-    <div class="header-status"><span class="status-dot"></span> System Online</div>
-  </header>
 
-  <main class="main">
-    <section class="panel">
-      <h2>System Architecture</h2>
-      <div class="layer-title">24 Specialist Bots</div>
-      <div class="bots-grid" id="specialist-bots"></div>
-      <div class="arrow">↓</div>
-      <div class="layer-title"><span class="live-dot"></span>4 Sub-Boss Groks <span class="flow-arrow">↔</span></div>
-      <div class="subboss-grid" id="sub-bosses"></div>
-      <div class="arrow">↓</div>
-      <div class="layer-title"><span class="live-dot"></span>Final Boss Grok</div>
-      <div class="final-boss-card">
-        <strong><span class="live-dot"></span>Ultimate Decision Maker <span class="flow-arrow">→</span></strong>
-        <p>Only receives setups with ≥70% probability and 3/4 Sub-Boss approval</p>
+    <div class="card">
+      <h2>Trade Log</h2>
+      <div id="tradeLog">
+        <div class="trade-row"><span>WTI Long · High Risk</span><span class="pnl pos">+1.8%</span></div>
+        <div class="trade-row"><span>NVDA Short · Mid Risk</span><span class="pnl neg">-0.6%</span></div>
+        <div class="trade-row"><span>GOLD Long · Low Risk</span><span class="pnl pos">+0.4%</span></div>
       </div>
-    </section>
+    </div>
 
-    <section class="panel">
-      <h2>Live Analysis</h2>
-      <div class="input-row">
-        <div class="input-wrapper">
-          <input type="text" id="symbolInput" placeholder="Search Trading 212 stocks, ETFs, commodities..." value="WTI" autocomplete="off">
-          <div class="suggestions" id="suggestions"></div>
-        </div>
-        <select id="timeframe">
-          <option value="1d">Daily</option>
-          <option value="1h">1 Hour</option>
-          <option value="4h">4 Hour</option>
-        </select>
-        <button id="analyzeBtn">Analyze</button>
+    <div class="card">
+      <h2>Account</h2>
+      <div class="balance-big" id="balance">$50,000</div>
+      <div class="pnl pos" id="totalPnl">+$1,240 (2.5%)</div>
+      <div style="margin-top:14px; font-size:13px; color:var(--muted);">Capital Allocation</div>
+      <div class="split-controls">
+        <input type="number" id="highAlloc" value="40" min="0" max="100"> 
+        <input type="number" id="midAlloc" value="35" min="0" max="100"> 
+        <input type="number" id="lowAlloc" value="25" min="0" max="100">
       </div>
-      <div class="meta" id="dataMeta">Enhanced system with 24 bots + real news scanning. Type to search.</div>
+      <button onclick="updateAlloc()" style="margin-top:10px; background:#1e293b; color:var(--text); border:1px solid var(--border); padding:6px 12px; border-radius:6px; font-size:12px; cursor:pointer;">Apply Split</button>
+    </div>
+  </div>
 
-      <div style="margin-bottom:12px; font-size:12px; color:#9ca3af;">
-        Optional API keys: 
-        <input type="password" id="apiKeyInput" placeholder="Finnhub key (news)" style="background:#0f172a; border:1px solid #1f2a3d; border-radius:6px; padding:6px 10px; color:#e5e7eb; width:180px; margin-left:8px; font-size:12px;">
-        <input type="password" id="massiveKeyInput" placeholder="Massive key (stocks)" style="background:#0f172a; border:1px solid #1f2a3d; border-radius:6px; padding:6px 10px; color:#e5e7eb; width:180px; margin-left:8px; font-size:12px;">
-        <button id="saveKeyBtn" style="background:#1e293b; border:1px solid #334155; color:#e5e7eb; border-radius:6px; padding:6px 12px; font-size:12px; margin-left:6px; cursor:pointer;">Save</button>
-        <span id="keyStatus" style="margin-left:8px; color:#22c55e;"></span>
+  <div class="teams">
+    <div class="team-card" onclick="toggleTeam(this)">
+      <h3>High Risk</h3>
+      <div class="risk">Aggressive · Larger size · Lower filters</div>
+      <div class="team-detail">
+        Focuses on breakouts and momentum. Willing to take more trades with wider risk. Uses higher position sizing relative to the other teams. Confluence requirement is relaxed.
       </div>
-
-      <div class="watchlist-section">
-        <div class="watchlist-title"><span class="live-dot"></span>Watchlist Alerts</div>
-        <div class="watch-input-row">
-          <input type="text" id="watchInput" placeholder="Add symbol (e.g. WTI, NVDA, GOLD)">
-          <button id="addWatchBtn">Add</button>
-          <button id="enableNotifBtn">Enable Notifications</button>
-        </div>
-        <div class="watch-chips" id="watchChips"></div>
-        <div class="notif-status" id="notifStatus">Notifications off</div>
+    </div>
+    <div class="team-card" onclick="toggleTeam(this)">
+      <h3>Mid Risk</h3>
+      <div class="risk">Balanced · Standard filters</div>
+      <div class="team-detail">
+        Balanced approach. Requires reasonable confluence from specialists. Medium position size. Aims for consistent returns without extreme drawdowns.
       </div>
-
-      <div id="newsHeadlines" style="display:none; background:#0f172a; border:1px solid #1f2a3d; border-radius:10px; padding:12px; margin-bottom:16px; font-size:12px; max-height:140px; overflow-y:auto;"></div>
-
-      <div id="analysisArea" class="hidden">
-        <div class="progress-section">
-          <div class="progress-label">Analysis Progress</div>
-          <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-          <div class="progress-text" id="progressText">Starting...</div>
-        </div>
-        <div class="layer-title">Specialist Bot Reports</div>
-        <div id="botReports" class="bot-reports"></div>
-        <div class="layer-title">Sub-Boss Verification</div>
-        <div id="subBossResults" class="subboss-results"></div>
-        <div class="final-decision" id="finalDecision"></div>
+    </div>
+    <div class="team-card" onclick="toggleTeam(this)">
+      <h3>Low Risk</h3>
+      <div class="risk">Conservative · High probability only</div>
+      <div class="team-detail">
+        Only takes highest-probability setups. Smaller size, wider stops or tighter filters. Prioritizes capital preservation. Fewer trades.
       </div>
-
-      <div id="placeholder" class="placeholder">
-        <p>Enter a symbol and click <strong>Analyze</strong>.<br>Enhanced multi-agent analysis with deeper checks.</p>
-      </div>
-    </section>
-  </main>
+    </div>
+  </div>
 </div>
 
-<script src="script.js?v=2"></script>
+<script>
+function login() {
+  const u = document.getElementById("username").value;
+  const p = document.getElementById("password").value;
+  if (u && p) {
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("app").style.display = "block";
+  }
+}
+function logout() {
+  document.getElementById("app").style.display = "none";
+  document.getElementById("loginScreen").style.display = "flex";
+}
+function toggleTeam(el) {
+  el.classList.toggle("open");
+}
+function updateAlloc() {
+  const h = +document.getElementById("highAlloc").value || 0;
+  const m = +document.getElementById("midAlloc").value || 0;
+  const l = +document.getElementById("lowAlloc").value || 0;
+  const total = h + m + l;
+  if (total !== 100) {
+    alert("Allocation must total 100%");
+    return;
+  }
+  alert(`Split applied: High ${h}% · Mid ${m}% · Low ${l}%`);
+}
+if (window.PublicKeyCredential) {
+  document.querySelector(".alt").textContent = "Touch ID / Face ID supported on this device";
+}
+</script>
 </body>
 </html>
