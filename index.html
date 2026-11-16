@@ -94,8 +94,8 @@ body{background:var(--bg);color:var(--text);font-family:"JetBrains Mono","SF Mon
     </div>
     <div class="card" onclick="openOverlay('account')">
       <h2>ACCOUNT</h2>
-      <div class="balance-big" id="balance">$50,000</div>
-      <div class="pnl pos" id="totalPnl">+$0 · 0.00%</div>
+      <div class="balance-big" id="balance">£—</div>
+      <div class="pnl pos" id="totalPnl">Awaiting data</div>
       <div style="margin-top:10px;font-size:11px;color:var(--muted);font-weight:700;">ALLOCATION %</div>
       <div class="split-controls">
         <input type="number" id="highAlloc" value="40">
@@ -110,19 +110,19 @@ body{background:var(--bg);color:var(--text);font-family:"JetBrains Mono","SF Mon
     <div class="team-card" onclick="openOverlay('a')">
       <h3>TEAM A</h3>
       <div class="risk">High Risk · Min 55% · Size up to 2.5%</div>
-      <div class="pnl-mini" id="aPnl">$0</div>
+      <div class="pnl-mini" id="aPnl">£—</div>
       <div class="bot-status" id="aStatus">Scanning...</div>
     </div>
     <div class="team-card" onclick="openOverlay('b')">
       <h3>TEAM B</h3>
       <div class="risk">Mid Risk · Min 65% · Size up to 1.5%</div>
-      <div class="pnl-mini" id="bPnl">$0</div>
+      <div class="pnl-mini" id="bPnl">£—</div>
       <div class="bot-status" id="bStatus">Scanning...</div>
     </div>
     <div class="team-card" onclick="openOverlay('c')">
       <h3>TEAM C</h3>
       <div class="risk">Low Risk · Min 75% · Size up to 0.8%</div>
-      <div class="pnl-mini" id="cPnl">$0</div>
+      <div class="pnl-mini" id="cPnl">£—</div>
       <div class="bot-status" id="cStatus">Scanning...</div>
     </div>
   </div>
@@ -152,8 +152,8 @@ function draw(){
 }
 draw();
 
-let balance=50000,trades=[],symbol="WTI",alloc={a:40,b:35,c:25};
-const teams={a:{pnl:0,minConf:55,maxRisk:.025,status:"Scanning",label:"Team A"},b:{pnl:0,minConf:65,maxRisk:.015,status:"Scanning",label:"Team B"},c:{pnl:0,minConf:75,maxRisk:.008,status:"Scanning",label:"Team C"}};
+let liveData=false,balance=0,trades=[],symbol="WTI",alloc={a:40,b:35,c:25};
+const teams={a:{pnl:0,minConf:55,maxRisk:.025,status:"Awaiting data",label:"Team A"},b:{pnl:0,minConf:65,maxRisk:.015,status:"Awaiting data",label:"Team B"},c:{pnl:0,minConf:75,maxRisk:.008,status:"Awaiting data",label:"Team C"}};
 const newsPool=["Oil inventories draw larger than expected","Fed speakers signal cautious path","Gold holds support ahead of data","BTC volume rising on key level","WTI breakout above 87","NVDA momentum continuation","DXY softens","Risk-on tone in crypto"];
 
 function setSymbol(){symbol=document.getElementById("symbolInput").value.toUpperCase()||"WTI";}
@@ -163,15 +163,15 @@ function updateAlloc(){
   alloc={a,b,c};
 }
 function render(){
-  document.getElementById("balance").textContent="$"+balance.toLocaleString();
+  document.getElementById("balance").textContent=liveData?"£"+balance.toLocaleString("en-GB"):"£—";
   const totalPnl=trades.reduce((s,t)=>s+t.pnl,0);
   const el=document.getElementById("totalPnl");
-  el.textContent=(totalPnl>=0?"+":"")+"$"+Math.round(totalPnl)+" · "+(totalPnl/500).toFixed(2)+"%";
+  el.textContent=liveData?(totalPnl>=0?"+":"")+"£"+Math.round(totalPnl)+" · "+(totalPnl/500).toFixed(2)+"%":"Awaiting data";
   el.className="pnl "+(totalPnl>=0?"pos":"neg");
-  document.getElementById("newsList").innerHTML=newsPool.slice(0,4).map(n=>`<div class="news-item"><span>${n}</span><span class="tag">${symbol}</span></div>`).join("");
-  document.getElementById("tradeList").innerHTML=trades.slice(-3).reverse().map(t=>`<div class="trade-row"><span>${t.sym} ${t.side} · ${t.team}</span><span class="pnl ${t.pnl>=0?"pos":"neg"}">${t.pnl>=0?"+":""}$${Math.round(t.pnl)}</span></div>`).join("")||"<div class='news-item'>No trades yet</div>";
+  document.getElementById("newsList").innerHTML=liveData?newsPool.slice(0,4).map(n=>`<div class="news-item"><span>${n}</span><span class="tag">${symbol}</span></div>`).join(""):"<div class='news-item'>Awaiting live news</div>";
+  document.getElementById("tradeList").innerHTML=trades.slice(-3).reverse().map(t=>`<div class="trade-row"><span>${t.sym} ${t.side} · ${t.team}</span><span class="pnl ${t.pnl>=0?"pos":"neg"}">${t.pnl>=0?"+":""}£${Math.round(t.pnl)}</span></div>`).join("")||"<div class='news-item'>No trades yet · awaiting live data</div>";
   ["a","b","c"].forEach(k=>{
-    document.getElementById(k+"Pnl").textContent=(teams[k].pnl>=0?"+":"")+"$"+Math.round(teams[k].pnl);
+    document.getElementById(k+"Pnl").textContent=liveData?(teams[k].pnl>=0?"+":"")+"£"+Math.round(teams[k].pnl):"£—";
     document.getElementById(k+"Pnl").className="pnl-mini "+(teams[k].pnl>=0?"pnl pos":"pnl neg");
     document.getElementById(k+"Status").textContent=teams[k].status;
   });
@@ -194,14 +194,14 @@ function simulateTrade(){
   if(trades.length>50)trades.shift();
   render();
 }
-setInterval(simulateTrade,4500);
+/* demo trade simulation disabled: analysis only, awaiting live data */
 render();
 
 const overlays={
   chief:{title:"CHIEF BOT",content:"Final decision engine. Receives reports from Team A, Team B, and Team C. Applies final filters and issues the trade."},
-  news:{title:"HOT NEWS",content:newsPool.map(n=>`<strong>${symbol}</strong><br>${n}<br><br>`).join("")},
-  trades:{title:"TRADE LOG",content:()=>trades.slice().reverse().map(t=>`<strong>${t.sym} ${t.side} · ${t.team}</strong><br>Conf: ${t.conf}% · P&L: ${t.pnl>=0?"+":""}$${Math.round(t.pnl)}<br><br>`).join("")||"No trades yet."},
-  account:{title:"ACCOUNT",content:`<strong>Balance</strong><br>$${balance.toLocaleString()}<br><br><strong>Allocation</strong><br>Team A ${alloc.a}% · Team B ${alloc.b}% · Team C ${alloc.c}%`},
+  news:{title:"HOT NEWS",content:"Awaiting live news."},
+  trades:{title:"TRADE LOG",content:()=>trades.slice().reverse().map(t=>`<strong>${t.sym} ${t.side} · ${t.team}</strong><br>Conf: ${t.conf}% · P&L: ${t.pnl>=0?"+":""}£${Math.round(t.pnl)}<br><br>`).join("")||"No trades yet."},
+  account:{title:"ACCOUNT",content:`<strong>Balance</strong><br>Awaiting data<br><br><strong>Allocation</strong><br>Team A ${alloc.a}% · Team B ${alloc.b}% · Team C ${alloc.c}%`},
   a:{title:"TEAM A",content:"High-risk specialist. Aggressive breakout and momentum focus. Lower confluence threshold. Larger relative size."},
   b:{title:"TEAM B",content:"Mid-risk specialist. Balanced filters. Mix of setups. Standard risk."},
   c:{title:"TEAM C",content:"Low-risk specialist. High-probability only. Smaller size. Capital preservation first."}
