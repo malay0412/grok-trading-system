@@ -191,14 +191,14 @@
     }
     renderPanel();
     load();
+    window.addEventListener("bq:data", load);
     setInterval(load, REFRESH_MS);
   }
 
   function load() {
-    if (!window.fetch) return;
-    fetch(DATA_URL + "?t=" + Date.now(), { cache: "no-store" }).then(function (r) {
-      if (!r.ok) throw new Error(r.status); return r.json();
-    }).then(function (d) {
+    // decrypted data from bq-crypto.js (window.BQ.data); no plaintext fetch
+    Promise.resolve(window.BQ && window.BQ.data).then(function (d) {
+      if (!d) { renderPanel(); return; }
       data = d; renderPanel();
       var top = document.getElementById("bpOverlayTop"), ov = document.getElementById("overlay");
       if (top && ov && ov.classList.contains("open")) top.innerHTML = bannerHtml(team) + rosterHtml(team);

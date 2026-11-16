@@ -158,9 +158,10 @@ input:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline
   <div class="login-box">
     <h1>BOTTY QUANTER.grok</h1>
     <p>PERSONAL TRADING SYSTEM</p>
-    <input type="text" id="username" placeholder="USERNAME" value="trader" onkeydown="if(event.key==='Enter')login()">
-    <input type="password" id="password" placeholder="PASSWORD" value="quant" onkeydown="if(event.key==='Enter')login()">
+    <input type="text" id="username" placeholder="USERNAME (optional)" autocomplete="username" onkeydown="if(event.key==='Enter')login()">
+    <input type="password" id="password" placeholder="PASSWORD" autocomplete="current-password" onkeydown="if(event.key==='Enter')login()">
     <button onclick="login()">ENTER</button>
+    <div id="loginError" role="alert" style="color:var(--red);font-size:13px;font-weight:600;min-height:18px;margin-top:10px;"></div>
     <div class="alt">TOUCH ID / FACE ID AVAILABLE</div>
   </div>
 </div>
@@ -236,6 +237,7 @@ input:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline
   </div>
   <div class="overlay-content" id="overlayContent"></div>
 </div>
+<script src="bq-crypto.js"></script>
 <script>
 /* Decorative "nano-space" background: 3 parallax particle layers, faint drifting grid and
    constellation lines. Single canvas, <=140 particles, DPR capped, paused when the tab is hidden,
@@ -367,26 +369,28 @@ function openOverlay(key){
   document.getElementById("overlay").classList.add("open");
 }
 function closeOverlay(){document.getElementById("overlay").classList.remove("open");}
-function login(){
-  if(document.getElementById("username").value&&document.getElementById("password").value){
+function login(fromSession){
+  const restoring=fromSession===true,pw=document.getElementById("password").value,err=document.getElementById("loginError");
+  if(!restoring&&!pw){err.textContent="Enter your password";return;}
+  err.textContent=restoring?"":"Unlocking…";
+  (restoring?BQ.restore():BQ.unlock(pw)).then(function(){
     document.getElementById("loginScreen").style.display="none";
     document.getElementById("app").style.display="block";
-    const ses=JSON.stringify({user:document.getElementById("username").value,signedInAt:Date.now()});
-    try{localStorage.setItem("bq_session",ses);}catch(e){try{sessionStorage.setItem("bq_session",ses);}catch(e2){}}
-  }
+    document.getElementById("password").value="";err.textContent="";
+  },function(e){err.textContent=restoring?"":(e&&e.code==="bad-password"?"Wrong password":"Sign-in failed ("+(e&&e.message||"error")+")");});
 }
 function logout(){
   document.getElementById("app").style.display="none";
   document.getElementById("loginScreen").style.display="flex";
-  try{localStorage.removeItem("bq_session");}catch(e){}try{sessionStorage.removeItem("bq_session");}catch(e){}
+  if(window.BQ)BQ.lock();location.reload();
 }
 if(window.PublicKeyCredential)document.querySelector(".alt").textContent="TOUCH ID / FACE ID SUPPORTED";
-/* restore a saved sign-in after refresh: prefill if empty, then reuse login() */
-(function(){let s=null;try{s=JSON.parse(localStorage.getItem("bq_session")||"null");}catch(e){}if(!s)try{s=JSON.parse(sessionStorage.getItem("bq_session")||"null");}catch(e){}
-  if(s&&typeof s.signedInAt==="number"){const u=document.getElementById("username"),p=document.getElementById("password");if(!u.value)u.value=s.user||"trader";if(!p.value)p.value="restored";login();}})();
+/* restore a saved (encrypted-data) session after refresh via the same login() path */
+if(window.BQ&&BQ.hasSession())login(true);
 </script>
 <script src="botty-loader.js"></script>
 <script src="trading-bg.js"></script>
 <script src="bots-panel.js"></script>
+<script src="account-panel.js"></script>
 </body>
 </html>
