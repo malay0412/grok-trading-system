@@ -1,0 +1,592 @@
+{
+  "updated": "2026-11-20T11:07:21Z",
+  "updated_london": "2026-11-20T11:07:21+00:00",
+  "generated_by": "scripts/fetch_news.py",
+  "context_note": "Why-it-matters lines are deterministic keyword/template rules, not editorial copy and not model-generated.",
+  "count": 40,
+  "items": [
+    {
+      "id": "14b9ade88eb3",
+      "headline": "Was Anthropic’s IPO the Real Reason Behind Bitcoin’s November Crash?",
+      "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxPZUViZndKMHZzbXkxUVVrbS1qRnRFNmJEMFUzSjN3LVh4ZEdHVWRsSkpkUWhxMlh4a2N2YzJ0TlZwdHpJTEtOZVFGZkJjY0Q5eXotUEpMMFVTQjVmRTBHOHVqU3Exc0VGbUJYdjZDa3JDR1BvWFRoUFlCcVNvS3hKMndueURmY0xnU0w2bzNMaFB6OUJXd2c?oc=5",
+      "source": "CryptoPotato",
+      "source_id": "cryptopotato",
+      "market": "crypto",
+      "published": "2026-11-20T11:02:00Z",
+      "sentiment": "bearish",
+      "tickers": [
+        "BTC"
+      ],
+      "context": "A bitcoin-focused headline can set the tone for the wider crypto complex, especially large-cap names.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "39796a8b2a81",
+      "headline": "Wall Street’s Black Friday sale: 4 earnings-crushing stocks with up to +54% upside",
+      "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxQVFFjTmFvU3k5X0dsNVhEV19aUHFodG41cVY5TW9Vdk9LZl95YkE2aEVieEZBbU9XZWpGYkc3Snl3dk9UVUwwLTR0TmlQckE0RFV5TlVOclJQYmstTHo2YWJkU1A1RDdYNWNYTkthUGpCTDJTdG9FSU0tWkFTTGpraHdkVTFaU1ZhOG9fdTJCdmVQT1A0TmFfTlFpaks1U08tZVR1V2xrMDRnb2V5cHZJR1NSeVNFU1g4TzR6YzJvNHl1TTZQQUx4SVN3MElrWTg?oc=5",
+      "source": "Investing.com",
+      "source_id": "investingcom",
+      "market": "stocks",
+      "published": "2026-11-20T11:01:53Z",
+      "sentiment": "neutral",
+      "tickers": [
+        "SPX"
+      ],
+      "context": "An equity-market development involving SPX; useful context, but not a clear buy or sell signal on its own.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "9e2ed6acef0c",
+      "headline": "Bitcoin Falls to Four-Month Low: Over $600 Million in Positions Wiped Out",
+      "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTFBzaWZJNlBkd052RmJmWU43UW1EMDIwMWtBY05vdHRVYVp3YklEQWdoUkxzbllVV0lnb1VBd0JRZFhkUHQzY1ptX09rbHdUSkc4X1pVUFdCa1M?oc=5",
+      "source": "Cryptonews.net",
+      "source_id": "cryptonewsnet",
+      "market": "crypto",
+      "published": "2026-11-20T11:01:44Z",
+      "sentiment": "bearish",
+      "tickers": [
+        "BTC"
+      ],
+      "context": "A bitcoin-focused headline can set the tone for the wider crypto complex, especially large-cap names.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "a2a3f2863a17",
+      "headline": "Bitcoin holds above realized price as the average holder stays in profit",
+      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE4wS2FtcTRkTFFzejVzX1haZ1pGSHNDZEd2RHZHc2tsSDlYbjg2ZDhqd25ieXR0SVdSQ0kyT1JhZDdqSVQ3akVqeVd4MW1fcEd1Mlp1ZDN0eENCN2xnUjJoZHNVVWFQSVc1YUlNZGw0REQ?oc=5",
+      "source": "Crypto Briefing",
+      "source_id": "cryptobriefing",
+      "market": "crypto",
+      "published": "2026-11-20T11:00:41Z",
+      "sentiment": "neutral",
+      "tickers": [
+        "BTC"
+      ],
+      "context": "A bitcoin-focused headline can set the tone for the wider crypto complex, especially large-cap names.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "7b5f3f7fea56",
+      "headline": "The Seven Charts That Explain the New Normal for Oil Prices",
+      "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPQS1yamN3ZV90S1NLcS16OE5Tb3BCNVgyRmJxMktsTHlJLS1Ldlp1UjQ0VWdaNUhNMmpoY0ZwYmF4R013c0ZPUjRYTjJJTFhRVmxWM2s0ME5xVU96UlpWWExXQmVJU3hmUmlIRXoxeFRzVHZqZ0lWM2hONWp0bEttUVpFSkw?oc=5",
+      "source": "WSJ",
+      "source_id": "wsj",
+      "market": "commodities",
+      "published": "2026-11-20T10:56:00Z",
+      "sentiment": "neutral",
+      "tickers": [
+        "CL"
+      ],
+      "context": "Crude supply or demand news can move WTI and Brent directly and also feed the inflation and rates debate.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "92de7ca199a1",
+      "headline": "Bitcoin Hovers Near $63,426 as Death Cross Looms and Fear Gauge Hits 10",
+      "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE4yZXNKd3NQZkRlZzI5SmRtWjhpOVQ1cFNaNEZXelRiTkZjYmdTY0dCT0FoSkhxenBNX0xBNS1Ec0VKM3hHdTlWN3VzU0lxcXQ1TVJxUFA5VzByYVNHSFU2b3oydXh0UnRZTl9HbWdWOThXTFdYX3c?oc=5",
+      "source": "BigGo Finance",
+      "source_id": "biggofinance",
+      "market": "crypto",
+      "published": "2026-11-20T10:55:00Z",
+      "sentiment": "neutral",
+      "tickers": [
+        "BTC",
+        "VIX"
+      ],
+      "context": "A bitcoin-focused headline can set the tone for the wider crypto complex, especially large-cap names.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "7ff7c5e830bd",
+      "headline": "VanEck to end Gemini ETF custody deals, keeps Coinbase",
+      "url": "https://cointelegraph.com/news/vaneck-gemini-etf-custody-end-keep-coinbase",
+      "source": "Cointelegraph by Helen Partz",
+      "source_id": "cointelegraphbyh",
+      "market": "crypto",
+      "published": "2026-11-20T10:54:38Z",
+      "sentiment": "neutral",
+      "tickers": [
+        "COIN"
+      ],
+      "context": "A crypto development involving COIN; it is informational rather than a clear directional signal.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "8e660d401b3b",
+      "headline": "Wall Street's fear gauge touches seven-month high as AI worries mount",
+      "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE9ZWXhKS3dTSUhyaWNlS1lLV0xYMVpyY2lSeGxOOElaY2F5Nl91YnlNdTUxWXU3U21ILXhxbjM3d1VBRjh2a0d5QUJIc3loWl8xMHdHYVdEcHo3aWpHbW5HcTNiNG1OSW1qLUpPWnhJV2VRTkI5dEVJQkthTDh6QQ?oc=5",
+      "source": "Lexington Herald Leader",
+      "source_id": "lexingtonheraldl",
+      "market": "stocks",
+      "published": "2026-11-20T10:54:06Z",
+      "sentiment": "neutral",
+      "tickers": [
+        "VIX",
+        "SPX"
+      ],
+      "context": "A move in the VIX is a read on equity stress and can spill into other risk assets the same session.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "10d3b20a78d3",
+      "headline": "Anthropic IPO and AMD short report sink the Dow 1,101 points",
+      "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQUi1YNUczRlFmNE1CM0s3YldxajJlMHlDcXJNLUNqWS1GUm82UTBUUkhtamhVVEZHeWtqVU9GVEU5WDkxeGpZQm53ZVJ4cHlDelJNalZWRHdBaFZWa2ZtQk5WLUNZTDJwSF9sMUw4M1VfVEpQMXJNYjBOdWdTbUlMYjdhcGN3eHRqOWdYN1BkQ2MyS19WRVhqcmp3?oc=5",
+      "source": "Opening Bell Daily",
+      "source_id": "openingbelldaily",
+      "market": "stocks",
+      "published": "2026-11-20T10:52:55Z",
+      "sentiment": "neutral",
+      "tickers": [],
+      "context": "An equity-market development; useful context, but not a clear buy or sell signal on its own.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "658b48c60c24",
+      "headline": "Coinbase targets first-half 2027 for its own prediction market contracts",
+      "url": "https://www.coindesk.com/business/2026/11/20/coinbase-targets-first-half-2027-for-its-own-prediction-market-contracts",
+      "source": "Francisco Rodrigues",
+      "source_id": "franciscorodrigu",
+      "market": "crypto",
+      "published": "2026-11-20T10:48:04Z",
+      "sentiment": "neutral",
+      "tickers": [
+        "COIN"
+      ],
+      "context": "A crypto development involving COIN; it is informational rather than a clear directional signal.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "9c4c4a32d3f7",
+      "headline": "Wall Street’s fear gauge touches seven-month high as AI worries mount By Reuters",
+      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxPRGhPUkdEODFJMER1T25FR2tucmRPWEhFOFFGU1Vvbkw3VGJzRC1kaDJGbGN4dkxPSmp5S1E3QjZsQ05qMkdudEhnZkZsODFrSnF1MHQ1NWdsSXhzaHU4RXltLWYyaWJHV2l3bXVCTlgtWHFiTlZzYmFVS1plNnltTUhYcG5QaGNENC0xa090ZnlUaTIxQ21FOFAxM2pfWkwxaUlOenpKVDNqY0tFSVdYdUt1QXZiS041NjcxU2Nab01Ddw?oc=5",
+      "source": "Investing.com",
+      "source_id": "investingcom",
+      "market": "stocks",
+      "published": "2026-11-20T10:45:30Z",
+      "sentiment": "neutral",
+      "tickers": [
+        "VIX",
+        "SPX"
+      ],
+      "context": "A move in the VIX is a read on equity stress and can spill into other risk assets the same session.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "faacbcb25b33",
+      "headline": "Travelers Stock Outlook: Is Wall Street Bullish or Bearish?",
+      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNTlJlMW5nLVA3bVdSeHZFNFlJM2dvaTQyZThYSWZzcWg3VUdoZjQ5U1VaZVdmTVF3QWFPcGExV3lRWm5uLUpWMGo3VXdyZGhrWUtzYlQ2dXBoUjZ2aDRSdWVzNVJ6VkZXYjZzSkV1ZzZpTlF0NC1NRWNBSGlyWmZlMjJLUFR6VE9kYWZTeW9aZlVLYkNYbVZSXzU1aWhPd2xhREtv?oc=5",
+      "source": "Barchart.com",
+      "source_id": "barchartcom",
+      "market": "stocks",
+      "published": "2026-11-20T10:38:36Z",
+      "sentiment": "bullish",
+      "tickers": [
+        "SPX"
+      ],
+      "context": "A constructive equity headline involving SPX; it may support the tagged names if the wider tape agrees.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "1a6661455ff0",
+      "headline": "Wall Street's fear gauge touches seven-month high as AI worries mount",
+      "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPV0tVUlFhRmE2OVRlWFJjZS1FUU9iemtCT0RkV0R6OEt5U0VwNFpGQVpJM3hKdDJyQkdMUC1nZ2RKQ1E3cWZmM09Mb0lQWEJDU1RkREp6NG5QN0JnSFU2OUZPczNoRHBYMnE4bTJSZTA1UE1zTmV2Nk1Tck9lcHc1WHk3QnRTWVVTU0NrNERUTDFlUGlaaGVDSGJSM3EyUFFyR1NQck1rMXJ4OTdBN0Mw?oc=5",
+      "source": "Reuters",
+      "source_id": "reuters",
+      "market": "stocks",
+      "published": "2026-11-20T10:37:43Z",
+      "sentiment": "neutral",
+      "tickers": [
+        "VIX",
+        "SPX"
+      ],
+      "context": "A move in the VIX is a read on equity stress and can spill into other risk assets the same session.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "0dfb30ac3f3a",
+      "headline": "Gold below $3,500, Bitcoin under $60,000: Breakdown or bounce?",
+      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQOV80bGhaQUpjTDhfbl8yaWdsSFpXMXpreE9vanJRQnVvSjdYRjRsX0sxLUlUWGJlUW5nY0NmWTJPNUMxZHNSbzI0TERTX3hWVmk5M2xUb2ZDS3RKekRiSWx2ZmxqTVlzR2YwQUFsMFgxNzRydGpZRFlWN3dCQi1DemVERnRORnJUY3h3QmdaNm9GNnJFZ2lsRW00YWE0Z09KV2hXdVBlQQ?oc=5",
+      "source": "FXStreet",
+      "source_id": "fxstreet",
+      "market": "crypto",
+      "published": "2026-11-20T10:36:05Z",
+      "sentiment": "bearish",
+      "tickers": [
+        "BTC"
+      ],
+      "context": "A bitcoin-focused headline can set the tone for the wider crypto complex, especially large-cap names.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "ea8b2c6f5a21",
+      "headline": "Hasbro Stock: Is Wall Street Bullish or Bearish?",
+      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQaWNkTzMxVFhrWmhrWENrYTZobkJWQ3Q1eS03VFlMeGUxcXo3YmZuaWkzdHFIVEtWRWZtR05MNUZmcHZBb0Y2dUk4ZGVYV1lsUUIwTURTQnp3a2ozUEFCd0Vya0pOVllPUW15OHhWaUNuMTItUUJYV0syT3JMWTR2Qm4waFFyUnVxOHRvNWVpWmlkdEZG?oc=5",
+      "source": "Barchart.com",
+      "source_id": "barchartcom",
+      "market": "stocks",
+      "published": "2026-11-20T10:34:48Z",
+      "sentiment": "bullish",
+      "tickers": [
+        "SPX"
+      ],
+      "context": "A constructive equity headline involving SPX; it may support the tagged names if the wider tape agrees.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "f42ad2ae135f",
+      "headline": "Crypto market retreats to $2.11T, following stocks",
+      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxPUTctRUQ1MXRPc2NCQzdkS3lkQllhd2RjMVZFRDVULUx3WV9jMmhhWk9Gc3hlN3NmUUlkVTZNTnMzbzM1OWNfUWRFVVNMZzl2dU9ZVDRuaWpRemVIZW0yMTFWMEw3c2R5bVBGUVlXcEktRS1VM21GektDU3FLd0p5WGluV3h3SWM0NDl1dWp0YWp4VDUzQnZBQ1pNYzkwZnY5TDNTZGJPRzVRVVk?oc=5",
+      "source": "FXStreet",
+      "source_id": "fxstreet",
+      "market": "crypto",
+      "published": "2026-11-20T10:32:46Z",
+      "sentiment": "neutral",
+      "tickers": [],
+      "context": "A crypto development; it is informational rather than a clear directional signal.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "9b0111181ee7",
+      "headline": "Are Wall Street Analysts Predicting CoStar Group Stock Will Climb or Sink?",
+      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxOZDRudFZXVktwQ05PdGlGSmczaTRWOVJ0VkRjTFdWTFZUUXFqTzdrNm9VdC1GdmFhXzBqaTdONS1oY3JfS0I3bnQ2R05BOHlGcHRTcHRfV2ZaZ3FWMlM0ZHBIUEFrV3hIYmpMQ3Jyemx3djZBMk5fcU1KVzVWSXkzSFFNWnhOUjNLczlWMzd5d2hXdHpHYXdVV2x2NnRqOEM3V0VVNGlubG4yM2UxWGFLZ19mLXNtVXo5?oc=5",
+      "source": "Barchart.com",
+      "source_id": "barchartcom",
+      "market": "stocks",
+      "published": "2026-11-20T10:31:15Z",
+      "sentiment": "neutral",
+      "tickers": [
+        "SPX"
+      ],
+      "context": "An equity-market development involving SPX; useful context, but not a clear buy or sell signal on its own.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "1fde6994eec5",
+      "headline": "Changing a crypto ETF’s custodian involves more than moving coins",
+      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPT0dvc05FSUk4cGFrdnZxRmQycUk2bkRJTlZybnViU1MxQ2x0NmlORFhnZ2dodTFvTHZWMFFKeWxYMm85UkplcXZUN2JKSnJYN1dqeXJ5SDhHOUlaUkQ1cmdDTTYyT25DM2FoUGJCZUFsd0JtbURXb3psbmJEVU1RTDRVMFZRb2JjLWlRbGhB?oc=5",
+      "source": "Crypto News",
+      "source_id": "cryptonews",
+      "market": "crypto",
+      "published": "2026-11-20T10:30:45Z",
+      "sentiment": "neutral",
+      "tickers": [],
+      "context": "A crypto development; it is informational rather than a clear directional signal.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "fb1f79943503",
+      "headline": "Bitcoin nears repeat of chart pattern that preceded 2023’s $25K retest",
+      "url": "https://cointelegraph.com/markets/bitcoin-first-death-cross-repeat-2023-bottom-25k",
+      "source": "Cointelegraph by William Suberg",
+      "source_id": "cointelegraphbyw",
+      "market": "crypto",
+      "published": "2026-11-20T10:29:10Z",
+      "sentiment": "neutral",
+      "tickers": [
+        "BTC"
+      ],
+      "context": "A bitcoin-focused headline can set the tone for the wider crypto complex, especially large-cap names.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "08e4c21a0461",
+      "headline": "Bitcoin nears repeat of chart pattern that preceded 2023’s $25K retest",
+      "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxNTGVVVGtSQ1gyR05FanFaVTdoeld3eEw0NXpoUU9JeXpFcE5jb0s1SnJvU242TzZzdmtSeG9oY0lsbmFxZ3prY3hvYnNDMjF3VFJmSmRvS2FzWHJzZzlIQVVzVHB4Y0xSWnRsb05aVTFET3NJMWhoc29KNy1mdV9VNDNWcnVoSjdzUFZmMWlBdnBkdThBcWNqeHpnWm1HN1VvRUJwS28tTk1PVm9vLWd2T0lDdVNWNlhkaGNRc2FFVngwYkRLSlU5SUFzSjYyUQ?oc=5",
+      "source": "TradingView",
+      "source_id": "tradingview",
+      "market": "crypto",
+      "published": "2026-11-20T10:29:10Z",
+      "sentiment": "neutral",
+      "tickers": [
+        "BTC"
+      ],
+      "context": "A bitcoin-focused headline can set the tone for the wider crypto complex, especially large-cap names.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "b1e9c6040d5f",
+      "headline": "Before the market opens: Behind the scenes at an oil equities desk",
+      "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxOa1ZsdUZZcFN3Ym5ud2hqY2VDZ0lqMHJqX3BseXVOVXRmMzh4RmhNNHNCRXdNRVpCT2FnMVU0OGdKQWVXNU9QSmpEbW9FLTdmWDNrbmNKSzk0dXhjM1pEUVlyUGZaWTNZS2ctc01HYWF6bzdZUUp1d01lZF9LSGpIX2NzT3lrZWJXTUlLVjdwblA2RmVCTUdYR0IxdkNSbWdtOHRUdFRnUVIyVGlPS3VIdjBzVDlLcnM?oc=5",
+      "source": "Upstream Online",
+      "source_id": "upstreamonline",
+      "market": "stocks",
+      "published": "2026-11-20T10:24:52Z",
+      "sentiment": "neutral",
+      "tickers": [],
+      "context": "An equity-market development; useful context, but not a clear buy or sell signal on its own.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "8d052a50272e",
+      "headline": "Gold falls for fifth day as AI stock rout rattles markets",
+      "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxNNUY5d2tCaGNPbUh3eG1lUEpTX1pMVEpJd1FvM2pWVzFxV0dzWlQ1NmFBUUFGUFduMVBzc0ZnV0JpNzdHMDA2bTdUZWpYbF9iN0ljLXFDcDltREs4N0t3dWpPYkZfZzBObFJiaHpGZHBjRlNBLTluRU9UZ2hVbTVhc3B3?oc=5",
+      "source": "Traders Union",
+      "source_id": "tradersunion",
+      "market": "commodities",
+      "published": "2026-11-20T10:20:09Z",
+      "sentiment": "bearish",
+      "tickers": [
+        "XAU"
+      ],
+      "context": "Gold usually tracks real yields and the dollar; this may matter for XAU and related commodities.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "1c8fa6e8bdcf",
+      "headline": "Is Wall Street Bullish or Bearish on Leidos Holdings Stock?",
+      "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNTEhwRHY2QXQ1YjNtZHpzSnF6M2p0WDFVMkcwaFFXekJ4Q0JhcGlWMS1UcVdnNGRMU3N3NE9WWGhjNVluYnVrclpUcS1PbzhNSEY0amFiYWhSQmdwZ2VCbUlfbHptMS03ZXBfYlRNZVQ1S1dodVM1OFVya1ZJX3BJbFVBWmZESTl0RG5NWTVQM1h4RGNGT0VHU21fWUVjT2RpNml0cA?oc=5",
+      "source": "Barchart.com",
+      "source_id": "barchartcom",
+      "market": "stocks",
+      "published": "2026-11-20T10:16:28Z",
+      "sentiment": "bullish",
+      "tickers": [
+        "SPX"
+      ],
+      "context": "A constructive equity headline involving SPX; it may support the tagged names if the wider tape agrees.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "134c3516699c",
+      "headline": "Paying With Crypto Abroad: 5 Countries Where It Actually Works",
+      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOSGxPNzlIRTdBZGF5YjNvQk5NcmJyeE4zWWtfWER0SVQxX1ZnUXVEUElLYVNHekxjMEFKN3d0YjhHZVZkUDhmeG9NdjAwanhUZkxjbTlva0o3azNKWjhZb1VMVmY2WWVCNHFPcUo4NjJYaVY3MmxMM2xWWEZxWk55SkFFMDk2Z21XLXZjbUduY2pITVJodVgwVDVlNEpIamZEY1E?oc=5",
+      "source": "Yahoo",
+      "source_id": "yahoo",
+      "market": "crypto",
+      "published": "2026-11-20T10:14:00Z",
+      "sentiment": "neutral",
+      "tickers": [],
+      "context": "A crypto development; it is informational rather than a clear directional signal.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "8bec6329d3e7",
+      "headline": "Gold prices tumble in Hyderabad: Is it time to buy?",
+      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNa0R5ZmJFMWVOLXd3VGEtRGdZU0cyWEVpOXpkWDdXU1gyd055LWxzelBLRVJYXzlNcVVMM0hVUUpSbmUxWUJkNVk2eDJYbC1YbUJJVjVWeTJ5RlNsU1Z4Q0IxTFJMQWxXdTVWQUZGRkZ4UlAwMTFRZHlfamFXQU9CU2x4cE4tZ3dj0gGOAUFVX3lxTFBzVWJYZzd4UnFyTzlraERkckF2OWFkeS1RQWNIRldwVDg4Vk1CVXpZYVRSSGVYNkg3by1JUHZhbF9EMmh5bmpXV1BtSGpLN09jY3NxYWFjNFFtUjhXejFkUnJkYjFOZm1jcU41bzFZTkVwNkxxV0x1VERCcmtwSkt4V0xsb1BJOEdkSHkyMWc?oc=5",
+      "source": "The Siasat Daily",
+      "source_id": "thesiasatdaily",
+      "market": "commodities",
+      "published": "2026-11-20T10:05:13Z",
+      "sentiment": "bearish",
+      "tickers": [
+        "XAU"
+      ],
+      "context": "Gold usually tracks real yields and the dollar; this may matter for XAU and related commodities.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "bef30d890334",
+      "headline": "A ‘Shock’ Rate Hike by the Fed? In This Economy?",
+      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxQQ1N1UEpzQUo3X0NFTW1tdEhiWlRtQzFzVEdCa1R4V1hJbjc4VUo4cWxZdHZEdHVUT0JZWkIyMHdfSThfVUNPeFRKanpxTndYTnA2d1BwN0hyVWtCamhiYVRMYW1qTWxNMDkwa1ZMcF9pY0xWVHBxUDBrTWItX2trcTZxOHZiOWhGVVBSLWZNREh0QVJBRFhONThHRUs0WHhpNmZhTlFlSEJoaWRzU04xRzJKS0ZCYjFvSkZ0dQ?oc=5",
+      "source": "Bloomberg.com",
+      "source_id": "bloombergcom",
+      "market": "macro",
+      "published": "2026-11-20T10:00:02Z",
+      "sentiment": "bearish",
+      "tickers": [],
+      "context": "Fed-policy headlines often move the dollar, yields and risk assets together, so this is a macro input for today's tape.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "8dd9320f90cc",
+      "headline": "Global Economy Faces Challenges Amid Rising Inflation Rates",
+      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPRjBQdkZqay1ZMDA1UDYtN0hyaV9jSnhGaTJpN1E5aEdOVWswVDZSelJ1Xy1LcUlHSlltT01ONzFZTmdFWTJZc2F1QjEyc0lYNk9ySmtUQXFjejJfcGIya21iVW5DWHBnMmpNc3A5X3VGZXE5U2xjZ29RNWhUMUJ6M2NYc1pseFVGTDJvRnNrWmdWUXl5WXZQVTlGQTRWbFhmWU1lamo3RQ?oc=5",
+      "source": "India News Network",
+      "source_id": "indianewsnetwork",
+      "market": "macro",
+      "published": "2026-11-20T09:59:15Z",
+      "sentiment": "neutral",
+      "tickers": [],
+      "context": "Inflation prints feed rate expectations, which then spill into yields, the dollar, gold and equities.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "ee11c644d21f",
+      "headline": "Gold Prices Hit 14-Month Low as Strong Dollar and Fed Rate Hike Bets Drive Weekly Sell-Off",
+      "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE9hZlFpTWljQTB3bFhudTY3NW1yVEdYelJBVGNpZDI4NVp1T3pucGRfR1FLSl9GNFhHVVplNHB5TVN2UEd2TEVYVE56bGQ4YV9ONU9KZTl2RzFWTGdqeDNjdkZvS1liYnp2WFVlVWRlb0RvZVBKY1pSVXdYd0ltQQ?oc=5",
+      "source": "Yahoo Finance UK",
+      "source_id": "yahoofinanceuk",
+      "market": "macro",
+      "published": "2026-11-20T09:52:39Z",
+      "sentiment": "bearish",
+      "tickers": [
+        "XAU",
+        "DXY"
+      ],
+      "context": "Fed-policy headlines often move the dollar, yields and risk assets together, so this is a macro input for today's tape.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "5e8fc2455911",
+      "headline": "Gold slides toward worst week in eight months on hawkish Fed outlook",
+      "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxOVFh0eWUtanl3SnJ3VTZqb1pQS0N0MHJyOHA5MFp1aEpZYk10WnFfY0hDWkFlMUdpMXFkWGZMSDhFcFdTM2FsSzJ4T2dWN2FrcW11M3RmclMzclVEbnVaY1VGN1dLNzh2bWtzXzMwNUlfeFpLMi1obVFMcTcya0lVU0h3N29GY3FWYURVUDJJbUYtcDN1QVRqaC1BbGpVaE9PbVg3RUJuelNSZHVsaGNTM1N5NVpyaEdwR2tnR0tJNFQ5ODZLNmZVWlZyaENhd3FETXFJYQ?oc=5",
+      "source": "TradingView",
+      "source_id": "tradingview",
+      "market": "macro",
+      "published": "2026-11-20T09:35:19Z",
+      "sentiment": "bearish",
+      "tickers": [],
+      "context": "A hawkish or risk-off macro headline; this kind of news often tightens financial conditions.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "65681344076c",
+      "headline": "Oil prices set for third straight weekly decline on Middle East export flows By Reuters",
+      "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxOWl9EWjV4QkloWE1LOC1pNmo0LWJxeUFjWGQtY1p0Z1RJWmdycWkzMFpDN3NnVTFUUUFONVd3dFNSdjRwUExCSm1MX0FCRjBpOXFYcjFmV3JBT1NYXzRZakYyb0QtOTJJdEFZbmgyclU1STRwZTE2dXkzVURkUFlyb3c1NXVEVkJfUUhMYnVVT1dlQTBNVGlhNHZUSThyYUJlRjY0cjVNU2VYeXEtbGRjUHY0MzlDT0FyRG1feGdYck54aHhEYjIw?oc=5",
+      "source": "Investing.com",
+      "source_id": "investingcom",
+      "market": "commodities",
+      "published": "2026-11-20T09:17:04Z",
+      "sentiment": "neutral",
+      "tickers": [
+        "CL"
+      ],
+      "context": "Crude supply or demand news can move WTI and Brent directly and also feed the inflation and rates debate.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "48a0962ce2e0",
+      "headline": "Oil Prices Retreat as Traders Assess Supply Outlook, Middle East Risks",
+      "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxQUVE3WWhmSEFMaFZmRkVRTHN5R1N0V3lLbmdYYWsyZ0QxSnRqaFdkcktIS1JqTk5RRTI0ODREZV9jcldqb3BpMzhmN3BUOWhRaDI1bGdnMG45VDRxNFU1YXN4X2hEd1Y4RTRLMkdabDU1T2p1cnRpT2R1VUY1UElIS1h3Q3NtdlpEMFpoaHB6bXh5LUNFakwyLUYwWF9KVG9YRmRKT2xwcVp4WkQtYnBucFV5WWFfbDY1dDRlWW9halQwclNac2tubV9vQQ?oc=5",
+      "source": "WSJ",
+      "source_id": "wsj",
+      "market": "commodities",
+      "published": "2026-11-20T09:17:00Z",
+      "sentiment": "neutral",
+      "tickers": [
+        "CL"
+      ],
+      "context": "Crude supply or demand news can move WTI and Brent directly and also feed the inflation and rates debate.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "b98edbcbcde2",
+      "headline": "Why is gold price going down?",
+      "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxQMkJrWmdweXdyOEVkbmZZNWJKZHFndTF5dkxoOTlVRTR6eU1fWVI5YW9lR3kzdmo0aUNRbzZPUTVWLXNTMm1CNUhvRFluQ1ZBaVZLZnhldW1jblI1RDREaXYxZVhSWUYyU2RYd0J5Z3hRNTBDZ0k2UlZjbjVHdDhzY25HOGhFb0JCYmxiZ3Vrclk?oc=5",
+      "source": "The National",
+      "source_id": "thenational",
+      "market": "commodities",
+      "published": "2026-11-20T09:08:33Z",
+      "sentiment": "neutral",
+      "tickers": [
+        "XAU"
+      ],
+      "context": "Gold usually tracks real yields and the dollar; this may matter for XAU and related commodities.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "94ced1738d3f",
+      "headline": "Gold heads for worst week since March as hawkish Fed, AI sell-off weigh",
+      "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE83a29ZaWhpZzgwdmJSWHhGa0Myd25kYnNsMUFZcGtNUW1WRnNnNzdIcFVRSWRQbFR5TnNOaS1kSkxqVzhaNWx0REFsQTVxS2xmQW81X1dzc1hFRkVMSEdlMTBWS3JnV0FTeVdfWVhvcw?oc=5",
+      "source": "AMWatch",
+      "source_id": "amwatch",
+      "market": "macro",
+      "published": "2026-11-20T09:04:40Z",
+      "sentiment": "bearish",
+      "tickers": [],
+      "context": "A hawkish or risk-off macro headline; this kind of news often tightens financial conditions.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "bf75630258e7",
+      "headline": "Gold falls more than 30% from January record high as dollar strengthens",
+      "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE9lLWRqb0k0TFZkZE1KNDVZeW1vZWRHbjk5ZUlLRGlod2pkYVFRenhKOGVTRmpVT3J4WDZhdFhZZjJnTmMxcnNpdDFTdUk4aVYzaUZlb2R5MVBYSUs5Y25ZZVhvMEhmWmhCazJtMWhfdXVjYmEtc3c?oc=5",
+      "source": "Nation Thailand",
+      "source_id": "nationthailand",
+      "market": "commodities",
+      "published": "2026-11-20T08:45:00Z",
+      "sentiment": "neutral",
+      "tickers": [
+        "XAU"
+      ],
+      "context": "Gold usually tracks real yields and the dollar; this may matter for XAU and related commodities.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "8935bab411f6",
+      "headline": "Gold prices head for their sharpest weekly decline since March",
+      "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNd0JZeEdlS2FGRVJBOV9JbGNYNjY4SDFTa0VHejNpSEhaa1BWdDZUdGZNb3Ffd3d3dzJhekh4N2Y0VzM3UWNPQmdrSXNvblJSbldxQW9OSUVuM1UySm5xYUNLb2N4NkZfYXlyZ1o5LUJMSW5GWFoxT2g4eTlNNkc1U0I4Z0czb2xjcS1pTFd1d0U0NEpDUVR4bnpDWVJtakFDSjRLaGNR?oc=5",
+      "source": "Laodong.vn",
+      "source_id": "laodongvn",
+      "market": "commodities",
+      "published": "2026-11-20T08:36:50Z",
+      "sentiment": "neutral",
+      "tickers": [
+        "XAU"
+      ],
+      "context": "Gold usually tracks real yields and the dollar; this may matter for XAU and related commodities.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "edbcb45e6854",
+      "headline": "Gold prices experienced their sharpest weekly decline since March as the Fed maintained its hawkish stance.",
+      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPVzJmWFdpWktvNHdBNTlxQWk0Nmd2TFFrb1VVTEx6V3FaMlVIeGo4MlY0bG52cXRudHdpRE5WVEdDdVZZNVRoSkpxU3RobHZZcTd3Qnc1MlUwRXE0NWhtQXJVLXUzdmZ4NHIyOW5NNERZaVFrREthSlBCMjF6RThZTW1zdXotdmM4cm5JSVQ1SXBjNWlfeHBLdFhra2ZlTHJCa2c?oc=5",
+      "source": "Vietnam.vn",
+      "source_id": "vietnamvn",
+      "market": "macro",
+      "published": "2026-11-20T08:34:38Z",
+      "sentiment": "bearish",
+      "tickers": [
+        "XAU"
+      ],
+      "context": "Gold usually tracks real yields and the dollar; this may matter for XAU and related commodities.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "54ff83ec90b6",
+      "headline": "Gold price decline unlikely to boost jewellery demand, manufacturers warn",
+      "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxObG5jd2tHQXFoTVRJcTdhOEpaeThQVUJNUjh4WVdZaTBHMjJxcFZRN3BXdDJhUS1tby1rZDJuUlhsNUdQbC1SVXpEY0xyOG1DSXRnSWluam5ZRFBiWV9HNk81YmpqOHdOR3VlMU9SdUxieUZSbkRWVklwMFVGdE91cGZnbnJnR2tZaWprQUFQbkZLMEpOcjJqdWpRNXpFV2tZNHE2eUJBZV9LUGJPcEpmanVPQjlqb2Z6T0pIdm9VTnREV2hsT1locEROcnB3NWs?oc=5",
+      "source": "Retail Jeweller",
+      "source_id": "retailjeweller",
+      "market": "commodities",
+      "published": "2026-11-20T08:33:01Z",
+      "sentiment": "bullish",
+      "tickers": [
+        "XAU"
+      ],
+      "context": "Gold usually tracks real yields and the dollar; this may matter for XAU and related commodities.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "67245f7f6e7d",
+      "headline": "Gold, silver prices fall amid stronger dollar, hawkish Fed signals",
+      "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxOYUxfajd1ejd3S2g4Rl9sNjhOVFhzd1VSaExrZFZocFZSNG4zeURRdmZwdXZjOXRPMEtERmRQN21SN3lENXl6ek1fY1NYXzhlNzlJbldtZVM2T3hueURiT1pnaWZxVG94MGFURXV0WFp6WHpNVUNEbEJ3b2x4dFhvWjB6WVRweVNPTmhvMjI3MV8xZVNlZHBNUlNGaVViU1NRM08xMmd3VDd6ZldyY1BvVlNXRzR0X3ZkNUtvUnBpNDhsOTRWa0xYbGZkYzBzQVdKak9tM9IB2gFBVV95cUxOdDZJRFI4QldfeG9jcUI2VDNuUGo5NXNVcXNMblRMUG1HeUdrV1pkTWw1VzhQNzRNOHQ2d3M3a3FEX1NWWXBMWVM4R3R0WTA1NkdDV3Vjdm1MeklYQ0tGNlF2SFFWMGlDSGhDRnVzUUsxYUxfN251bVRfNmprR25FOTZwSE43czhjcWtraUhZMjFPbzRQZ3hneXYtZGFHWkhobUxOd0g1cEltTy1wTUdIMHhKakJiOXVaYkljWFNDOUFwVEQxNXNBSE40NmFkbER4aEs1dU50akJFQQ?oc=5",
+      "source": "Business Standard",
+      "source_id": "businessstandard",
+      "market": "macro",
+      "published": "2026-11-20T07:57:34Z",
+      "sentiment": "bearish",
+      "tickers": [],
+      "context": "A hawkish or risk-off macro headline; this kind of news often tightens financial conditions.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "b4c629fa3c4b",
+      "headline": "Crude Oil Edges Up as Mideast Risks Revive Supply Fears",
+      "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNOV92QlZUdmxGcWZ4VkJCQzBjQ2hZbnh6RUlvbFpiZGJSTDkzNEhjUEtGYVNhcjl3NU5UT0t1MWpNcDAwTTIxRFJLcHVKSDRLblNiaFotTFhWa29jN0lBRUdjNzlSdmppX1ZqMDRDTlg2R043ejdrbkE3TjVReVphaEN2aG01ZW9TRTFkMUgyQUZTTS1yVU9ZR2ViX04?oc=5",
+      "source": "TradingPedia",
+      "source_id": "tradingpedia",
+      "market": "commodities",
+      "published": "2026-11-20T07:54:48Z",
+      "sentiment": "neutral",
+      "tickers": [
+        "CL"
+      ],
+      "context": "Crude supply or demand news can move WTI and Brent directly and also feed the inflation and rates debate.",
+      "context_kind": "rule"
+    },
+    {
+      "id": "8a26a83ea6ce",
+      "headline": "Gold Set for Worst Week Since March on Hawkish Fed, AI Selloff",
+      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxNRkRDQWZYNXlObXhXM0Q1TEFtSXhxV24ySVdMUnNCVWRRSnJDTkVBLWtJR1lTWEliYzRIbWhWeEFRYzUySHFObzRJajNFWW5wd2lmZ0tIeXpQaFZfdlRZaFJEUTdRVkFKUW1HNDZ1dWhXU1QzSFpIOF80MUJkSWJsdTY1ME9CRUVVYVY0SllFVFYzR0pVVER4YjVSNGp6Y2tIR0ZSRW5yS1VHSHV2OU9MU2lB?oc=5",
+      "source": "Bloomberg.com",
+      "source_id": "bloombergcom",
+      "market": "macro",
+      "published": "2026-11-20T07:15:00Z",
+      "sentiment": "bearish",
+      "tickers": [],
+      "context": "A hawkish or risk-off macro headline; this kind of news often tightens financial conditions.",
+      "context_kind": "rule"
+    }
+  ]
+}
