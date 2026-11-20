@@ -1,11 +1,11 @@
 {
-  "updated_utc": "2026-11-20T19:13:07Z",
-  "updated_london": "2026-11-20 19:13",
+  "updated_utc": "2026-11-20T22:25:50Z",
+  "updated_london": "2026-11-20 22:25",
   "symbol": "CL=F",
-  "last_close": 83.08,
-  "candle_start_utc": 1795200300,
-  "candle_close_time": "2026-11-20 19:00",
-  "status_line": "19:00 London · WTI 83.08 · sell-side · no trigger",
+  "last_close": 83.62,
+  "candle_start_utc": 1795211100,
+  "candle_close_time": "2026-11-20 22:00",
+  "status_line": "22:00 London · WTI 83.62 · sell-side · no trigger",
   "state": "neutral",
   "bias": "sell-side",
   "armed": {
@@ -14,7 +14,7 @@
     "bias_flip": true,
     "no_trade": true
   },
-  "last_processed_candle": 1795200300,
+  "last_processed_candle": 1795211100,
   "recent_signals": [],
   "disclaimer": "Analysis only. No orders are placed. Not financial advice. Yahoo futures data may be delayed 10-30 minutes."
 }
