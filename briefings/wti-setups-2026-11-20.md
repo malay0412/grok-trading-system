@@ -3,6 +3,7 @@
 Contract: WTI January (CL Jan). December expires today.
 Prices from the Chief Bot briefing at about 10:49 London (GMT), delayed 10–30 min. Check live prices before acting.
 Today's bias: SELL-SIDE. Sell rallies, don't chase the lows.
+**Trigger timeframe: 15-minute closes for ALL setups** (changed from 1-hour). A setup triggers only when a 15-minute candle closes beyond the level.
 Analysis only. No orders are placed by BOTTY QUANTER. Not financial advice.
 
 ---
@@ -11,7 +12,7 @@ Analysis only. No orders are placed by BOTTY QUANTER. Not financial advice.
 
 | | Price |
 |---|---|
-| Entry | Hourly CLOSE below **80.70** |
+| Entry | 15-minute CLOSE below **80.70** |
 | Stop loss | **82.50** |
 | Target 1 | **79.18** |
 | Target 2 | **78.00** |
@@ -21,7 +22,7 @@ Analysis only. No orders are placed by BOTTY QUANTER. Not financial advice.
 
 | | Price |
 |---|---|
-| Entry | Hourly CLOSE above **83.95** only |
+| Entry | 15-minute CLOSE above **83.95** only |
 | Stop loss | **82.16** |
 | Target 1 | **85.93** |
 | Target 2 | **88.21** |
@@ -52,5 +53,5 @@ Break-even assumes about 3 cents of round-trip costs (2 ticks of slippage plus c
 - 79.18
 - 77.60 – 78.40 (strongest, held 7 of 11 times)
 
-**Bias flip:** an hourly close above 83.91 turns the bias neutral or long.
+**Bias flip:** a 15-minute close above 83.91 turns the bias neutral or long.
 **Risks today:** Iran and Hormuz headlines, WTI December expiry, Baker Hughes rig count at 18:00 London, Friday close and weekend gap.
