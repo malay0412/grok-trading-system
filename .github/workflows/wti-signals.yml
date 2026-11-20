@@ -1,0 +1,49 @@
+# WTI 15-minute close signals. Analysis only. Never places trades.
+# Zero Grok credits: stdlib Python and GITHUB_TOKEN only.
+#
+# Schedule: every 15 minutes, Monday-Friday, 08:00-16:30 Europe/London.
+# GitHub cron is UTC. London is currently GMT (UTC+0, late October to late March),
+# so the times below match 08:00-16:30 London.
+# When BST (UTC+1, typically late March to late October) is in effect, this same
+# cron would run 09:00-17:30 London. Update the UTC hours then if the window
+# must stay 08:00-16:30 London.
+name: WTI 15m signals
+
+on:
+  schedule:
+    - cron: "0,15,30,45 8-15 * * 1-5"
+    - cron: "0,15,30 16 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: wti-signals
+  cancel-in-progress: false
+
+jobs:
+  signal:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Evaluate last closed 15m WTI candle
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: python3 scripts/wti_signals.py
+
+      - name: Commit data/wti_signals.json if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/wti_signals.json
+          if git diff --cached --quiet; then
+            echo "wti_signals.json unchanged"
+            exit 0
+          fi
+          git commit -m "chore: refresh public wti_signals.json"
+          git push

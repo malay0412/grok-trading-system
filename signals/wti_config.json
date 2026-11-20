@@ -1,0 +1,24 @@
+{
+  "symbol": "CL=F",
+  "interval": "15m",
+  "range": "1d",
+  "timezone": "Europe/London",
+  "default_bias": "sell-side",
+  "interval_seconds": 900,
+  "recent_signals_limit": 20,
+  "levels": {
+    "short_entry": 80.70,
+    "short_stop": 82.50,
+    "short_target_1": 79.18,
+    "short_target_2": 78.00,
+    "short_break_even": 80.67,
+    "long_entry": 83.95,
+    "long_stop": 82.16,
+    "long_target_1": 85.93,
+    "long_target_2": 88.21,
+    "long_break_even": 83.98,
+    "bias_flip": 83.91,
+    "no_trade_low": 80.70,
+    "no_trade_high": 81.20
+  }
+}
