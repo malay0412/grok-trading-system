@@ -1,11 +1,12 @@
 # Refresh public headlines for the dashboard HOT NEWS panel.
-# Scheduled every 5 minutes (GitHub may delay scheduled workflows; 5 minutes is the practical minimum).
+# PAUSED 2026-11-20 11:16 London at Malay's request: the 5-minute schedule is commented out below.
+# To re-enable, uncomment the two schedule lines. Manual runs (workflow_dispatch) still work.
 # Zero Grok credits: stdlib Python only, rule-based notes, headlines only (no account data).
 name: Refresh headlines
 
 on:
-  schedule:
-    - cron: "*/5 * * * *"
+  # schedule:
+  #   - cron: "*/5 * * * *"
   workflow_dispatch:
 
 permissions:
