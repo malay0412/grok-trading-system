@@ -1,20 +1,35 @@
 {
-  "updated_utc": "2026-11-20T22:25:50Z",
-  "updated_london": "2026-11-20 22:25",
+  "updated_utc": "2026-11-23T19:54:37Z",
+  "updated_london": "2026-11-23 19:54",
   "symbol": "CL=F",
-  "last_close": 83.62,
-  "candle_start_utc": 1795211100,
-  "candle_close_time": "2026-11-20 22:00",
-  "status_line": "22:00 London · WTI 83.62 · sell-side · no trigger",
-  "state": "neutral",
+  "last_close": 80.0,
+  "candle_start_utc": 1795462200,
+  "candle_close_time": "2026-11-23 19:45",
+  "status_line": "19:45 London · WTI 80.00 · SHORT trigger · close below 80.70",
+  "state": "short",
   "bias": "sell-side",
   "armed": {
-    "short": true,
+    "short": false,
     "long": true,
     "bias_flip": true,
     "no_trade": true
   },
-  "last_processed_candle": 1795211100,
-  "recent_signals": [],
+  "last_processed_candle": 1795462200,
+  "recent_signals": [
+    {
+      "type": "short",
+      "close": 80.0,
+      "candle_start_utc": 1795462200,
+      "candle_close_time": "2026-11-23 19:45",
+      "issued_at_utc": "2026-11-23T19:54:37Z",
+      "bias": "sell-side",
+      "entry": 80.7,
+      "stop": 82.5,
+      "target_1": 79.18,
+      "target_2": 78.0,
+      "break_even": 80.67,
+      "issue_url": "https://github.com/malay0412/grok-trading-system/issues/1"
+    }
+  ],
   "disclaimer": "Analysis only. No orders are placed. Not financial advice. Yahoo futures data may be delayed 10-30 minutes."
 }
