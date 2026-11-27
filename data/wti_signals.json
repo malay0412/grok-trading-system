@@ -1,20 +1,20 @@
 {
-  "updated_utc": "2026-11-27T00:10:32Z",
-  "updated_london": "2026-11-27 00:10",
+  "updated_utc": "2026-11-27T17:53:58Z",
+  "updated_london": "2026-11-27 17:53",
   "symbol": "CL=F",
-  "last_close": 84.42,
-  "candle_start_utc": 1795668300,
-  "candle_close_time": "2026-11-26 05:00",
-  "status_line": "05:00 London · WTI 84.42 · above long level · already signalled",
-  "state": "long",
-  "bias": "neutral/long",
+  "last_close": 82.65,
+  "candle_start_utc": 1795800600,
+  "candle_close_time": "2026-11-27 17:45",
+  "status_line": "17:45 London · WTI 82.65 · sell-side · no trigger",
+  "state": "neutral",
+  "bias": "sell-side",
   "armed": {
     "short": true,
-    "long": false,
-    "bias_flip": false,
+    "long": true,
+    "bias_flip": true,
     "no_trade": true
   },
-  "last_processed_candle": 1795668300,
+  "last_processed_candle": 1795800600,
   "recent_signals": [
     {
       "type": "long",
